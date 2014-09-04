@@ -10,13 +10,14 @@ opts_chunk$set(fig.align='left')
 require(devtools)
 install_github("vbonhomme/Momocs")
 require(Momocs)
+setwd("/Volumes/Macintosh HD/users/clipo/mataaMorphometrics/")
 ```
 
 # Introduction
 
 Rapa Nui is a tiny island located in a remote corner of Eastern Polynesia, more than 2000km from the nearest inhabited body of land. The island was first colonized by Polynesians who sailed from central East Polynesia in voyaging canoes during the 13th century AD (Hunt and Lipo 2008; Wilmshurst et al. 2011).  
 
-![Easter Island, Chile (Rapa Nui)](./mataaMorphometrics/Figures/Figure1.pdf).
+![Easter Island, Chile (Rapa Nui)](/Volumes/Macintosh HD/users/clipo/mataaMorphometrics/Figures/Figure1.pdf).
 
 It is often assumed that prehistoric Rapa Nui populations experienced intense warfare during late prehistory (Bahn and Flenley 1992; Diamond 1995, 2005; Flenley and Bahn 2002). One line of evidence used to make this assumption is the presence of mata’a, flaked obsidian stemmed tools. Mata’a are a class of hafted flaked obsidian artifacts that are found commonly on Rapa Nui. They are similar in form to tools found on other islands such as New Britain, Papua New Guinea (e.g., Torrence et al. 2008).
 
@@ -31,7 +32,7 @@ Here, we use shape morphometric analysis to examine mata’a shape variability a
 ```
 ```{r}
 
-data.path <- "./Data/RapaNuiMataaData.txt" 
+data.path <- "/Volumes/Macintosh HD/users/clipo/mataaMorphometrics/Data/RapaNuiMataaData.txt" 
 # We read the whole file
 PAST <- read.table(data.path, header = TRUE, sep="\t")
 last.meta <- which(colnames(PAST)=="X1") - 1
