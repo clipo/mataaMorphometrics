@@ -18,11 +18,10 @@ Rapa Nui is a tiny island located in a remote corner of Eastern Polynesia, more 
 
 ```
 ```{r}
-#require(knitr)
 require(devtools)
 install_github("vbonhomme/Momocs")
 require(Momocs)
-data.path <- "~/Google Drive/Mataa/AllCollections/RapaNuiMataaData.txt" 
+data.path <- "~/PycharmProjects/mataaMorphometrics/Data/RapaNuiMataaData.txt" 
 # We read the whole file
 PAST <- read.table(data.path, header = TRUE, sep="\t")
 last.meta <- which(colnames(PAST)=="X1") - 1
