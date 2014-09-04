@@ -5,14 +5,15 @@ date: "3 September 2014"
 output: pdf_document
 ---
 ```
-{r, echo=FALSE}
+```{r, echo=FALSE}
 require(knitr)
 opts_chunk$set(fig.align='left') 
 require(devtools)
 install_github("vbonhomme/Momocs")
 require(Momocs)
-setwd("/Volumes/Macintosh HD/users/clipo/Documents/mataaMorphometrics/")
+
 ```
+
 
 # Introduction
 
@@ -75,7 +76,8 @@ plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 
 
 Some embedded plots.
-```
+
+
 ```{r, echo=FALSE}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
