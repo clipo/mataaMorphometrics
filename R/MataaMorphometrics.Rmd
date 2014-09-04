@@ -1,0 +1,70 @@
+---
+title: "Rapa Nui Mataa Morphometric Analyses"
+author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
+date: "3 September 2014"
+output: pdf_document
+---
+
+# Introduction
+
+Rapa Nui is a tiny island located in a remote corner of Eastern Polynesia, more than 2000km from the nearest inhabited body of land. The island was first colonized by Polynesians who sailed from central East Polynesia in voyaging canoes during the 13th century AD (Hunt and Lipo 2008; Wilmshurst et al. 2011).  
+
+![Easter Island, Chile (Rapa Nui)](./Figures/Figure1.pdf).
+
+# Mataa
+
+# Data
+
+
+```
+```{r}
+#require(knitr)
+require(devtools)
+install_github("vbonhomme/Momocs")
+require(Momocs)
+data.path <- "~/Google Drive/Mataa/AllCollections/RapaNuiMataaData.txt" 
+# We read the whole file
+PAST <- read.table(data.path, header = TRUE, sep="\t")
+last.meta <- which(colnames(PAST)=="X1") - 1
+fac <- PAST[, 1:last.meta]
+# xy will contain coordinates only
+xy <- as.matrix(PAST[, -c(1:last.meta)])
+# a short loop to reorder thing and store them in a list
+coo <- list()
+for (i in 1:nrow(xy)){ 
+  coo[[i]] <- cbind(xy[i, seq(1, ncol(xy), 2)], xy[i, seq(2, ncol(xy), 2)])}
+# we renames the components of the list (ie the shapes)
+names(coo) <- fac[, 1]
+# now we create the Out object (formerly Coo,
+# but Coo became a super-class now, to handle outlines, open outlines, and
+# landmarks)
+RapaNui <- Out(coo, fac=fac)
+
+panel(RapaNui, fac = "Site")
+panel(RapaNui, fac = "Island")
+panel(RapaNui, fac="Source", reorder="Source")
+
+# Lets begin by centering, scaling them 
+stack(RapaNui)
+
+RapaF <- eFourier(RapaNui, 12)
+RapaP <- fgProcrustes(RapaNui)
+RapaFP <- eFourier(RapaP, 12, norm=FALSE)
+
+#by source
+plot(PCA(RapaF), "Source") # regular EFT with normalized coefficients
+plot(PCA(RapaFP), "Source") # Procrustes aligned (normalization of the outlines)
+
+# by site
+plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
+plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
+
+
+```
+
+
+Some embedded plots.
+```
+```{r, echo=FALSE}
+plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
+```
