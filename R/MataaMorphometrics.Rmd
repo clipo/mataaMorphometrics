@@ -37,10 +37,6 @@ We assume that due to performance the functional aspects of any tool result in s
 
 # Mata'a Analyses
 
-In order to test these hypotheses, we used morphometric outline analysis. With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent. Our assemblage consisted of photographs of mata’a (n=401) taken by Lipo on Rapa Nui from 2007 through 2009.  25 to 33 artifacts were randomly selected from each of (4) sites. 
-Using TPSdig software (Rohlf 2014), each mata’a was measured using 200 sets of X-Y coordinates from the perimeter of the artifact. Radial measurements were also taken every 2 degrees around the circumference. 
-We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coordinate and radii analyses were done. The X-Y coordinates were used to create overlying images showing shape variability. The radii analysis were used to compute the standard deviation of each radius. The standard deviations were then used to graph out areas of constraint and/or variability in each group.
-Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
 
 
 ```
@@ -69,8 +65,12 @@ xMaxWidth<-0
 for (i in 1:nrow(xy)){ xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) ) }
 ```
 
+In order to test these hypotheses, we used morphometric outline analysis. With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent. Our assemblage consisted of photographs of mata’a (n=401) taken by Lipo on Rapa Nui from 2007 through 2009.  25 to 33 artifacts were randomly selected from each of (4) sites. 
+Using TPSdig software (Rohlf 2014), each mata’a was measured using 200 sets of X-Y coordinates from the perimeter of the artifact. Radial measurements were also taken every 2 degrees around the circumference. 
+We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coordinate and radii analyses were done. The X-Y coordinates were used to create overlying images showing shape variability. The radii analysis were used to compute the standard deviation of each radius. The standard deviations were then used to graph out areas of constraint and/or variability in each group.
+Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
 
-# Data
+
 
 
 ```{r}
