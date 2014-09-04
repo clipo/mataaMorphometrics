@@ -9,7 +9,7 @@ output: pdf_document
 
 Rapa Nui is a tiny island located in a remote corner of Eastern Polynesia, more than 2000km from the nearest inhabited body of land. The island was first colonized by Polynesians who sailed from central East Polynesia in voyaging canoes during the 13th century AD (Hunt and Lipo 2008; Wilmshurst et al. 2011).  
 
-![Easter Island, Chile (Rapa Nui)](./Figures/Figure1.pdf).
+![Easter Island, Chile (Rapa Nui)](~/PycharmProjects/mataaMorphometrics/Figures/Figure1.pdf).
 
 # Mataa
 
