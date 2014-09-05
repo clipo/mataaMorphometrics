@@ -34,7 +34,7 @@ We assume that due to performance the functional aspects of any tool result in s
    * If *mata’a* are weapons, the distal end of the artifact will show a tendency towards a pointed spear-like shape that will penetrate either enemies or prey. If *mata’a* are not weapons, there will be no such constrictive tendency at the distal end of the tool.
    * If there was inter-tribal warfare, *mata’a* from distinct areas may show stylistic traits of distinct groups. If natives were not divided into warring groups, distinct stylistic  traits may or may not be apparent. 
 
-# Mata'a Analyses
+# Data
 
 ```
 ```{r}
@@ -61,13 +61,26 @@ for (i in 1:nrow(xy)){ xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i,
 #maximum width
 xMaxWidth<-0
 for (i in 1:nrow(xy)){ xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) ) }
+
+# some descriptions of the numbers of mataa
+ 
+englertMataa <- length(which(fac[3] == "Englert"))
+bishopMataa <- length(which(fac[3]=="Bishop"))
+
 ```
+
+```{r}
+table(fac$Collection,fac$Site)
+```
+
 
 In order to test these hypotheses, we used morphometric outline analysis. With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent. Our assemblage consisted of planview photographs of (N='r numberOfMataa') *mata’a* from 2 museum collections. The first museum collection consisted of XXX *mata'a* housed at the P. Sebastian Englert Museum on Rapa Nui.  This collection is composed of XX *mata'a* collected from XX locations on the island and XXX *mata'a* for which provience is known only to the level of the island itself. [[More detail on the locations?]]
 
 The second collection of *mata'a* is composed of XXX objects housed at the Bishop Museum, Honolulu, Hawai'i. 
 
 of t of XXX mata'a These *mata'a* wer taken by Lipo on Rapa Nui from 2007 through 2009.  25 to 33 artifacts were randomly selected from each of (4) sites. 
+
+# Analyses
 
 Using TPSdig software (Rohlf 2014), each mata’a was measured using 200 sets of X-Y coordinates from the perimeter of the artifact. Radial measurements were also taken every 2 degrees around the circumference. 
 
