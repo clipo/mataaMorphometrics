@@ -63,6 +63,12 @@ for (i in 1:nrow(xy)){
 # we renames the components of the list (ie the shapes)
 names(coo) <- fac[, 1]
 
+# now we create the Out object (formerly Coo,
+# but Coo became a super-class now, to handle outlines, open outlines, and
+# landmarks)
+RapaNui <- Out(coo, fac=fac)
+
+## some descriptive information
 numberOfMataa <- nrow(xy)
 #maximum width
 xMaxLength<-0
@@ -81,6 +87,8 @@ bishopMataa <- length(which(fac[3]=="Bishop"))
 
 ```{r}
 table(fac$Collection,fac$Site)
+
+table(fac$Source,fac$Site)
 ```
 
 
@@ -100,10 +108,6 @@ Each set of analysis were performed separately for each site, and collectively f
 
 ```
 ```{r}
-# now we create the Out object (formerly Coo,
-# but Coo became a super-class now, to handle outlines, open outlines, and
-# landmarks)
-RapaNui <- Out(coo, fac=fac)
 
 panel(RapaNui, fac = "Site")
 panel(RapaNui, fac = "Island")
@@ -134,3 +138,26 @@ Some embedded plots.
 ```{r, echo=FALSE}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
+
+# References Cited
+
+Bollt, R., Clark, J.E., Fisher, P.R., Yoshida, H.K., 2006. An experiment in the replication and classification of Easter Island mata`a. Rapa Nui Journal 20:125-133.
+Church, F. Ellis, J.G., 1996.  A use-wear analysis of obsidian tools from an Ana Kionga. Rapa Nui Journal 10, 81-88.
+Church, F., Rigney, J., 1994. A microwear analysis of tools from Site 10-241, Easter Island—an inland processing site. Rapa Nui Journal 8, 101-105.
+Diamond, J., 2005. Collapse: How societies choose to fail or succeed, Viking, New York.
+Eerkens, J.W., Lipo, C.P. 2005. Cultural transmission, copying errors, and the generation of variation in material culture and the archaeological record.  Journal of Anthropological Archaeology 24(4):316-334.
+Flenley, J., Bahn, P., 2003. The Enigmas of Easter Island: Island on the Edge. Oxford University Press. Oxford.
+Hunt, T.L. and Lipo, C.P., 2007. Chronology, deforestation, and “collapse:” Evidence vs. faith in Rapa Nui prehistory.  Rapa Nui Journal 21(2): 85-97.
+Hunt, T.L. and Lipo, C.P. 2009. Revisiting Rapa Nui (Easter Island) “Ecocide.”  Pacific Science 
+63(4):601-616.
+Kirch, P.V., 1984. The Evolution of the Polynesian Chiefdoms, Cambridge University Press, Cambridge.
+Kirch, P.V., 2000. On the Road of The Winds:  An Archaeological History of the Pacific Islands before European Contact, University of California Press, Berkeley.
+Lipo, C. P., 2001.  Science, Style and the Study of Community Structure: An Example from the Central Mississippi River Valley. British Archaeological Reports, International Series, no. 918, Oxford.
+Lipo, C.P., Hunt, T.L., 2005. Mapping prehistoric statue roads on Easter Island, Antiquity 79, 158-168.
+Lipo, C., Madsen, M., Dunnell, R., Hunt, T., 1997. Population Structure, Cultural Transmission, and Frequency Seriation, Journal of Anthropological Archaeology 16, 33.
+Mulloy, W., 1961. Ceremonial Center of Vinapu, in: Heyerdahl, T., Ferdon, E.N.J. (Eds.), Archaeology of Easter Island, The School of American Research and the Museum of New Mexico, Santa Fe, pp. 93-161.
+Neiman, F. 1995. Stylistic variation in evolutionary perspective: Inferences from decorative diversity and interassemblage distance in Illinois Woodland ceramic assemblages.  American Antiquity 60(1): 7-36.
+O’Brien, Michael J., Lyman R. L. 2003 Cladistics and Archaeology. University of Utah Press, Salt Lake City. 
+Routledge, K., 1919. The Mystery of Easter Island, Sifton, Praed & Co., London.
+von Saher, H., 1990. Some details from the journal of Captain Bouman on the discovery of Easter Island. Rapa Nui Journal 6, 34-39.
+
