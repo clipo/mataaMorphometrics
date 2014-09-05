@@ -87,17 +87,12 @@ bishopMataa <- length(which(fac[3]=="Bishop"))
 ```
 ```{r kable, results="asis"}
 
-n <- 100
-x <- rnorm(n)
-y <- 2*x + rnorm(n)
-out <- lm(y ~ x)
+byCollection <- table(fac$Collection,fac$Site)
 
-table(fac$Collection,fac$Site)
+bySource <- table(fac$Source,fac$Site)
 
-table(fac$Source,fac$Site)
-
-kable(fac$Collection,fac$Site, digits=0)
-kable(fac$Source,fac$Site,digits=0)
+kable(byCollection, digits=0)
+kable(bySource,digits=0)
 ```
 ```
 
