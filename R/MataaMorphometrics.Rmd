@@ -25,7 +25,7 @@ One of the claims related to the "collapse" scenario is that  prehistoric Rapa N
 
 Previous stylistic analysis and evaluation of usewear for *mata'a* contradict claims of weapons and instead point to their use as either some kind of symbolic implement or their use in cultivation activities (Bollt et al. 2006; Lipo et al. 2010). [[ NEED MORE DETAIL HERE]]
 
-In this analysis, we use shape morphometric analysis to examine mata’a shape variability and to look for areas of shape that are constrained versus those that are free to vary. Our results conclude that mata’a were only functionally constrained in terms of the haft. These results continue to support the alternative hypotheses that these artifacts were not used as weapons.   
+In this analysis, we use shape morphometric analysis to examine *mata’a* shape variability and to look for areas of shape that are constrained versus those that are free to vary. Our results conclude that mata’a were only functionally constrained in terms of the haft. These results continue to support the alternative hypotheses that these artifacts were not used as weapons.   
 
 As a group, *mata'a* vary greatly in size and shape, but average 6-10 cm in width and length. They formed from a hard hammer flakes with the haft formed from one of the lateral margins of the flake and the blade from the remaining distal and opposite lateral margin. The haft and shoulder is formed from unifacial flakes and is generally lenticular in form. Overall, the blade shape is dominated by the shape of the parent flake though some additional shaping can be evident. Often, large areas of cortex still cover much of one face. much of one face. 
 
@@ -75,7 +75,7 @@ We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coor
 
 Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
 
-
+```
 ```{r}
 # now we create the Out object (formerly Coo,
 # but Coo became a super-class now, to handle outlines, open outlines, and
@@ -107,7 +107,7 @@ plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 
 Some embedded plots.
 
-
+```
 ```{r, echo=FALSE}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
