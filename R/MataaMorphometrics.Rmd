@@ -5,6 +5,8 @@ date: "3 September 2014"
 output: 
   pdf_document:
     keep_tex: true
+bibliography: bibliography.ris
+csl: antiquity.csl
 ---
 
 
@@ -165,7 +167,6 @@ Church, F. Ellis, J.G., 1996.  A use-wear analysis of obsidian tools from an Ana
 Church, F., Rigney, J., 1994. A microwear analysis of tools from Site 10-241, Easter Island—an inland processing site. Rapa Nui Journal 8, 101-105.
 
 Diamond, J., 2005. Collapse: How societies choose to fail or succeed, Viking, New York.
-Eerkens, J.W., Lipo, C.P. 2005. Cultural transmission, copying errors, and the generation of variation in material culture and the archaeological record.  Journal of Anthropological Archaeology 24(4):316-334.
 
 Flenley, J., Bahn, P., 2003. The Enigmas of Easter Island: Island on the Edge. Oxford University Press. Oxford.
 Hunt, T.L. and Lipo, C.P., 2007. Chronology, deforestation, and “collapse:” Evidence vs. faith in Rapa Nui prehistory.  Rapa Nui Journal 21(2): 85-97.
