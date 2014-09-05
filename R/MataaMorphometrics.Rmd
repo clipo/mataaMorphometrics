@@ -130,8 +130,10 @@ RapaFP <- eFourier(RapaP, 12, norm=FALSE)
 
 
 ## By Source
-```{r, rapaf-plot, results='asis'}
-plot(PCA(RapaF), "Source") # regular EFT with normalized coefficients
+```{r, rapaf-plot,fig.width=4.5,fig.height=4.5}
+
+plot(PCA(RapaF), "Source")
+
 ```
 
 
