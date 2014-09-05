@@ -2,11 +2,13 @@
 title: "Rapa Nui Mataa Morphometric Analyses"
 author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 date: "3 September 2014"
-output: pdf_document
+output: 
+  pdf_document:
+    keep_tex: true
 ---
 
-```
-```{r, echo=FALSE}
+
+```{r, error=FALSE, message=FALSE,   echo=FALSE, cache=FALSE, warning=FALSE}
 require(knitr)
 opts_chunk$set(fig.align='left') 
 require(devtools)
@@ -19,7 +21,6 @@ require(Momocs)
 
 Rapa Nui (Easter Island, Chile) is a tiny island located in a remote corner of Eastern Polynesia, more than 2000 km from the nearest inhabited body of land. The island was first colonized by Polynesians who sailed from central East Polynesia in voyaging canoes during the 13th century AD (Hunt and Lipo 2008; Wilmshurst et al. 2011). Depsite the island's diminuitive size, remoteness and limited natural resources, the prehistoric Rapanui are well-known for the construction of nearly 1000 mult-ton statues known as *moai* (REFS). The contrast between the spectacular nature of the archaeological record and the sparse enviornment of the island has led some researchers to believe that prehistoric populations  grew in numbers until resource use exceeded the carrying capacity of the island, resulting in catastropic demographic collapse.  New research, however, is now challenging this notion with new evidence that the Rapanui flourished on the island until AD 1722 when Europeans brought diseases and other social disruptions (Hunt 200X; Hunt and Lipo 20XX, 2011; Mulrooney 20XX). 
 
-![Easter Island, Chile (Rapa Nui)](/Volumes/Macintosh HD/users/clipo/Documents/mataaMorphometrics/Figures/Figure1.pdf).
 
 One of the claims related to the "collapse" scenario is that  prehistoric Rapa Nui populations experienced intense warfare during late prehistory when resources became increasingly scarce (Bahn and Flenley 1992; Diamond 1995, 2005; Flenley and Bahn 2002). In addition to oral traditions recorded in the 20th century (Metraux 1940; Routledge 1917), one line of evidence used to make this assumption is the presence of *mata’a*, flaked obsidian stemmed tools. *Mata’a* are a class of hafted flaked obsidian artifacts that are found commonly on Rapa Nui. As stemmed obsidian tools, their form is similar to artifacts found on other islands such as New Britain, Papua New Guinea (e.g., Torrence et al. 2008).
 
@@ -46,10 +47,10 @@ We assume that due to performance the functional aspects of any tool result in s
 
 # Data
 
-```
-```{r}
 
-data.path <- "/Volumes/Macintosh HD/users/clipo/mataaMorphometrics/Data/RapaNuiMataaData.txt" 
+```{r, data-analysis, echo=FALSE}
+
+data.path <- "../Data/RapaNuiMataaData.txt" 
 # We read the whole file
 PAST <- read.table(data.path, header = TRUE, sep="\t")
 last.meta <- which(colnames(PAST)=="X1") - 1
@@ -84,7 +85,7 @@ englertMataa <- length(which(fac[3] == "Englert"))
 bishopMataa <- length(which(fac[3]=="Bishop"))
 ```
 
-```
+
 ```{r kable, results="asis"}
 
 byCollection <- table(fac$Collection,fac$Site)
@@ -94,7 +95,7 @@ bySource <- table(fac$Source,fac$Site)
 kable(byCollection, digits=0)
 kable(bySource,digits=0)
 ```
-```
+
 
 
 In order to test these hypotheses, we used morphometric outline analysis. With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent. Our assemblage consisted of planview photographs of (N='r numberOfMataa') *mata’a* from 2 museum collections. The first museum collection consisted of XXX *mata'a* housed at the P. Sebastian Englert Museum on Rapa Nui.  This collection is composed of XX *mata'a* collected from XX locations on the island and XXX *mata'a* for which provience is known only to the level of the island itself. [[More detail on the locations?]]
@@ -111,8 +112,7 @@ We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coor
 
 Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
 
-```
-```{r}
+```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE}
 
 panel(RapaNui, fac = "Site")
 panel(RapaNui, fac = "Island")
@@ -125,22 +125,33 @@ RapaF <- eFourier(RapaNui, 12)
 RapaP <- fgProcrustes(RapaNui)
 RapaFP <- eFourier(RapaP, 12, norm=FALSE)
 
-#by source
+
+```
+
+
+## By Source
+```{r, rapaf-plot, results='asis'}
 plot(PCA(RapaF), "Source") # regular EFT with normalized coefficients
+```
+
+
+```{r, rapafp-plot,results='asis'}
 plot(PCA(RapaFP), "Source") # Procrustes aligned (normalization of the outlines)
+```
 
-# by site
+## By Site
+```{r, rapafs-plot, results='asis'}
 plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
+```
+
+```{r, rapafps-plot, results='asis'}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
-
-
 ```
 
 
 Some embedded plots.
 
-```
-```{r, echo=FALSE}
+```{r, rapafp-p, results='asis'}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
