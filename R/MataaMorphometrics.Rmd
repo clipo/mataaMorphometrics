@@ -82,13 +82,23 @@ for (i in 1:nrow(xy)){ xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, 
  
 englertMataa <- length(which(fac[3] == "Englert"))
 bishopMataa <- length(which(fac[3]=="Bishop"))
-
 ```
 
-```{r}
+```
+```{r kable, results="asis"}
+
+n <- 100
+x <- rnorm(n)
+y <- 2*x + rnorm(n)
+out <- lm(y ~ x)
+
 table(fac$Collection,fac$Site)
 
 table(fac$Source,fac$Site)
+
+kable(fac$Collection,fac$Site, digits=0)
+kable(fac$Source,fac$Site,digits=0)
+```
 ```
 
 
