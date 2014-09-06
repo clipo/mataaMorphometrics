@@ -13,9 +13,9 @@ csl: antiquity.csl
 ```{r, error=FALSE, message=FALSE, echo=FALSE, cache=FALSE, warning=FALSE}
 require(knitr)
 opts_chunk$set(fig.align='left') 
-#require(devtools)
-#install_github("vbonhomme/Momocs")
-#require(Momocs)
+require(devtools)
+install_github("vbonhomme/Momocs")
+require(Momocs)
 
 ```
 # Introduction
