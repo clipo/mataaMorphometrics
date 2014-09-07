@@ -26,7 +26,7 @@ require(Momocs)
 
 Rapa Nui (Easter Island, Chile) is a tiny island located in a remote corner of Eastern Polynesia, more than 2000 km from the nearest inhabited body of land. The island was first colonized by Polynesians who sailed from central East Polynesia in voyaging canoes during the 13th century AD [@Hunt:2006aa; @Wilmshurst:2011aa]. Depsite the island's diminuitive size, remoteness, and limited natural resources, the archaeological record of Rapa Nui is well-known for its nearly 1000 multi-ton statues known as *moai* that once sat atop massive stone platforms known as *ahu* [@Hunt:2011aa]. 
 
-The dramatic prehistoric investment in monumental architecture stand in marked contrast to the Rapa Nui's environment and historically observed population levels. Even at the first point of European contact, the tiny island was largely devoid of trees and population sizes were just about 3000 individuals [@Hunt:2011aa, p. XXX]. While earlier researchers [e.g., @Heyerdahl:1965aa; @Heyerdahl:1989aa] believed the depleted and depauperate state of the island was due to conflict between Polynesians and elite from South America, more recent reseachers have interepreted the contrast between the spectacular nature of the archaeological record and the sparse enviornment of the island as the outcome of a prehistoric environmental catastrophe [@Bahn:1992aa; @Flenley:2003aa].  These researchers argue that based largely on oral traditions, that prehistoric populations grew in numbers until resource use exceeded the carrying capacity and the island underwent catastropic demographic collapse. This account has been popularlized as the "collapse" scenario [@Diamond:1995aa, @Diamond:2005aa].
+The dramatic prehistoric investment in monumental architecture stand in marked contrast to the Rapa Nui's environment and historically observed population levels. Even at the first point of European contact, the tiny island was largely devoid of trees and population sizes were just about 3000 individuals [@Hunt:2011aa, p. XXX]. While earlier researchers [e.g., @Heyerdahl:1965aa; @Heyerdahl:1989aa] believed the depleted and depauperate state of the island was due to conflict between Polynesians and elite from South America, more recent reseachers have interepreted the contrast between the spectacular nature of the archaeological record and the sparse enviornment of the island as the outcome of a prehistoric environmental catastrophe [@Bahn:1992aa; @Flenley:2003aa].  These researchers argue that based largely on oral traditions, that prehistoric populations grew in numbers until resource use exceeded the carrying capacity and the island underwent catastropic demographic collapse. This account has been popularlized as the "collapse" scenario [@Diamond:1995aa; -@Diamond:2005aa].
 
 New research, however, has challenged this notion with empirical evidence generated from the archaeological record that the Rapanui flourished on the island until AD 1722 when Europeans brought diseases and other social disruptions [@Hunt:2007aa; @Hunt:2007ab; @Hunt:2009aa; @Hunt:2009ac; @Hunt:2011aa; @Hunt:2011ab; @Mulrooney:2009aa; @Mulrooney:2012aa; @Rainbird:2002aa]. Investigations on Rapa Nui's settelement patterns demonstrates that the island's inhabitants lived in a dispersed pattern in a low density fashion [@Hunt:2011aa; @Morrison:2012aa]. In addition, studies show that subsistence was largely based on extensive but marginally productive lithic mulch gardens to boost the nutrient-poor soil to a level that sustained sweet potato cultivation [@Bork:2004aa; @Ladefoged:2005aa; @Ladefoged:2010aa; @Ladefoged:2013aa; @Mieth:2010aa; @Stevenson:2002aa; @Stevenson:2006aa]. Finally, demise of the once extensive palm tree forest appears to have had little to do with statue construction or changes in carry capacity [@Hunt:2011aa; @Lipo:2013aa].
 
@@ -38,7 +38,7 @@ On the surface landscape of Rapa Nui, *mata'a* are one of the most numerous shap
 
 Even if we had direct observations of these objects being used in "spear-like" fashion, the unavoidable tendency for these European observers to interpret what they saw through their own preconceptions requires us examine the physical evidence available on mata'a. In this way we can learn not only the range of interactions that the objects had with the environment but also determine if there is variablity in their use through time or over space. 
 
-In exploring the the way in which *mata'a* vary, research have nted that there is a great diversity of shape and this feature has remained one particularly puzzling aspect of mata`a [@Mulloy:1961]. *Mata`a* shapes are highly inconsistent and vary from rounded to subangluar to angular to complex.  Early researchers assigned mata`a shape variation to what they conceived as ethnographic categories based on Rapanui words [i.e., @Routledge:1919aa].  Later attempts to construct systematic classifications have also focused on identifying types based on characterizations of overall shape.  None of these classification efforts produced useful categories.
+In exploring the the way in which *mata'a* vary, research have nted that there is a great diversity of shape and this feature has remained one particularly puzzling aspect of *mata`a* [@Mulloy:1961aa]. *Mata`a* shapes are highly inconsistent and vary from rounded to subangluar to angular to complex.  Early researchers assigned mata`a shape variation to what they conceived as ethnographic categories based on Rapanui words [i.e., @Routledge:1919aa].  Later attempts to construct systematic classifications have also focused on identifying types based on characterizations of overall shape.  None of these classification efforts produced useful categories.
 
 Mulloy [-@Mulloy:1961aa, p. 151], for example, argued that “no significant clustering or correlations could be extracted.... the material represents a continuous range of variation without objective natural order, and that the only classification possible must involve the subjective selection of ideal types from infinite series of possibilities, and the arbitrary reference of intermediate for to one or another of these.”  Mulloy concluded manufacturing procedures dictated shapes and differences in overall shape of mata’a were best explained by chance.
 
@@ -48,9 +48,9 @@ In this analysis, we use a large database of *mata'a* with shape morphometric an
 
 # Analysis
 
-As a group, *mata'a* vary greatly in size and shape, but average 6-10 cm in width and length. They are formed from flakes derived trough hard hammer percussion on obsidian cores quarried from one of the island's obsidian sources.  Most of the shaping of the *mata'a*  with the haft formed from one of the lateral margins of the flake and the blade from the remaining distal and opposite lateral margin. The haft and shoulder is formed from unifacial flakes and is generally lenticular in form. Overall, the blade shape is dominated by the shape of the parent flake though some additional shaping can be evident. Often, large areas of cortex still cover much of one face.  
+As a group, *mata'a* vary greatly in size and shape, but average 6-10 cm in width and length. They are formed from unifacial flakes derived trough hard hammer percussion on obsidian cores quarried from one of the island's obsidian sources.  Most of the shaping of the *mata'a* occurs during the creation of a stem that presumably serves as a haft. The stem is formed from one of the lateral margins of the original flake where blade constitutes the remaining distal and opposite lateral margins. *Mata'a* stems and shoulders are formed by unifacial flaking and are generally lenticular in cross section. Overall, the blade shape is dominated by the shape of the parent flake though some shaping through secondary flaking is sometimes evident. Often, large areas of cortex still cover much of one face.  
 
-We assume that due to performance the functional aspects of any tool result in shape variability that is more constrained than the non-functional or stylistic attributes.  Based on this notion, we hypothesise that:
+In our analysis here, we focus on *mata'a* variability in the blade portion of the mata'a relative to the stem.  We assume that as hafted objects the point at the center of the stem where it meets the blade can be held constant for comparisons of shape.  We then assume that due to performance the functional aspects of the tool will result in shape variability that is more constrained than the non-functional or stylistic attributes [@Lipo:2012aa]. The constraints are the result of natural selection that serves to sort shape variability in proportion to the benefits/drawbacks to performance. Based on this notion, we hypothesise that:
 
    - If *mata’a* are weapons, the distal end of the artifact will be constrained. However, if *mata’a* are not weapons, other areas of the tool will show greater constraint  consistent with alternate functions.
    
@@ -59,7 +59,6 @@ We assume that due to performance the functional aspects of any tool result in s
    - If there was inter-tribal warfare, *mata’a* from distinct areas may show stylistic traits of distinct groups. If natives were not divided into warring groups, distinct stylistic  traits may or may not be apparent. 
 
 # Data
-
 
 ```{r, data-analysis, echo=FALSE}
 
@@ -109,7 +108,11 @@ kable(byCollection, digits=0)
 kable(bySource,digits=0)
 ```
 
-In order to test these hypotheses, we used morphometric outline analysis. Morphometrics is ... With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent. Our assemblage consisted of planview photographs of (N='r numberOfMataa') *mata’a* from 2 museum collections. The first museum collection consisted of `r englertMataa`  *mata'a* housed at the P. Sebastian Englert Museum on Rapa Nui.  This collection is composed of *mata'a* collected from 6 locations on the island as well as XXX *mata'a* for which provience is known only to the level of the island itself. [[More detail on the locations?]]
+In order to test these hypotheses, we used morphometric outline analysis. Morphometrics is ... With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent.
+
+[@Bonhomme:2013aa]
+
+Our assemblage consisted of planview photographs of (N='r numberOfMataa') *mata’a* from 2 museum collections. The first museum collection consisted of `r englertMataa`  *mata'a* housed at the P. Sebastian Englert Museum on Rapa Nui.  This collection is composed of *mata'a* collected from 6 locations on the island as well as XXX *mata'a* for which provience is known only to the level of the island itself. [[More detail on the locations?]]
 
 The second collection of *mata'a* is composed of `r bishopMataa` objects housed at the Bishop Museum, Honolulu, Hawai'i. 
 
@@ -117,7 +120,7 @@ of t of XXX mata'a These *mata'a* were taken by Lipo on Rapa Nui from 2007 throu
 
 # Analyses
 
-Using TPSdig software (Rohlf 2014), each mata’a was measured using 200 sets of X-Y coordinates from the perimeter of the artifact. Radial measurements were also taken every 2 degrees around the circumference. 
+In our analyses, we used scaled photos of mata'a and aligned them with midpoint where the stem meets the blade. Using TPSdig software (Rohlf 2014), we created outlines of each mata’a using 200 sets of X-Y coordinates measured along the perimeter of the artifact.  
 
 We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coordinate and radii analyses were done. The X-Y coordinates were used to create overlying images showing shape variability. The radii analysis were used to compute the standard deviation of each radius. The standard deviations were then used to graph out areas of constraint and/or variability in each group.
 
