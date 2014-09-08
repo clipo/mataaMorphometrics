@@ -15,7 +15,7 @@ csl: antiquity.csl
 bibliography: bibliography.bib
 ---
 
-```{r, error=FALSE, message=FALSE, echo=FALSE, cache=FALSE, warning=FALSE}
+```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
 suppressPackageStartupMessages(require(rCharts, quietly=TRUE))
 require(knitr)
 library(httr)
@@ -24,8 +24,10 @@ opts_chunk$set(fig.align='left')
 require(devtools)
 install_github("vbonhomme/Momocs")
 require(Momocs)
+```
 
-```{r, data-analysis, echo=FALSE}
+
+```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
 
 data.path <- "../Data/RapaNuiMataaData.txt" 
 # We read the whole file
@@ -42,22 +44,34 @@ for (i in 1:nrow(xy)){
 names(coo) <- fac[, 1]
 
 # now we create the Out object (formerly Coo,
-# but Coo became a super-class now, to handle outlines, open outlines, and
+# but Coo is now a super-class now in order to handle outlines, open outlines, and
 # landmarks)
 RapaNui <- Out(coo, fac=fac)
 
-## some descriptive information
+## Descriptive information for the paper
 numberOfMataa <- nrow(xy)
+
+## note that in the images 1 cm = 75 pixels
+lengths <- 0
+for (i in 1:nrow(xy)){ lengths[i] <- (max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]))/75 }
+
+widths <- 0
+for (i in 1:nrow(xy)){ widths[i] <- (max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]))/75 }
+
+meanLength <-mean(lengths)
+sdLength <-sd(lengths)
+meanWidth <- mean(widths)
+sdWidth <-sd(widths)
+
 #maximum width
 xMaxLength<-0
-for (i in 1:nrow(xy)){ xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]) ) }
+for (i in 1:nrow(xy)){ xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]) )/75 }
 
-#maximum width
+# Maximum width
 xMaxWidth<-0
-for (i in 1:nrow(xy)){ xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) ) }
+for (i in 1:nrow(xy)){ xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) )/75 }
 
 # some descriptions of the numbers of mataa
- 
 englertMataa <- length(which(fac[3] == "Englert"))
 bishopMataa <- length(which(fac[3]=="Bishop"))
 ```
@@ -99,7 +113,7 @@ In our analysis here, we focus on *mata'a* variability in the blade portion of t
    - If there was inter-tribal warfare, *mata’a* from distinct areas may show stylistic traits of distinct groups. If natives were not divided into warring groups, distinct stylistic  traits may or may not be apparent. 
 
 
-```{r kable, results="asis"}
+```{r kable, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
 
 byCollection <- table(fac$Collection,fac$Site)
 
@@ -131,14 +145,23 @@ We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coor
 
 Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
 
-```{r}
-# A family picture
-panel(Rapa, fac = "collection")
-stack(Rapa)
+```{r basic_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+
+hist(lengths, main="Mata'a Length") 
+hist(widths, main="Mata'a Width") 
+
 ```
 
 
-```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE}
+
+```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+# A family picture
+panel(RapaNui, fac = "Collection")
+stack(RapaNui)
+```
+
+
+```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
 
 panel(RapaNui, fac = "Site")
 panel(RapaNui, fac = "Island")
@@ -163,23 +186,23 @@ plot(PCA(RapaF), "Source")
 ```
 
 
-```{r, rapafp-plot,results='asis'}
+```{r, rapafp-plot,results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Source") # Procrustes aligned (normalization of the outlines)
 ```
 
 ## By Site
-```{r, rapafs-plot, results='asis'}
+```{r, rapafs-plot, results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
 ```
 
-```{r, rapafps-plot, results='asis'}
+```{r, rapafps-plot, results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
 
 Some embedded plots.
 
-```{r, rapafp-p, results='asis'}
+```{r, rapafp-p, results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
