@@ -131,6 +131,13 @@ We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coor
 
 Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
 
+```{r}
+# A family picture
+panel(Rapa, fac = "collection")
+stack(Rapa)
+```
+
+
 ```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE}
 
 panel(RapaNui, fac = "Site")
