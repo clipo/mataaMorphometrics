@@ -1,7 +1,11 @@
 ---
 title: "Rapa Nui Mataa Morphometric Analyses"
-author: "Carl P. Lipo, Rene Horneman, Mark Madsen, Terry L. Hunt, Vincent Bonhomme"
-date: "3 September 2014"
+author: "Carl P. Lipo, Rene Horneman, Mark E. Madsen, Terry L. Hunt, Vincent Bonhomme"
+affiliations:
+  1: California State University Long Beach
+  2: University of Oregon
+date: "7 September 2014"
+email: carl.lipo@csulb.edu
 output:
   word_document: 
     reference_docx: reference.docx
@@ -10,7 +14,6 @@ output:
 csl: antiquity.csl
 bibliography: bibliography.bib
 ---
-
 
 ```{r, error=FALSE, message=FALSE, echo=FALSE, cache=FALSE, warning=FALSE}
 require(knitr)
