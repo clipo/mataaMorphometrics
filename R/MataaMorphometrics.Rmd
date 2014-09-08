@@ -107,7 +107,10 @@ kable(byCollection, digits=0)
 kable(bySource,digits=0)
 ```
 
-In order to test these hypotheses, we used morphometric outline analysis. Morphometrics is ... With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent.
+In order to test these hypotheses, we used morphometric outline analysis. Morphometrics is ... 
+Morphometrics is the quantitative analysis of form, a concept that encompasses size and shape. Morphometric analyses are commonly performed on organisms, and are useful in analyzing their fossil record, the impact of mutations on shape, developmental changes in form, covariances between ecological factors and shape, as well for estimating quantitative-genetic parameters of shape. Morphometrics can be used to quantify a trait of evolutionary significance, and by detecting changes in the shape, deduce something of their ontogeny, function or evolutionary relationships. A major objective of morphometrics is to statistically test hypotheses about the factors that affect shape.
+
+With this technique exact outlines of artifacts can be overlaid and compared making variations between artifacts readily apparent.
 
 [@Bonhomme:2013aa]
 
