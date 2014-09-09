@@ -17,9 +17,10 @@ bibliography: bibliography.bib
 
 ```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
 #suppressPackageStartupMessages(require(rCharts, quietly=TRUE))
-require(knitr)
-library(httr)
+library(knitr)
+require(httr)
 require(Rmisc)
+require(plotrix)
 set_config( config( ssl.verifypeer = 0L ) )
 opts_chunk$set(fig.align='left') 
 require(devtools)
@@ -33,8 +34,8 @@ require(Momocs)
 # some constants we use in the file
 data.path <- "../Data/RapaNuiMataaData.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
-xCenter = 500  # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
-yCenter = 500  # y coordinate of centroid
+xCenter = 900/scalingFactor  # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
+yCenter = 800/scalingFactor # y coordinate of centroid
 
 # We read the whole file
 PAST <- read.table(data.path, header = TRUE, sep="\t")
@@ -76,8 +77,8 @@ sdWidth <-sd(widths)
 xMaxLength<-0
 xMaxWidth<-0
 for (i in 1:nrow(xy)){ 
-  xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]) )/75 
-  xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) )/75
+  xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]) )/scalingFactor
+  xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) )/scalingFactor
   }
 
 # Create some descriptions of the numbers of mataa in different categories
@@ -86,28 +87,33 @@ bishopMataa <- length(which(fac[3]=="Bishop"))
 unknownMataa <- length(which(fac[3]=="Unknown"))
 numberOfSites <-length(fac[4])-1
 
-angles<-0
-distance <- 0
-curangle <- 0
+
 #angles
-for (i in 1:ncol(xy)) { 
-  curangle <- curangle + 360/200
+curangle <- 0
+angles<-0
+for (i in 1:(ncol(xy))/2) { 
+  curangle <- curangle + 360/(ncol(xy))
   angles[i]<-curangle 
 }
 
+distance <- 0
 distance <- array(dim=c(nrow(xy), ncol(xy)/2))
 for (i in 1:nrow(xy)) {
-  for (j in 1:ncol(xy)) {
-    distance[i,] = sqrt((xy[i,seq(1,ncol(xy),2)] - xCenter)^2 + (xy[i,seq(2,ncol(xy),2)]-yCenter)^2 )/75
-  }
+    distance[i,] = sqrt((xy[i,seq(1,ncol(xy),2)] - xCenter)^2 + (xy[i,seq(2,ncol(xy),2)]-yCenter)^2 )/scalingFactor
 }
-  
-for (i in 1:ncol(xy)) {
-  averageDistance[i]<-mean(distance[,i])
+
+## now calculate the mean, sd, upper and lower CI for the distances from centroid (we will use this in a polar graph)
+averageDistances <- 0
+sdDistance <- 0
+confidenceInterval <-0
+upperCI <- 0
+lowerCI <- 0
+for (i in 1:ncol(distance)) {
+  averageDistances[i]<-mean(distance[,i])
   sdDistance[i]<-mean(distance[,i])
-  confidenceInterval[i]<-CI(distance[,i])
-  upperCI[i]<-confidenceInterval.upper[i]
-  lowerCI[i]<-confidenceInterval.lower[i]
+  confidenceInterval<-CI(distance[,i])
+  upperCI[i]<-confidenceInterval[1]
+  lowerCI[i]<-confidenceInterval[3]
 }
 
 ## note: could bootstrap if wanted -- for example (its remarkably easy)
@@ -187,12 +193,11 @@ The second collection of *mata'a* is composed of `r bishopMataa` objects housed 
 
 # Analyses
 
-In our analyses, we used scaled photos of mata'a and aligned them with midpoint where the stem meets the blade. Using TPSdig software (Rohlf 2014), we created outlines of each mata’a using 200 sets of X-Y coordinates measured along the perimeter of the artifact (Figure 3).  
+In our analyses, we used scaled photos of mata'a and aligned them with midpoint where the stem meets the blade. Using TPSdig software [@Rohlf:2014aa], we created outlines of each mata’a using 200 sets of X-Y coordinates measured along the perimeter of the artifact (Figure 3).  
 
 ![Figure 3.  Measurement process used to generate semilandmark data for each *mata'a* image.]("../Figures/Figure3.jpg")
 
-We transferred the data to PAST 3.01 (Hammer et al. 2001)  software and X-Y coordinate and radii analyses were done. The X-Y coordinates were used to create overlying images showing shape variability. The radii analysis were used to compute the standard deviation of each radius. The standard deviations were then used to graph out areas of constraint and/or variability in each group.
-
+We transferred the data to PAST V3.01 [@Hammer:2001aa] software and X-Y coordinate and radii analyses were done. The X-Y coordinates were used to create overlying images showing shape variability. The radii analysis were used to compute the standard deviation of each radius. The standard deviations were then used to graph out areas of constraint and/or variability in each group.
 
 
 Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
@@ -221,6 +226,14 @@ stack(RapaNui)
 
 ```
 
+
+```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+polar.plot(averageDistances,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
+polar.plot(upperCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=3) 
+polar.plot(lowerCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=5) 
+```
+
+
 Procrustes superimposition uses the the centroid of the shapes to (0,0) as the bases for comparison between shapes.  The centroid is calculated on the based of average of the x and y coordinates.   The shapes are then scaled so that they are equivalent by multipling the coordinates of each semilandmark by the suare root of the summed squared distances between the centroid and each semilandmark. The algorithm then rotates each shape until there is minimal distance between the shape and the mean shape for all shapes.  For the semilandmarks, the variation in position of each semilandmark along the outline curve is also removed. Analyses are done by projecting shapes onto a space tangent to shape space. Within the tangent space, conventional multivariate statistical methods such as multivariate analysis of variance and multivariate regression, can be used to test statistical hypotheses about shape.
 
 ```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
@@ -231,9 +244,6 @@ RapaFP <- eFourier(RapaP, 12, norm=FALSE)
 
 
 ```
-
-
-
 
 ## By Source
 ```{r, rapaf-plot,fig.width=4.5,fig.height=4.5}
@@ -257,7 +267,7 @@ plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
 
-Some embedded plots.
+#Some embedded plots.
 
 ```{r, rapafp-p, results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
