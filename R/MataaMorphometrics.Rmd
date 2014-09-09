@@ -132,7 +132,9 @@ In order to test these hypotheses, we used morphometric outline analysis.  Morph
 
 Measurements for morphometrics can be generated in a number of ways.  The earliest form of morphometrics focused on identifying the location specific landmarks. This approach requires defining features of interest that are to be examined as to how they relate to each other.  In the case of artifacts such as *mata'a* there are few consistent landmarks to hold constant other than perhaps the distal and proximal end. In these such cases, one can conduct an analysis of what is known as "semi-landmarks," a standard number of regularly positioned points around the outline of an object [@Bookstein:1997aa; @Gunz:2013aa].
 
-[@Bonhomme:2013aa]
+@Thompson:1917aa
+  
+In our morphometric analyses we make use of Momocs, an R package developed by Bonhomme [-@Bonhomme:2013aa]. Momocs builds upon techniques developed by Claude [-@Claude:2008aa].
 
 For our analyses of Rapa Nui *mata'a*, our assemblage consisted of planview photographs of (N='r numberOfMataa') artifacts from two museum collections. The first museum collection consisted of `r englertMataa`  *mata'a* housed at the P. Sebastian Englert Museum on Rapa Nui.  This collection is composed of photograps of *mata'a* collected from `r numberOfSites` locations on the island as well as `r unknownMataa ` *mata'a* for which provience is known only to the level of the island itself (Figure 2). 
 
