@@ -16,16 +16,16 @@ bibliography: bibliography.bib
 ---
 
 ```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
-#suppressPackageStartupMessages(require(rCharts, quietly=TRUE))
+#suppressPackageStartupMessages(library(rCharts, quietly=TRUE))
 library(knitr)
-require(httr)
-require(Rmisc)
-require(plotrix)
+library(httr)
+library(Rmisc)
+library(plotrix)
 set_config( config( ssl.verifypeer = 0L ) )
 opts_chunk$set(fig.align='left') 
-require(devtools)
+library(devtools)
 install_github("vbonhomme/Momocs")
-require(Momocs)
+library(Momocs)
 ```
 
 
@@ -34,8 +34,8 @@ require(Momocs)
 # some constants we use in the file
 data.path <- "../Data/RapaNuiMataaData.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
-xCenter = 900/scalingFactor  # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
-yCenter = 800/scalingFactor # y coordinate of centroid
+xCenter = 800/scalingFactor  # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
+yCenter = 900/scalingFactor # y coordinate of centroid
 
 # We read the whole file
 PAST <- read.table(data.path, header = TRUE, sep="\t")
@@ -129,13 +129,13 @@ for (i in 1:ncol(distance)) {
 
 Rapa Nui (Easter Island, Chile) is a tiny island located in a remote corner of Eastern Polynesia, more than 2000 km from the nearest inhabited body of land (Figure 1). The island was first colonized by Polynesians who sailed from central East Polynesia in voyaging canoes during the 13th century AD [@Hunt:2006aa; @Wilmshurst:2011aa]. Depsite the island's diminuitive size, remoteness, and limited natural resources, the archaeological record of Rapa Nui is well-known for its nearly 1000 multi-ton statues known as *moai* that once sat atop massive stone platforms known as *ahu* [@Hunt:2011aa]. 
 
-![Figure 1.  Location of Rapa Nui in Polynesia.]("../Figures/Figure1.pdf")
+![Figure 1.  Location of Rapa Nui in Polynesia.](../Figures/Figure1.pdf)
 
 The dramatic prehistoric investment in monumental architecture stand in marked contrast to the Rapa Nui's environment and historically observed population levels. Even at the first point of European contact, the tiny island was largely devoid of trees and population sizes were just about 3000 individuals [@Hunt:2011aa, p. XXX]. While earlier researchers [e.g., @Heyerdahl:1965aa; @Heyerdahl:1989aa] believed the depleted and depauperate state of the island was due to conflict between Polynesians and elite from South America, more recent reseachers have interepreted the contrast between the spectacular nature of the archaeological record and the sparse enviornment of the island as the outcome of a prehistoric environmental catastrophe [@Bahn:1992aa; @Flenley:2003aa].  These researchers argue that based largely on oral traditions, that prehistoric populations grew in numbers until resource use exceeded the carrying capacity and the island underwent catastropic demographic collapse. This account has been popularlized as the "collapse" scenario [@Diamond:1995aa; -@Diamond:2005aa].
 
 New research, however, has challenged this notion with empirical evidence generated from the archaeological record that the Rapanui flourished on the island until AD 1722 when Europeans brought diseases and other social disruptions [@Hunt:2007aa; @Hunt:2007ab; @Hunt:2009aa; @Hunt:2009ac; @Hunt:2011aa; @Hunt:2011ab; @Lipo:2009ab; @Mulrooney:2009aa; @Mulrooney:2012aa; @Rainbird:2002aa]. Investigations on Rapa Nui's settelement patterns demonstrates that the island's inhabitants lived in a dispersed pattern in a low density fashion [@Hunt:2011aa; @Morrison:2012aa]. In addition, studies show that subsistence was largely based on extensive but marginally productive lithic mulch gardens to boost the nutrient-poor soil to a level that sustained sweet potato cultivation [@Bork:2004aa; @Ladefoged:2005aa; @Ladefoged:2010aa; @Ladefoged:2013aa; @Mieth:2010aa; @Stevenson:2002aa; @Stevenson:2006aa]. Finally, demise of the once extensive palm tree forest appears to have had little to do with statue construction or changes in carry capacity [@Hunt:2011aa; @Lipo:2013aa].
 
-One of the claims that persists that is thought to support the "collapse" scenario is the idea that prehistoric Rapa Nui populations experienced intense warfare during late prehistory when resources became increasingly scarce [@Bahn:1992aa; @Diamond:1995aa, @Diamond:2005aa; @Flenley:2003aa]. Oral traditions are known that attribute the toppling of stone statues to intertribal prehistorc warfare [@Bahn:1992a]. But the existence of fallen statues alone does not necessarily imply warfare since other natural explanations are more likely [@Edmunds:1996aa]. Indeed, the existing evidence points to the toppling of statues as as series of post-contact historic events rather than prehistory [@Hunt:2011aa]. Most significantly, examples of defensive structures are entirely lacking in the island's archaeological record [@Hunt:2011aa; @Lipo:2014aa].  Overall, much of the evidence for prehistoric warfare among the inhabitants of Rapa Nui comes from oral traditions recorded in the 20th century [e.g., @Routledge:1919aa]. The oral traditions, however, have an unknown relation to prehistory. Metraux [-@1940:aa, p. XXX], for example, argues that most of the traditions are likely recent and thus likely do not reflect prehistoric events.   
+One of the claims that persists that is thought to support the "collapse" scenario is the idea that prehistoric Rapa Nui populations experienced intense warfare during late prehistory when resources became increasingly scarce [@Bahn:1992aa; @Diamond:1995aa, @Diamond:2005aa; @Flenley:2003aa]. Oral traditions are known that attribute the toppling of stone statues to intertribal prehistorc warfare [@Bahn:1992aa]. But the existence of fallen statues alone does not necessarily imply warfare since other natural explanations are more likely [@Edwards:1996aa]. Indeed, the existing evidence points to the toppling of statues as as series of post-contact historic events rather than prehistory [@Hunt:2011aa]. Most significantly, examples of defensive structures are entirely lacking in the island's archaeological record [@Hunt:2011aa; @Lipo:2014aa].  Overall, much of the evidence for prehistoric warfare among the inhabitants of Rapa Nui comes from oral traditions recorded in the 20th century [e.g., @Routledge:1919aa]. The oral traditions, however, have an unknown relation to prehistory. Metraux [-@1940:aa, p. XXX], for example, argues that most of the traditions are likely recent and thus likely do not reflect prehistoric events.   
 
 The one example of empirical evidence used to support arguments about prehistoric warfare on Rapa Nui is the presence of *mata’a*, flaked obsidian stemmed tools. *Mata’a* are a class of hafted flaked obsidian artifacts that are found commonly on Rapa Nui. As relatively simple stemmed obsidian tools with wide blades, their form is similar to artifacts known as *mata* found on other Polynesian islands such the basalt artifacts found on New Zealand, Pitcairn and the Chatham Islands [@Balfour:1917aa; @Metraux:1957aa, p. 232; @Skinner:1958aa] as well as New Britain, Papua New Guinea [e.g., @Araho:1997aa; @Specht:1988aa; @Torrence:2009aa; @Torrence:2009ab; @Torrence:2013aa].
 
@@ -164,12 +164,15 @@ In our analysis here, we focus on *mata'a* variability in the blade portion of t
    - If there was inter-tribal warfare, *mata’a* from distinct areas may show stylistic traits of distinct groups. If natives were not divided into warring groups, distinct stylistic  traits may or may not be apparent. 
 
 
-```{r kable, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
-
+Table 1:  *Mata'a* included in analyses by collection.
+```{r kable1, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
 byCollection <- table(fac$Collection,fac$Site)
 bySource <- table(fac$Source,fac$Site)
-
 kable(byCollection, digits=0)
+```
+
+Table 2:  *Mata'a* included in analyses by location.
+```{r kable2, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
 kable(bySource,digits=0)
 ```
 
@@ -187,34 +190,27 @@ For our analyses of Rapa Nui *mata'a*, our assemblage consisted of planview phot
 
 The second collection of *mata'a* is composed of `r bishopMataa` objects housed at the Bishop Museum, Honolulu, Hawai'i. These *mata'a* consist of examples  purchased from the island by a private collector in 1920, collections made by Kenneth P. Emory in 1929-1931 and various gifts to the museum [@Mulrooney:2014aa, p. 5-6]. Mulrooney and colleagus took photos of these *mata'a* during their study of obsidian sourcing via pXRF [@Mulrooney:2014aa]. While we can only attribute the source of these *mata'a* to Rapa Nui and and not a specific location, Mulrooney and colleagues kindly provided source identifications for each mata'a based on the results of their study. In this way, we can also examine shape variability as a product of the obsidian source.
 
-![Figure 2.  Location of collections on Rapa Nui, Chile.]("../Figures/Figure2.pdf")
+![Figure 2.  Location of collections on Rapa Nui, Chile.](../Figures/Figure2.pdf)
 
-  25 to 33 artifacts were randomly selected from each of (4) sites. 
+# Data
 
-# Analyses
+For our analyses, we used scaled photos of mata'a and aligned them with midpoint where the stem meets the blade. Using TPSdig software [@Rohlf:2014aa], we created outlines of each mata’a using 200 sets of X-Y coordinates measured along the perimeter of the artifact (Figure 3).  
 
-In our analyses, we used scaled photos of mata'a and aligned them with midpoint where the stem meets the blade. Using TPSdig software [@Rohlf:2014aa], we created outlines of each mata’a using 200 sets of X-Y coordinates measured along the perimeter of the artifact (Figure 3).  
-
-![Figure 3.  Measurement process used to generate semilandmark data for each *mata'a* image.]("../Figures/Figure3.jpg")
-
-We transferred the data to PAST V3.01 [@Hammer:2001aa] software and X-Y coordinate and radii analyses were done. The X-Y coordinates were used to create overlying images showing shape variability. The radii analysis were used to compute the standard deviation of each radius. The standard deviations were then used to graph out areas of constraint and/or variability in each group.
-
-
-Each set of analysis were performed separately for each site, and collectively for the entire assemblage.  
-
-```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+![Figure 3.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
+ 
+```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=2,fig.height=2}
 hist(lengths, main="Mata'a Length") 
 ```
 Figure 4: *Mata'a* lengths.
 
-```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=2,fig.height=2}
 hist(widths, main="Mata'a Width") 
 ```
 Figure 5. *Mata'a* widths.
 
-![Figure 6.  Variability in mata’a shape. Magenta outlines are maximum and minimum outlines within the assemblage. The green outline is the mean. The blue and red outlines are two standard deviations above and below the mean respectively.]("../Figures/Figure4.png
+![Figure 6.  Variability in mata’a shape. Magenta outlines are maximum and minimum outlines within the assemblage. The green outline is the mean. The blue and red outlines are two standard deviations above and below the mean respectively.](../Figures/Figure6.png)
 
-```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
 # A family picture
 panel(RapaNui, fac = "Collection")
 panel(RapaNui, fac = "Site")
@@ -225,23 +221,27 @@ panel(RapaNui, fac="Source", reorder="Source")
 stack(RapaNui)
 
 ```
+Figure 7. *Mata'a* shape variability. The outlines of the 
 
 
 ```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 polar.plot(averageDistances,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
+par(new=T)
 polar.plot(upperCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=3) 
+par(new=T)
 polar.plot(lowerCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=5) 
+par(new=F)
 ```
+Figure 8. *Mata'a* statistical estimation of shape variability: mean and 95% confidence intervals.
 
+#Morphometric Analyses
 
 Procrustes superimposition uses the the centroid of the shapes to (0,0) as the bases for comparison between shapes.  The centroid is calculated on the based of average of the x and y coordinates.   The shapes are then scaled so that they are equivalent by multipling the coordinates of each semilandmark by the suare root of the summed squared distances between the centroid and each semilandmark. The algorithm then rotates each shape until there is minimal distance between the shape and the mean shape for all shapes.  For the semilandmarks, the variation in position of each semilandmark along the outline curve is also removed. Analyses are done by projecting shapes onto a space tangent to shape space. Within the tangent space, conventional multivariate statistical methods such as multivariate analysis of variance and multivariate regression, can be used to test statistical hypotheses about shape.
 
 ```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-
 RapaF <- eFourier(RapaNui, 12)
 RapaP <- fgProcrustes(RapaNui)
 RapaFP <- eFourier(RapaP, 12, norm=FALSE)
-
 
 ```
 
