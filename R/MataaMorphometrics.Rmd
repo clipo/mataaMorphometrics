@@ -95,12 +95,12 @@ for (i in 1:ncol(xy)) {
   angles[i]<-curangle 
 }
 
-distance <- array(dim=c(nrow(xy), ncol(xy)))
+distance <- array(dim=c(nrow(xy), ncol(xy)/2))
 for (i in 1:nrow(xy)) {
   for (j in 1:ncol(xy)) {
-    distance[i,j] = sqrt( (xy[i,seq(1,ncol(xy),1)] - xCenter)^2 + (xy[i,seq(1,ncol(xy),2)]-yCenter)^2)/75
-    }
+    distance[i,] = sqrt((xy[i,seq(1,ncol(xy),2)] - xCenter)^2 + (xy[i,seq(2,ncol(xy),2)]-yCenter)^2 )/75
   }
+}
   
 for (i in 1:ncol(xy)) {
   averageDistance[i]<-mean(distance[,i])
