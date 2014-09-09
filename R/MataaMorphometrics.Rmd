@@ -16,7 +16,7 @@ bibliography: bibliography.bib
 ---
 
 ```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
-suppressPackageStartupMessages(require(rCharts, quietly=TRUE))
+#suppressPackageStartupMessages(require(rCharts, quietly=TRUE))
 require(knitr)
 library(httr)
 require(Rmisc)
@@ -88,11 +88,11 @@ numberOfSites <-length(fac[4])-1
 
 angles<-0
 distance <- 0
+curangle <- 0
 #angles
 for (i in 1:ncol(xy)) { 
   curangle <- curangle + 360/200
   angles[i]<-curangle 
-  
 }
 
 distance <- array(dim=c(nrow(xy), ncol(xy)))
@@ -102,13 +102,12 @@ for (i in 1:nrow(xy)) {
     }
   }
   
-
 for (i in 1:ncol(xy)) {
   averageDistance[i]<-mean(distance[,i])
   sdDistance[i]<-mean(distance[,i])
   confidenceInterval[i]<-CI(distance[,i])
-  upperCI[i]<-confidenceInterval[i].upper
-  lowerCI[i]<-confidenceInterval[i].lower
+  upperCI[i]<-confidenceInterval.upper[i]
+  lowerCI[i]<-confidenceInterval.lower[i]
 }
 
 ## note: could bootstrap if wanted -- for example (its remarkably easy)
