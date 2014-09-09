@@ -19,6 +19,7 @@ bibliography: bibliography.bib
 suppressPackageStartupMessages(require(rCharts, quietly=TRUE))
 require(knitr)
 library(httr)
+require(Rmisc)
 set_config( config( ssl.verifypeer = 0L ) )
 opts_chunk$set(fig.align='left') 
 require(devtools)
@@ -29,7 +30,12 @@ require(Momocs)
 
 ```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
 
+# some constants we use in the file
 data.path <- "../Data/RapaNuiMataaData.txt" 
+scalingFactor = 75 ## this is the # of pixels per cm. 
+xCenter = 500  # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
+yCenter = 500  # y coordinate of centroid
+
 # We read the whole file
 PAST <- read.table(data.path, header = TRUE, sep="\t")
 last.meta <- which(colnames(PAST)=="X1") - 1
@@ -51,31 +57,67 @@ RapaNui <- Out(coo, fac=fac)
 ## Descriptive information for the paper
 numberOfMataa <- nrow(xy)
 
+# Create vectors of the lengths and widths for descr. stats. 
 ## note that in the images 1 cm = 75 pixels
 lengths <- 0
-for (i in 1:nrow(xy)){ lengths[i] <- (max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]))/75 }
-
 widths <- 0
-for (i in 1:nrow(xy)){ widths[i] <- (max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]))/75 }
+for (i in 1:nrow(xy)){ 
+  lengths[i] <- (max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]))/scalingFactor
+  widths[i] <- (max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]))/scalingFactor
+  }
 
+# descriptive values
 meanLength <-mean(lengths)
 sdLength <-sd(lengths)
 meanWidth <- mean(widths)
 sdWidth <-sd(widths)
 
-#maximum width
+# Determine maximum width and length
 xMaxLength<-0
-for (i in 1:nrow(xy)){ xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]) )/75 }
-
-# Maximum width
 xMaxWidth<-0
-for (i in 1:nrow(xy)){ xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) )/75 }
+for (i in 1:nrow(xy)){ 
+  xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]) )/75 
+  xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) )/75
+  }
 
-# some descriptions of the numbers of mataa
+# Create some descriptions of the numbers of mataa in different categories
 englertMataa <- length(which(fac[3] == "Englert"))
 bishopMataa <- length(which(fac[3]=="Bishop"))
 unknownMataa <- length(which(fac[3]=="Unknown"))
 numberOfSites <-length(fac[4])-1
+
+angles<-0
+distance <- 0
+#angles
+for (i in 1:ncol(xy)) { 
+  curangle <- curangle + 360/200
+  angles[i]<-curangle 
+  
+}
+
+distance <- array(dim=c(nrow(xy), ncol(xy)))
+for (i in 1:nrow(xy)) {
+  for (j in 1:ncol(xy)) {
+    distance[i,j] = sqrt( (xy[i,seq(1,ncol(xy),1)] - xCenter)^2 + (xy[i,seq(1,ncol(xy),2)]-yCenter)^2)/75
+    }
+  }
+  
+
+for (i in 1:ncol(xy)) {
+  averageDistance[i]<-mean(distance[,i])
+  sdDistance[i]<-mean(distance[,i])
+  confidenceInterval[i]<-CI(distance[,i])
+  upperCI[i]<-confidenceInterval[i].upper
+  lowerCI[i]<-confidenceInterval[i].lower
+}
+
+## note: could bootstrap if wanted -- for example (its remarkably easy)
+#x <- rnorm(100)
+## sample variance
+#var(x) 
+## CI
+#quantile(replicate(10000, var(sample(x, replace=TRUE))), probs=c(0.025, 0.975)) 
+
 ```
 
 # Introduction
