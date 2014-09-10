@@ -30,12 +30,11 @@ library(Momocs)
 
 
 ```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
-
 # some constants we use in the file
 data.path <- "../Data/RapaNuiMataaData.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
-xCenter = 800/scalingFactor  # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
-yCenter = 900/scalingFactor # y coordinate of centroid
+xCenter = 12 # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
+yCenter = 11 # y coordinate of centroid
 
 # We read the whole file
 PAST <- read.table(data.path, header = TRUE, sep="\t")
@@ -43,10 +42,11 @@ last.meta <- which(colnames(PAST)=="X1") - 1
 fac <- PAST[, 1:last.meta]
 # xy will contain coordinates only
 xy <- as.matrix(PAST[, -c(1:last.meta)])
+scaledXY <- xy/scalingFactor
 # a short loop to reorder thing and store them in a list
 coo <- list()
-for (i in 1:nrow(xy)){ 
-  coo[[i]] <- cbind(xy[i, seq(1, ncol(xy), 2)], xy[i, seq(2, ncol(xy), 2)])}
+for (i in 1:nrow(scaledXY)){ 
+  coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])}
 # we renames the components of the list (ie the shapes)
 names(coo) <- fac[, 1]
 
@@ -56,16 +56,16 @@ names(coo) <- fac[, 1]
 RapaNui <- Out(coo, fac=fac)
 
 ## Descriptive information for the paper
-numberOfMataa <- nrow(xy)
+numberOfMataa <- nrow(scaledXY)
 
 # Create vectors of the lengths and widths for descr. stats. 
 ## note that in the images 1 cm = 75 pixels
 lengths <- 0
 widths <- 0
-for (i in 1:nrow(xy)){ 
-  lengths[i] <- (max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]))/scalingFactor
-  widths[i] <- (max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]))/scalingFactor
-  }
+for (i in 1:nrow(scaledXY)){ 
+  lengths[i] <- (max(scaledXY[i, seq(2, ncol(scaledXY), 2)])-min(scaledXY[i, seq(2, ncol(scaledXY), 2)]))
+  widths[i] <- (max(scaledXY[i, seq(1, ncol(scaledXY), 2)])-min(scaledXY[i, seq(1, ncol(scaledXY), 2)]))
+}
 
 # descriptive values
 meanLength <-mean(lengths)
@@ -76,9 +76,9 @@ sdWidth <-sd(widths)
 # Determine maximum width and length
 xMaxLength<-0
 xMaxWidth<-0
-for (i in 1:nrow(xy)){ 
-  xMaxLength[i]<-(max(xy[i, seq(2, ncol(xy), 2)])-min(xy[i, seq(2, ncol(xy), 2)]) )/scalingFactor
-  xMaxWidth[i]<-(max(xy[i, seq(1, ncol(xy), 2)])-min(xy[i, seq(1, ncol(xy), 2)]) )/scalingFactor
+for (i in 1:nrow(scaledXY)){ 
+  xMaxLength[i]<-(max(scaledXY[i, seq(2, ncol(scaledXY), 2)])-min(scaledXY[i, seq(2, ncol(scaledXY), 2)]) )
+  xMaxWidth[i]<-(max(scaledXY[i, seq(1, ncol(scaledXY), 2)])-min(scaledXY[i, seq(1, ncol(scaledXY), 2)]) )
   }
 
 # Create some descriptions of the numbers of mataa in different categories
@@ -88,20 +88,32 @@ unknownMataa <- length(which(fac[3]=="Unknown"))
 numberOfSites <-length(fac[4])-1
 
 
-#angles
+#first calculate the angle and distance that each point sits on from the centroid for each mataa
 curangle <- 0
-angles<-0
-for (i in 1:(ncol(xy))/2) { 
-  curangle <- curangle + 360/(ncol(xy))
-  angles[i]<-curangle 
+
+angles<-(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
+rads<- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
+degrees<- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
+distance <- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
+for (i in 1:nrow(xy)) {   
+  rads[i,] <- atan2(   -(yCenter - scaledXY[i,seq(1,ncol(scaledXY),2)]), (xCenter - scaledXY[i,seq(2,ncol(scaledXY),2)])  )
+  degrees[i,] <- rads[i] * (180 / pi);
+  distance[i,] <- sqrt(  (scaledXY[i,seq(1,ncol(scaledXY),2)]-xCenter)^2 
+                      + (scaledXY[i,seq(2,ncol(scaledXY),2)]-yCenter)^2 )
+  a <- 0
+  for (d in degrees[i,]) {
+        a = a + 1
+        angles[i,d ] <- distance[i,a]
+  }
 }
 
-distance <- 0
-distance <- array(dim=c(nrow(xy), ncol(xy)/2))
-for (i in 1:nrow(xy)) {
-    distance[i,] = sqrt((xy[i,seq(1,ncol(xy),2)] - xCenter)^2 + (xy[i,seq(2,ncol(xy),2)]-yCenter)^2 )/scalingFactor
+anglesAndDistances <- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
+# now for all 360 degrees find the closest point for each object at that angle and pool together the distances
+for (a in seq(1,360)){
+  for (i in 1:nrow(xy)){
+    anglesAndDistances[a,]<-  which(abs(list[i,]-a)==min(abs(abs(list[i,]-a))))
+  }
 }
-
 ## now calculate the mean, sd, upper and lower CI for the distances from centroid (we will use this in a polar graph)
 averageDistances <- 0
 sdDistance <- 0
@@ -109,11 +121,11 @@ confidenceInterval <-0
 upperCI <- 0
 lowerCI <- 0
 for (i in 1:ncol(distance)) {
-  averageDistances[i]<-mean(distance[,i])
-  sdDistance[i]<-mean(distance[,i])
+  sdDistance[i]<-sd(distance[,i])
   confidenceInterval<-CI(distance[,i])
   upperCI[i]<-confidenceInterval[1]
   lowerCI[i]<-confidenceInterval[3]
+  mean<-confidenceInterval[2]
 }
 
 ## note: could bootstrap if wanted -- for example (its remarkably easy)
@@ -221,15 +233,15 @@ panel(RapaNui, fac="Source", reorder="Source")
 stack(RapaNui)
 
 ```
-Figure 7. *Mata'a* shape variability. The outlines of the 
+Figure 7. *Mata'a* shape variability. After aligning the *mata'a* with respect to the center of the stem at the point in which it intersects the blad, we show the outlines of each of the *mata'a* superimposed.    
 
 
 ```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
-polar.plot(averageDistances,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
+polar.plot(upperCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
 par(new=T)
-polar.plot(upperCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=3) 
+polar.plot(mean,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
 par(new=T)
-polar.plot(lowerCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=5) 
+polar.plot(lowerCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=5) 
 par(new=F)
 ```
 Figure 8. *Mata'a* statistical estimation of shape variability: mean and 95% confidence intervals.
