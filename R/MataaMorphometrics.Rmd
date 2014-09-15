@@ -88,52 +88,38 @@ unknownMataa <- length(which(fac[3]=="Unknown"))
 numberOfSites <-length(fac[4])-1
 
 
-#first calculate the angle and distance that each point sits on from the centroid for each mataa
-curangle <- 0
+# the dmp function
+dmp <- function(q, xlab="", ylab="", title="", th0=pi/2,
+                cols, palette=col.summer, leg, ...){
+  op <- par(mar=c(5.1, 0, 4.1, 0))
+  q <- q/max(q)
+  nr <- nrow(q)
+  nc <- ncol(q)
+  #th <- seq(0, 2*pi, length=nc+1)[-(nc+1)] + th0
+  th <- seq(0, 2*pi, length=nc) + th0
+  xi <- t(apply(q, 1, function(r) r*cos(th)))
+  yi <- t(apply(q, 1, function(r) r*sin(th)))
+  if (missing(cols)) cols <- palette(nr)
+  plot(NA, asp=1, xlim=c(-1, 1), ylim=c(-1, 1),
+       xlab=xlab, ylab=ylab, main=title,
+       xaxs="i", las=1, ann=FALSE, axes=FALSE, frame=FALSE)#, ...)
+  lines(cos(th), sin(th), col="grey80")
+  for (i in seq(0, 1, 0.25)){
+    lines(i*cos(th), i*sin(th), col="grey80", lty=2)}
+  th.grid <- seq(0, 2*pi, length=9)
+  segments(0, 0, cos(th.grid), sin(th.grid), col=c("grey80"), lty=2)
+  for (i in 1:nr) lines(xi[i, ], yi[i, ], col=cols[i])
+  if (missing(leg)) leg <- rownames(q)
+  legend("topright", lwd=1, col=cols, legend=leg, cex=3/4, bty="n")}
 
-angles<-(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
-rads<- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
-degrees<- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
-distance <- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
-for (i in 1:nrow(xy)) {   
-  rads[i,] <- atan2(   -(yCenter - scaledXY[i,seq(1,ncol(scaledXY),2)]), (xCenter - scaledXY[i,seq(2,ncol(scaledXY),2)])  )
-  degrees[i,] <- rads[i] * (180 / pi);
-  distance[i,] <- sqrt(  (scaledXY[i,seq(1,ncol(scaledXY),2)]-xCenter)^2 
-                      + (scaledXY[i,seq(2,ncol(scaledXY),2)]-yCenter)^2 )
-  a <- 0
-  for (d in degrees[i,]) {
-        a = a + 1
-        angles[i,d ] <- distance[i,a]
-  }
-}
-
-anglesAndDistances <- array(dim=c(nrow(scaledXY), ncol(scaledXY)/2))
-# now for all 360 degrees find the closest point for each object at that angle and pool together the distances
-for (a in seq(1,360)){
-  for (i in 1:nrow(xy)){
-    anglesAndDistances[a,]<-  which(abs(list[i,]-a)==min(abs(abs(list[i,]-a))))
-  }
-}
-## now calculate the mean, sd, upper and lower CI for the distances from centroid (we will use this in a polar graph)
-averageDistances <- 0
-sdDistance <- 0
-confidenceInterval <-0
-upperCI <- 0
-lowerCI <- 0
-for (i in 1:ncol(distance)) {
-  sdDistance[i]<-sd(distance[,i])
-  confidenceInterval<-CI(distance[,i])
-  upperCI[i]<-confidenceInterval[1]
-  lowerCI[i]<-confidenceInterval[3]
-  mean<-confidenceInterval[2]
-}
-
-## note: could bootstrap if wanted -- for example (its remarkably easy)
-#x <- rnorm(100)
-## sample variance
-#var(x) 
-## CI
-#quantile(replicate(10000, var(sample(x, replace=TRUE))), probs=c(0.025, 0.975)) 
+# just a domestic plotter
+radar.plot <- function(x){
+  #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
+  x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-600, -500)))
+  x <- lapply(x$coo, coo.centdist)
+  x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
+  xCI <- apply(x, 2, CI,ci = 0.95)
+  dmp(xCI)}
 
 ```
 
@@ -165,7 +151,9 @@ In exploring the the way in which *mata'a* forms vary, researchers have noted th
 
 Mulloy [-@Mulloy:1961aa, p. 151], for example, argued that “no significant clustering or correlations could be extracted.... the material represents a continuous range of variation without objective natural order, and that the only classification possible must involve the subjective selection of ideal types from infinite series of possibilities, and the arbitrary reference of intermediate for to one or another of these.”  Mulloy concluded manufacturing procedures dictated shapes and differences in overall shape of mata’a were best explained by chance.
  
-The overall shape of an object is rarely a useful dimension for problem-oriented classification [@Dunnell:1986aa]. The forms of objects are limited by technological constraints of the material, performance aspects that depend upon the range of environments in which the object is used, and simple idiosyncratic variability related to the manufacturer and the process of production.  In the case of *mata’a* much of the variability in the overall blade shape can be explained by the contingent results involved in the stages of manufacture [@Bollt:2006aa]. The difference in shapes, therefore, may have structured  functional variation related to the range and kinds of activities for which the tool was primarily used.  Studies of use-wear found on *mata'a* point to the tool being used primarily for scraping and cutting or some combination  [@Church:1994aa; @Church:1996aa]. A study of *mata'a* shape using stylistic classes as a means for examining how class frequencies changed over space and through time showed remarkably continuous change consistent with mata'a form being inherited through the passing on of manufacturing techniques and not related to how the *mata'a* performed in its use [@Lipo:2010aa]  Overall, our understanding of *mata'a* variability continues to contradict claims of weapons and instead point to their use as either some kind of symbolic implement or their use in cultivation activities [@Bollt:2006aa; @Lipo:2010aa].
+The overall shape of an object is rarely a useful dimension for problem-oriented classification [@Dunnell:1986aa]. The forms of objects are limited by technological constraints of the material, performance aspects that depend upon the range of environments in which the object is used, and simple idiosyncratic variability related to the manufacturer and the process of production.  In the case of *mata’a* much of the variability in the overall blade shape can be explained by the contingent results involved in the stages of manufacture [@Bollt:2006aa]. The difference in shapes, therefore, may have structured  functional variation related to the range and kinds of activities for which the tool was primarily used.  Studies of use-wear found on *mata'a* point to the tool being used primarily for scraping and cutting or some combination  [@Church:1994aa; @Church:1996aa]. 
+
+A recent study of *mata'a* shape using stylistic classes and deterministic frequency seriation as a means for examining how class frequencies changed over space and through time showed remarkably continuous change [@Lipo:2010aa]. The seriation results suggest that the source of variability in *mata'a* form is largely being inherited through the social learning of manufacturing techniques between indivdiuals.  The evidence also indicates that variability in the form of *mata'a* is not related to how the *mata'a* performed in its use environment(s).   Overall, our growing understanding of *mata'a* variability continues to support their form being related to ceremonial or cultivation activities and not as weapons invovled in warfare [@Bollt:2006aa; @Lipo:2010aa].
 
 In our analysis here, we focus on *mata'a* variability in the blade portion of the mata'a relative to the stem.  We assume that as hafted objects the point at the center of the stem where it meets the blade can be held constant for comparisons of shape.  We then assume that due to performance the functional aspects of the tool will result in shape variability that is more constrained than the non-functional or stylistic attributes [@Lipo:2012aa]. The constraints are the result of natural selection that serves to sort shape variability in proportion to the benefits/drawbacks to performance. Based on this notion, we hypothesise that:
 
@@ -211,16 +199,24 @@ For our analyses, we used scaled photos of mata'a and aligned them with midpoint
 ![Figure 3.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
  
 ```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=2,fig.height=2}
+par(mfrow=c(1, 2))
 hist(lengths, main="Mata'a Length") 
 ```
 Figure 4: *Mata'a* lengths.
 
 ```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=2,fig.height=2}
 hist(widths, main="Mata'a Width") 
+par(mfrow=c(1, 1))
 ```
 Figure 5. *Mata'a* widths.
 
-![Figure 6.  Variability in mata’a shape. Magenta outlines are maximum and minimum outlines within the assemblage. The green outline is the mean. The blue and red outlines are two standard deviations above and below the mean respectively.](../Figures/Figure6.png)
+```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+# we interpolate before equianular sampling
+RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 3600)
+RapaNuirr.int <- coo.samplerr(RapaNui, 120) # and plot this one
+radar.plot(RapaNuirr.int) ; title("interpolated")
+```
+Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals.
 
 ```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
 # A family picture
