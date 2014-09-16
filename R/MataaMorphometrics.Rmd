@@ -120,7 +120,12 @@ ci.plot <- function(x){
   #x <- lapply(x$coo, coo.centdist)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
   xCI <- apply(x, 2, CI,ci = 0.95)
-  dmp(xCI)}
+  ## now add some and substract to differentiate between the 3 lines.. this is just arbitrary spacing.
+  l<-xCI[1,]-100
+  m<-xCI[2,]
+  u<-xCI[3,]+100
+  xxCI=rbind(l,m,u)
+  dmp(xxCI)}
 
 quartiles.plot<-function(x){
   #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
@@ -214,7 +219,7 @@ par(mfrow=c(1, 2))
 hist(lengths, main="Mata'a Length") 
 ```
 Figure 4: *Mata'a* lengths.
-
+x
 ```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=2,fig.height=2}
 hist(widths, main="Mata'a Width") 
 par(mfrow=c(1, 1))
