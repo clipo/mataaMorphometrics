@@ -113,13 +113,24 @@ dmp <- function(q, xlab="", ylab="", title="", th0=pi/2,
   legend("topright", lwd=1, col=cols, legend=leg, cex=3/4, bty="n")}
 
 # just a domestic plotter
-radar.plot <- function(x){
+ci.plot <- function(x){
   #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
   x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-600, -500)))
-  x <- lapply(x$coo, coo.centdist)
+  #x <-lapply(x$coo,coo.interpolate,360)
+  #x <- lapply(x$coo, coo.centdist)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
   xCI <- apply(x, 2, CI,ci = 0.95)
   dmp(xCI)}
+
+quartiles.plot<-function(x){
+  #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
+  x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-600, -500)))
+  #x <-lapply(x$coo,coo.interpolate,360)
+  #x <- lapply(x$coo, coo.centdist)
+  x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
+  quartilesCI <- apply(x, 2, quantile, probs=seq(0, 1, 0.25)
+  dmp(quartilesCI)
+  }
 
 ```
 
@@ -212,11 +223,14 @@ Figure 5. *Mata'a* widths.
 
 ```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 # we interpolate before equianular sampling
-RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 3600)
-RapaNuirr.int <- coo.samplerr(RapaNui, 120) # and plot this one
-radar.plot(RapaNuirr.int) ; title("interpolated")
+RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 360)
+RapaNuirr.int <- coo.samplerr(RapaNui, 360) # and plot this one
+par(mfrow=c(1,1))
+ci.plot(RapaNuirr.int)
+quartiles.plot(RapaNurr.int)
+par(mfrow=c(1, 2))
 ```
-Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals.
+Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals and quartiles.
 
 ```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
 # A family picture
