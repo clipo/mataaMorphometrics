@@ -214,18 +214,29 @@ For the purposes of our analyses and following the approach taken in Lipo et al.
 In our analyses, we used scaled photos of *mata'a* that we aligned at the point where the midpoint of the stem meets the blade. We converted the images to binary to isolate the artifact from the background and then used TPSdig software [@Rohlf:2014aa] to create outlines of each *mata’a*.  TPSDig was particularly useful as it provides a means for automatically tracing outlines with a fixed number of points.  In the creation of outlines, we identified 200 sets of X-Y coordinates located on equidistant points along the perimeter of the artifact (Figure 3). The set of coordinates for each mata'a were aggregated into a single file using PAST [@Hammer:2001aa]. 
 
 ![Figure 3.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
- 
-```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=2,fig.height=2}
+
+```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+panel(RapaNui, fac = "Collection")
+#panel(RapaNui, fac = "Site")
+#panel(RapaNui, fac = "Island")
+#panel(RapaNui, fac="Source", reorder="Source")
+```
+Figure 4.  *Mata'a* included in the current analyses.
+
+```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
 par(mfrow=c(1, 2))
 hist(lengths, main="Mata'a Length") 
-```
-Figure 4: *Mata'a* lengths.
-x
-```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=2,fig.height=2}
 hist(widths, main="Mata'a Width") 
 par(mfrow=c(1, 1))
 ```
-Figure 5. *Mata'a* widths.
+Figure 5. *Mata'a* length and width.
+
+While the range of variability in shape shown in Figure 4 is significant, using simply metrics of length and width (Figure 5) shows that there appears to be just a single distribution of these object without clear modes. 
+
+```{r stack, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+# Lets stack them scaling them 
+stack(RapaNui)
+```
 
 ```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 # we interpolate before equianular sampling
@@ -236,17 +247,10 @@ ci.plot(RapaNuirr.int)
 quartiles.plot(RapaNurr.int)
 par(mfrow=c(1, 2))
 ```
-Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals and quartiles.
+Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals and quartiles. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
 
-```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
-# A family picture
-panel(RapaNui, fac = "Collection")
-panel(RapaNui, fac = "Site")
-panel(RapaNui, fac = "Island")
-panel(RapaNui, fac="Source", reorder="Source")
 
-# Lets begin by centering, scaling them 
-stack(RapaNui)
+
 
 ```
 Figure 7. *Mata'a* shape variability. After aligning the *mata'a* with respect to the center of the stem at the point in which it intersects the blad, we show the outlines of each of the *mata'a* superimposed.    
