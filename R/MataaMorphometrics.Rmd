@@ -126,7 +126,8 @@ ci.plot <- function(x){
   m<-xCI[2,]
   u<-xCI[3,]+100
   xxCI=rbind(l,m,u)
-  dmp(xxCI)}
+  dmp(xxCI)
+  }
 
 quartiles.plot<-function(x){
   #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
@@ -134,7 +135,7 @@ quartiles.plot<-function(x){
   #x <-lapply(x$coo,coo.interpolate,360)
   #x <- lapply(x$coo, coo.centdist)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
-  quartilesCI <- apply(x, 2, quantile, probs=seq(0, 1, 0.25)
+  quartilesCI <- apply(x, 2, quantile, probs=seq(0, 1, 0.25))
   dmp(quartilesCI)
   }
 
@@ -185,12 +186,12 @@ Table 1:  *Mata'a* included in analyses by collection.
 ```{r kable1, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
 byCollection <- table(fac$Collection,fac$Site)
 bySource <- table(fac$Source,fac$Site)
-kable(byCollection, digits=0)
+knitr:::kable(byCollection, digits=0)
 ```
 
 Table 2:  *Mata'a* included in analyses by location.
 ```{r kable2, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
-kable(bySource,digits=0)
+knitr:::kable(bySource,digits=0)
 ```
 
 # Methods and Data
@@ -216,7 +217,7 @@ In our analyses, we used scaled photos of *mata'a* that we aligned at the point 
 ![Figure 3.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
 
 ```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
-panel(RapaNui, fac = "Collection")
+Momocs:::panel(RapaNui, fac = "Collection")
 #panel(RapaNui, fac = "Site")
 #panel(RapaNui, fac = "Island")
 #panel(RapaNui, fac="Source", reorder="Source")
