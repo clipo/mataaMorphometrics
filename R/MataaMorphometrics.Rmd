@@ -33,7 +33,7 @@ library(Momocs)
 
 ```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
 # some constants we use in the file
-data.path <- "../Data/RapaNuiMataaData.txt" 
+data.path <- "../Data/xyfinaldatawithids.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
 xCenter = 12 # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
 yCenter = 11 # y coordinate of centroid
@@ -246,13 +246,10 @@ RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 360)
 RapaNuirr.int <- coo.samplerr(RapaNui, 360) # and plot this one
 par(mfrow=c(1,1))
 ci.plot(RapaNuirr.int)
-quartiles.plot(RapaNurr.int)
+quartiles.plot(RapaNuirr.int)
 par(mfrow=c(1, 2))
 ```
 Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals and quartiles. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
-
-
-
 
 ```
 Figure 7. *Mata'a* shape variability. After aligning the *mata'a* with respect to the center of the stem at the point in which it intersects the blad, we show the outlines of each of the *mata'a* superimposed.    
