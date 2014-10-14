@@ -1,6 +1,6 @@
 ---
 title: "Rapa Nui Mataa Morphometric Analyses"
-author: "Carl P. Lipo, Rene Horneman, Mark E. Madsen, Terry L. Hunt, Vincent Bonhomme"
+author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 affiliations:
   1: California State University Long Beach
   2: University of Oregon
@@ -33,22 +33,29 @@ library(Momocs)
 
 ```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
 # some constants we use in the file
-data.path <- "../Data/xyfinaldatawithids.txt" 
+data.path <- "/Volumes/Macintosh HD/Users/carllipo/mataaMorphometrics/Data/xyfinaldatawithids.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
 xCenter = 12 # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
 yCenter = 11 # y coordinate of centroid
 
 # We read the whole file
-PAST <- read.table(data.path, header = TRUE, sep="\t")
+allPAST <- read.table(data.path, header = TRUE, sep="\t")
+PAST <- PAST[which(allPAST$Island=="Rapa Nui"),]
+
 last.meta <- which(colnames(PAST)=="X1") - 1
 fac <- PAST[, 1:last.meta]
 # xy will contain coordinates only
 xy <- as.matrix(PAST[, -c(1:last.meta)])
+allxy<- as.matrix(allPAST[,-c(1:last.meta)])
 scaledXY <- xy/scalingFactor
+allscaledXY <-xy/scalingFactor
 # a short loop to reorder thing and store them in a list
 coo <- list()
+allcoo <-list()
 for (i in 1:nrow(scaledXY)){ 
-  coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])}
+  coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
+  allcoo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
+  }
 # we renames the components of the list (ie the shapes)
 names(coo) <- fac[, 1]
 
@@ -56,6 +63,9 @@ names(coo) <- fac[, 1]
 # but Coo is now a super-class now in order to handle outlines, open outlines, and
 # landmarks)
 RapaNui <- Out(coo, fac=fac)
+
+## include the non Rapa Nui examples
+allMataa <-Out(allcoo,fac=fac)
 
 ## Descriptive information for the paper
 numberOfMataa <- nrow(scaledXY)
@@ -219,9 +229,9 @@ In our analyses, we used scaled photos of *mata'a* that we aligned at the point 
 
 ```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 Momocs:::panel(RapaNui, fac = "Collection")
-#panel(RapaNui, fac = "Site")
-#panel(RapaNui, fac = "Island")
-#panel(RapaNui, fac="Source", reorder="Source")
+Momocs:::panel(RapaNui, fac = "Site")
+Momocs:::panel(RapaNui, fac = "Island")
+Momocs:::panel(RapaNui, fac="Source", reorder="Source")
 ```
 Figure 4.  *Mata'a* included in the current analyses.
 
@@ -233,12 +243,13 @@ par(mfrow=c(1, 1))
 ```
 Figure 5. *Mata'a* length and width.
 
-While the range of variability in shape shown in Figure 4 is significant, using simply metrics of length and width (Figure 5) shows that there appears to be just a single distribution of these object without clear modes. 
+While the range of variability in shape shown in Figure 4 is substantial, simple metrics of length and width (Figure 5) suggest that there is just a single distribution of these objects without clear-cut modes in size. Comparisons of length and width, however, are fairly crude descriptions of shape.  
 
 ```{r stack, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 # Lets stack them scaling them 
 stack(RapaNui)
 ```
+We can examine variabilty 
 
 ```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 # we interpolate before equianular sampling
@@ -255,12 +266,12 @@ Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals a
 Figure 7. *Mata'a* shape variability. After aligning the *mata'a* with respect to the center of the stem at the point in which it intersects the blad, we show the outlines of each of the *mata'a* superimposed.    
 
 ```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
-polar.plot(upperCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
-par(new=T)
-polar.plot(mean,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
-par(new=T)
-polar.plot(lowerCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=5) 
-par(new=F)
+#polar.plot(u,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
+#par(new=T)
+#polar.plot(m,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
+#par(new=T)
+#polar.plot(l,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=5) 
+#par(new=F)
 ```
 Figure 8. *Mata'a* statistical estimation of shape variability: mean and 95% confidence intervals.
 
