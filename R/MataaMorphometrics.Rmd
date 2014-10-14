@@ -1,19 +1,19 @@
 ---
 title: "Rapa Nui Mataa Morphometric Analyses"
 author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
-affiliations:
-  1: California State University Long Beach
-  2: University of Oregon
-  3: French Institute of Pondicherry
 date: "7 September 2014"
-email: carl.lipo@csulb.edu
 output:
-  word_document: 
+  word_document:
     reference_docx: reference.docx
   pdf_document:
     keep_tex: yes
-csl: antiquity.csl
 bibliography: bibliography.bib
+email: carl.lipo@csulb.edu
+csl: antiquity.csl
+affiliations:
+  '1': California State University Long Beach
+  '2': University of Oregon
+  '3': French Institute of Pondicherry
 ---
 
 ```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
@@ -29,7 +29,7 @@ set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
 if("Momocs" %in% rownames(installed.packages()) == FALSE) { install_github("vbonhomme/Momocs")}
 #install_github("vbonhomme/Momocs")
-library(Momocs)
+#library(Momocs)
 ```
 
 
@@ -220,7 +220,8 @@ The second collection of *mata'a* is composed of `r bishopMataa` objects housed 
 
 ![Figure 2.  Locations *mata'a* collections from Rapa Nui, Chile.](../Figures/Figure2.pdf)
 
-```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE} 
+#, fig.width=4.5,fig.height=4.5}
 Momocs:::panel(RapaNui, fac = "Collection")
 #Momocs:::panel(RapaNui, fac = "Site")
 #Momocs:::panel(RapaNui, fac = "Island")
@@ -237,7 +238,8 @@ In our analyses, we used scaled photos of *mata'a* that we aligned at the point 
 
 ![Figure 4.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
 
-```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
+```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=3,fig.height=3}
 par(mfrow=c(1, 2))
 hist(lengths, main="Mata'a Length") 
 hist(widths, main="Mata'a Width") 
@@ -247,7 +249,8 @@ Figure 5. *Mata'a* length and width.
 
 While the range of variability in shape shown in Figure 4 is substantial, simple metrics of length and width (Figure 5) suggest that there is just a single distribution of these objects without clear-cut modes in size. Comparisons of length and width, however, are fairly crude descriptions of shape.  A more direct means of evaluating shape variability is accomplished by superimposing  *mata'a* outlines (Figure 6). This process required selecting a standard reference point for all objects from which measurements would be based.  We selected our reference points, referred to here as “centroids,” based on the points from which we believe variability will be meaningfully constrained (or not).  In this case of *mata'a*, we chose a centroid at the center of the haft where it intersects the blade.    
 
-```{r stack, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r stack, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=4.5,fig.height=4.5}
 # Lets stack them scaling them 
 stack(RapaNui)
 ```
@@ -256,7 +259,8 @@ Figure 6. Superimposed *mata'a* outlines from Rapa Nui.  For comparison, all *ma
 Once we identified the centroid, we calculated the distance from the centroids to the perimeter in one-degree intervals for the 360-degree perimeter.  One-degree increments  provide sufficient detail about shape at a scale that characterized overall shape variability with enough detail to capture attributes regarding the haft shape and distal blade shape outline.   
 While our measured outlines are composed of 200 points, Momocs interpolates between points to locate distances from centroids at even intervals.In addition, since all measurements are based on georeferenced coordinates, planimetric measure (such as width or length) can be calculated.  Additional image analysis techniques to isolate object outlines point to the strong potential for automation of the measurement process, greatly increasing the ability to characterize large assemblages. With large numbers of measures of radial distances made relative to the *mata'a* centroids, we then calculate a statistical summary for each angle to assess variability in relative dimensions (Figure 7).  
 
-```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=4.5,fig.height=4.5}
 # we interpolate before equianular sampling
 RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 360)
 RapaNuirr.int <- coo.samplerr(RapaNui, 360) # and plot this one
@@ -267,7 +271,8 @@ par(mfrow=c(1, 2))
 ```
 Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
 
-```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=4.5,fig.height=4.5}
 #polar.plot(u,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
 #par(new=T)
 #polar.plot(m,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
@@ -288,30 +293,35 @@ RapaFP <- eFourier(RapaP, 12, norm=FALSE)
 ```
 
 ## By Source
-```{r, rapaf-plot,fig.width=4.5,fig.height=4.5}
+```{r, rapaf-plot} 
+#,fig.width=4.5,fig.height=4.5}
 
 plot(PCA(RapaF), "Source")
 
 ```
 
 
-```{r, rapafp-plot,results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafp-plot,results='asis'} 
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Source") # Procrustes aligned (normalization of the outlines)
 ```
 
 ## By Site
-```{r, rapafs-plot, results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafs-plot, results='asis'} 
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
 ```
 
-```{r, rapafps-plot, results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafps-plot, results='asis'} 
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
 
 #Some embedded plots.
 
-```{r, rapafp-p, results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafp-p, results='asis'}
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
