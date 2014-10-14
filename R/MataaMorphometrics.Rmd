@@ -25,8 +25,10 @@ library(plotrix)
 set_config( config( ssl.verifypeer = 0L ) )
 opts_chunk$set(fig.align='left') 
 options(repos = c(CRAN = "http://cran.rstudio.com"))
+set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
-install_github("vbonhomme/Momocs")
+if("Momocs" %in% rownames(installed.packages()) == FALSE) { install_github("vbonhomme/Momocs")}
+#install_github("vbonhomme/Momocs")
 library(Momocs)
 ```
 
@@ -65,7 +67,7 @@ names(coo) <- fac[, 1]
 RapaNui <- Out(coo, fac=fac)
 
 ## include the non Rapa Nui examples
-allMataa <-Out(allcoo,fac=fac)
+allMataa <-Out(allcoo, fac=fac)
 
 ## Descriptive information for the paper
 numberOfMataa <- nrow(scaledXY)
@@ -194,11 +196,11 @@ In our analysis here, we focus on *mata'a* variability in the blade portion of t
 
 # Methods and Data
 
-In order to test these hypotheses, we used morphometric outline analysis.  Morphometrics is the quantitative analysis of form in terms of shape and size [@Bookstein:1982aa; @Bookstein:1985aa; @Bookstein:1997aa; @Kendall:1989aa; @Rolff:1990aa]. It has advantages over traditional studies of shape that treat shape as a nominal character (e.g., "triangular", "square", "round"). Even classifications that break shape into a series of dimensionally constructed classes reduce variability into modal categories. Morphometrics avoid the problem of nominal shape by analyzing the form of objects as a series of metric measurements that characterize the relative positions of series of landmarks or comprise the outline.  Analysies of form variability can be conducted in two and three dimensions [@Kendall:1989aa]. With techniques available for standardizing scale and rotation, morphometric measurements directly compare outlines of artifacts and generate data on the variations between artifacts.  Consequently, one major feature of morphometrics is its ready ability to statistically test hypotheses about the factors that affect shape.  
+In order to test these hypotheses, we used morphometric outline analysis.  Morphometrics is the quantitative analysis of form in terms of shape and size [@Bookstein:1982aa; @Bookstein:1985aa; @Bookstein:1997aa; @Cardillo:2010aa; @Kendall:1989aa; @Rohlf:1990aa]. It has advantages over traditional studies of shape that treat shape as a nominal character (e.g., "triangular", "square", "round"). Even classifications that break shape into a series of dimensionally constructed classes reduce variability into modal categories. Morphometrics avoid the problem of nominal shape by analyzing the form of objects as a series of metric measurements that characterize the relative positions of series of landmarks or comprise the outline.  Analysies of form variability can be conducted in two and three dimensions [@Kendall:1989aa]. With techniques available for standardizing scale and rotation, morphometric measurements directly compare outlines of artifacts and generate data on the variations between artifacts.  Consequently, one major feature of morphometrics is its ready ability to statistically test hypotheses about the factors that affect shape.  
 
-Measurements for morphometrics can be generated in a number of ways.  With roots in biology, the earliest form of morphometrics focused on identifying the location specific landmarks [e.g., @Thompson:1917aa]. A landmark approach requires defining features of interest that are to be examined as to how they relate to each other.  In the case of artifacts such as *mata'a* there are few consistent landmarks to hold constant other than perhaps the distal and proximal end. One can also one can conduct an analysis of what is known as "semi-landmarks," a fixed number of regularly positioned points around the outline of an object [@Bookstein:1997aa; @Gunz:2013aa].Both approaches to measuring shape make use of the relative positions between all points [@Moellering:1981aa; @Kuhl:1982aa].
+Measurements for morphometrics can be generated in a number of ways.  With roots in biology, the earliest form of morphometrics focused on identifying the location specific landmarks [e.g., @Thompson:1917aa]. A landmark approach requires defining features of interest that are to be examined as to how they relate to each other.  In the case of artifacts such as *mata'a* there are few consistent landmarks to hold constant other than perhaps the distal and proximal end. One can also one can conduct an analysis of what is known as "semi-landmarks," a fixed number of regularly positioned points around the outline of an object [@Bookstein:1997aa; @Gunz:2013aa]. Both approaches to measuring shape make use of the relative positions between all points [@Bookstein:1991aa; -@Bookstein:1997aa].
   
-In our morphometric analyses we make use of Momocs (http://CRAN.R-project.org/package=Momocs), an R package (R Core Team 2014) developed by Bonhomme [-@Bonhomme:2013aa]. Momocs builds upon techniques developed by Claude [-@Claude:2008aa] and reviewed by Bowman [-@Bowman:2009aa]. Bonhomme incorporated functions from Claude's work into an integrated framework and a standalone R package. The package's vignette *A Graphical Introduction to Momocs and Outline Analysis Using R* [@Bonhomme:2012aa]  provides an extensive description of the functions of the package.
+In our morphometric analyses we make use of Momocs (http://CRAN.R-project.org/package=Momocs), an R package (R Core Team 2014) developed by Bonhomme [-@Bonhomme:2012aa; @Bonhomme:2014ab]. Momocs builds upon techniques developed by Claude [-@Claude:2008aa] and reviewed by Bowman [-@Bowman:2009aa]. Bonhomme incorporated functions from Claude's work into an integrated framework and a standalone R package. The package's vignette *A Graphical Introduction to Momocs and Outline Analysis Using R* [@Bonhomme:2012aa]  provides an extensive description of the functions of the package.
 
 Table 1:  *Mata'a* included in analyses by collection.
 ```{r kable1, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
