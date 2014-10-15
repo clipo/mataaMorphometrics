@@ -1,19 +1,19 @@
 ---
 title: "Rapa Nui Mataa Morphometric Analyses"
-author: "Carl P. Lipo, Rene Horneman, Mark E. Madsen, Terry L. Hunt, Vincent Bonhomme"
-affiliations:
-  1: California State University Long Beach
-  2: University of Oregon
-  3: French Institute of Pondicherry
+author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 date: "7 September 2014"
-email: carl.lipo@csulb.edu
 output:
-  word_document: 
+  word_document:
     reference_docx: reference.docx
   pdf_document:
     keep_tex: yes
-csl: antiquity.csl
 bibliography: bibliography.bib
+email: carl.lipo@csulb.edu
+csl: antiquity.csl
+affiliations:
+  '1': California State University Long Beach
+  '2': University of Oregon
+  '3': French Institute of Pondicherry
 ---
 
 ```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
@@ -25,30 +25,39 @@ library(plotrix)
 #set_config( config( ssl.verifypeer = 0L ) )
 opts_chunk$set(fig.align='left') 
 options(repos = c(CRAN = "http://cran.rstudio.com"))
+set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
-install_github("vbonhomme/Momocs")
-library(Momocs)
+if("Momocs" %in% rownames(installed.packages()) == FALSE) { install_github("vbonhomme/Momocs")}
+#install_github("vbonhomme/Momocs")
+#library(Momocs)
 ```
 
 
 ```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
 # some constants we use in the file
-data.path <- "../Data/RapaNuiMataaData.txt" 
+data.path <- "/Volumes/Macintosh HD/Users/carllipo/mataaMorphometrics/Data/xyfinaldatawithids.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
 xCenter = 12 # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
 yCenter = 11 # y coordinate of centroid
 
 # We read the whole file
-PAST <- read.table(data.path, header = TRUE, sep="\t")
+allPAST <- read.table(data.path, header = TRUE, sep="\t")
+PAST <- allPAST[which(allPAST$Island=="Rapa Nui"),]
+
 last.meta <- which(colnames(PAST)=="X1") - 1
 fac <- PAST[, 1:last.meta]
 # xy will contain coordinates only
 xy <- as.matrix(PAST[, -c(1:last.meta)])
+allxy<- as.matrix(allPAST[,-c(1:last.meta)])
 scaledXY <- xy/scalingFactor
+allscaledXY <-xy/scalingFactor
 # a short loop to reorder thing and store them in a list
 coo <- list()
+allcoo <-list()
 for (i in 1:nrow(scaledXY)){ 
-  coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])}
+  coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
+  allcoo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
+  }
 # we renames the components of the list (ie the shapes)
 names(coo) <- fac[, 1]
 
@@ -56,6 +65,9 @@ names(coo) <- fac[, 1]
 # but Coo is now a super-class now in order to handle outlines, open outlines, and
 # landmarks)
 RapaNui <- Out(coo, fac=fac)
+
+## include the non Rapa Nui examples
+allMataa <-Out(allcoo, fac=fac)
 
 ## Descriptive information for the paper
 numberOfMataa <- nrow(scaledXY)
@@ -121,7 +133,7 @@ ci.plot <- function(x){
   #x <-lapply(x$coo,coo.interpolate,360)
   #x <- lapply(x$coo, coo.centdist)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
-  xCI <- apply(x, 2, CI,ci = 0.95)
+  xCI <- apply(x, 2, CI,ci = 0.99)
   ## now add some and substract to differentiate between the 3 lines.. this is just arbitrary spacing.
   l<-xCI[1,]-100
   m<-xCI[2,]
@@ -182,6 +194,13 @@ In our analysis here, we focus on *mata'a* variability in the blade portion of t
    
    - If there was inter-tribal warfare, *mata’a* from distinct areas may show stylistic traits of distinct groups. If natives were not divided into warring groups, distinct stylistic  traits may or may not be apparent. 
 
+# Methods and Data
+
+In order to test these hypotheses, we used morphometric outline analysis.  Morphometrics is the quantitative analysis of form in terms of shape and size [@Bookstein:1982aa; @Bookstein:1985aa; @Bookstein:1997aa; @Cardillo:2010aa; @Kendall:1989aa; @Rohlf:1990aa]. It has advantages over traditional studies of shape that treat shape as a nominal character (e.g., "triangular", "square", "round"). Even classifications that break shape into a series of dimensionally constructed classes reduce variability into modal categories. Morphometrics avoid the problem of nominal shape by analyzing the form of objects as a series of metric measurements that characterize the relative positions of series of landmarks or comprise the outline.  Analysies of form variability can be conducted in two and three dimensions [@Kendall:1989aa]. With techniques available for standardizing scale and rotation, morphometric measurements directly compare outlines of artifacts and generate data on the variations between artifacts.  Consequently, one major feature of morphometrics is its ready ability to statistically test hypotheses about the factors that affect shape.  
+
+Measurements for morphometrics can be generated in a number of ways.  With roots in biology, the earliest form of morphometrics focused on identifying the location specific landmarks [e.g., @Thompson:1917aa]. A landmark approach requires defining features of interest that are to be examined as to how they relate to each other.  In the case of artifacts such as *mata'a* there are few consistent landmarks to hold constant other than perhaps the distal and proximal end. One can also one can conduct an analysis of what is known as "semi-landmarks," a fixed number of regularly positioned points around the outline of an object [@Bookstein:1997aa; @Gunz:2013aa]. Both approaches to measuring shape make use of the relative positions between all points [@Bookstein:1991aa; -@Bookstein:1997aa].
+  
+In our morphometric analyses we make use of Momocs (http://CRAN.R-project.org/package=Momocs), an R package (R Core Team 2014) developed by Bonhomme [-@Bonhomme:2012aa; @Bonhomme:2014ab]. Momocs builds upon techniques developed by Claude [-@Claude:2008aa] and reviewed by Bowman [-@Bowman:2009aa]. Bonhomme incorporated functions from Claude's work into an integrated framework and a standalone R package. The package's vignette *A Graphical Introduction to Momocs and Outline Analysis Using R* [@Bonhomme:2012aa]  provides an extensive description of the functions of the package.
 
 Table 1:  *Mata'a* included in analyses by collection.
 ```{r kable1, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
@@ -195,37 +214,32 @@ Table 2:  *Mata'a* included in analyses by location.
 knitr:::kable(bySource,digits=0)
 ```
 
-# Methods and Data
+For our analyses of Rapa Nui *mata'a*, our assemblage consisted of planview photographs of (N='r numberOfMataa') artifacts from two museum collections. Outlines of the studied *mata'a* are shown in Figure 3).  The first museum collection consisted of `r englertMataa`  *mata'a* housed at the P. Sebastian Englert Museum on Rapa Nui.  This collection is composed of photograps of *mata'a* collected from `r numberOfSites` locations on the island as well as `r unknownMataa ` *mata'a* for which provience is known only to the level of the island itself (Figure 2). 
 
-In order to test these hypotheses, we used morphometric outline analysis.  Morphometrics is the quantitative analysis of form in terms of shape and size [@Bookstein:1982aa; @Bookstein:1985aa; @Bookstein:1997aa; @Kendall:1989aa; @Rolff:1990aa]. It has advantages over traditional studies of shape that treat shape as a nominal character (e.g., "triangular", "square", "round"). Even classifications that break shape into a series of dimensionally constructed classes reduce variability into modal categories. Morphometrics avoid the problem of nominal shape by analyzing the form of objects as a series of metric measurements that characterize the relative positions of series of landmarks or comprise the outline.  Analysies of form variability can be conducted in two and three dimensions [@Kendall:1989aa]. With techniques available for standardizing scale and rotation, morphometric measurements directly compare outlines of artifacts and generate data on the variations between artifacts.  Consequently, one major feature of morphometrics is its ready ability to statistically test hypotheses about the factors that affect shape.  
-
-Measurements for morphometrics can be generated in a number of ways.  With roots in biology, the earliest form of morphometrics focused on identifying the location specific landmarks [e.g., @Thompson:1917aa]. A landmark approach requires defining features of interest that are to be examined as to how they relate to each other.  In the case of artifacts such as *mata'a* there are few consistent landmarks to hold constant other than perhaps the distal and proximal end. One can also one can conduct an analysis of what is known as "semi-landmarks," a fixed number of regularly positioned points around the outline of an object [@Bookstein:1997aa; @Gunz:2013aa].Both approaches to measuring shape make use of the relative positions between all points [@Moellering:1981aa; @Kuhl:1982aa].
-  
-In our morphometric analyses we make use of Momocs (http://CRAN.R-project.org/package=Momocs), an R package (R Core Team 2014) developed by Bonhomme [-@Bonhomme:2013aa]. Momocs builds upon techniques developed by Claude [-@Claude:2008aa] and reviewed by Bowman [-@Bowman:2009aa]. Bonhomme incorporated functions from Claude's work into an integrated framework and a standalone R package. The package's vignette *A Graphical Introduction to Momocs and Outline Analysis Using R* [@Bonhomme:2012aa]  provides an extensive description of the functions of the package.
-
-For our analyses of Rapa Nui *mata'a*, our assemblage consisted of planview photographs of (N='r numberOfMataa') artifacts from two museum collections. The first museum collection consisted of `r englertMataa`  *mata'a* housed at the P. Sebastian Englert Museum on Rapa Nui.  This collection is composed of photograps of *mata'a* collected from `r numberOfSites` locations on the island as well as `r unknownMataa ` *mata'a* for which provience is known only to the level of the island itself (Figure 2). 
-
-The second collection of *mata'a* is composed of `r bishopMataa` objects housed at the Bishop Museum, Honolulu, Hawai'i. These *mata'a* consist of examples  purchased from the island by a private collector in 1920, collections made by Kenneth P. Emory in 1929-1931 and various gifts to the museum [@Mulrooney:2014aa, p. 5-6]. Mulrooney and colleagues took photos of these *mata'a* during their study of obsidian sourcing via pXRF [@Mulrooney:2014aa]. Their findings demonstrate that the majority of *mata'a* were made from obsidian obtained at the Orito source. Given the assorted history of the Bishop Museum collection, we can only attribute the source of these *mata'a* to Rapa Nui and and not a specific location.  However, Mulrooney and colleagues kindly provided source identifications for each mata'a based on the results of their study. In this way, we are able to use these *mata'a* examples to examine potential shape variability that might be due to the obsidian source. This shape variability could be potentially caused by systematic material differences or by the differential use of *mata'a* that are dervied from different locations. 
+The second collection of *mata'a* is composed of `r bishopMataa` objects housed at the Bishop Museum, Honolulu, Hawai'i. These *mata'a* consist of examples  purchased from the island by a private collector in 1920, collections made by Kenneth P. Emory in 1929-1931 and various gifts to the museum [@Mulrooney:2014aa, p. 5-6]. Mulrooney and colleagues took photos of these *mata'a* during their study of obsidian sourcing via pXRF [@Mulrooney:2014aa]. Their findings demonstrate that the majority of *mata'a* were made from obsidian obtained at the Orito source. Given the assorted history of the Bishop Museum collection, we can only attribute the source of these *mata'a* to Rapa Nui and and not a specific location.   Mulrooney and colleagues, however, kindly provided source identifications for each mata'a based on the results of their study. In this way, we are able to use these *mata'a* examples to examine potential shape variability that might be due to the obsidian source. This shape variability could be potentially caused by systematic material differences or by the differential use of *mata'a* that are dervied from different locations. 
 
 ![Figure 2.  Locations *mata'a* collections from Rapa Nui, Chile.](../Figures/Figure2.pdf)
+
+```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE} 
+#, fig.width=4.5,fig.height=4.5}
+Momocs:::panel(RapaNui, fac = "Collection")
+#Momocs:::panel(RapaNui, fac = "Site")
+#Momocs:::panel(RapaNui, fac = "Island")
+#Momocs:::panel(RapaNui, fac="Source", reorder="Source")
+```
+Figure 3.  *Mata'a* included in the current analyses.
+
 
 For the purposes of our analyses and following the approach taken in Lipo et al. [-@Lipo:2010aa], we assumed that *mata'a* are the hafted portions of compound tools that are otherwise incompletely preserved in archaeological deposits.  In this context and based on evidence of usewear on the distal edges [@Church:1994aa; @Church:1996aa], we assume that the overall shape of *mata'a* shape is a functional element [sensu @Dunnell:1978aa], the portion of the artifact that interacts with the environment.  Consequently, our interest is on those aspects of shape that potentially affect function and thereby come under natural selection.  The task of explaining variability in shape consists of identifying selective pressures that affect the performance of shape and to determine whether their magnitude is sufficiently great to impact fitness.  The greater the selective pressures on performance, the more constraint we would expect on those aspects of shape.  If the effect on function and performance is sufficiently small, then other forces such as technological (i.e., material source, manufacturing steps, etc.) or stylistic (stochastic or neutral) ones may have played a role in fixing the shapes of *mata'a*, as well as when and where they occur in the archaeological record. In these cases, we would expect to see a greater range of variability. It is possible, however, that not all *mata'a* instances were used in the same way.  If *mata'a* shapes is influcenced by more than one function, either contemporaneously or over time, then the selective context will differ and thus the “cause” of *mata'a* shape should vary. This situation should create modal patterns of mata'a where shape variability forms statistically distinguishablke groups. 
 
 # Data
 
-In our analyses, we used scaled photos of *mata'a* that we aligned at the point where the midpoint of the stem meets the blade. We converted the images to binary to isolate the artifact from the background and then used TPSdig software [@Rohlf:2014aa] to create outlines of each *mata’a*.  TPSDig was particularly useful as it provides a means for automatically tracing outlines with a fixed number of points.  In the creation of outlines, we identified 200 sets of X-Y coordinates located on equidistant points along the perimeter of the artifact (Figure 3). The set of coordinates for each mata'a were aggregated into a single file using PAST [@Hammer:2001aa]. 
+In our analyses, we used scaled photos of *mata'a* that we aligned at the point where the midpoint of the stem meets the blade. We converted the images to binary to isolate the artifact from the background and then used TPSdig software [@Rohlf:2014aa] to create outlines of each *mata’a*.  TPSDig was particularly useful as it provides a means for automatically tracing outlines with a fixed number of points.  In the creation of outlines, we identified 200 sets of X-Y coordinates located on equidistant points along the perimeter of the artifact (Figure 4). The set of coordinates for each mata'a were aggregated into a single file using PAST [@Hammer:2001aa]. 
 
-![Figure 3.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
+![Figure 4.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
 
-```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
-Momocs:::panel(RapaNui, fac = "Collection")
-#panel(RapaNui, fac = "Site")
-#panel(RapaNui, fac = "Island")
-#panel(RapaNui, fac="Source", reorder="Source")
-```
-Figure 4.  *Mata'a* included in the current analyses.
-
-```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
+```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=3,fig.height=3}
 par(mfrow=c(1, 2))
 hist(lengths, main="Mata'a Length") 
 hist(widths, main="Mata'a Width") 
@@ -233,39 +247,39 @@ par(mfrow=c(1, 1))
 ```
 Figure 5. *Mata'a* length and width.
 
-While the range of variability in shape shown in Figure 4 is significant, using simply metrics of length and width (Figure 5) shows that there appears to be just a single distribution of these object without clear modes. 
+While the range of variability in shape shown in Figure 4 is substantial, simple metrics of length and width (Figure 5) suggest that there is just a single distribution of these objects without clear-cut modes in size. Comparisons of length and width, however, are fairly crude descriptions of shape.  A more direct means of evaluating shape variability is accomplished by superimposing  *mata'a* outlines (Figure 6). This process required selecting a standard reference point for all objects from which measurements would be based.  We selected our reference points, referred to here as “centroids,” based on the points from which we believe variability will be meaningfully constrained (or not).  In this case of *mata'a*, we chose a centroid at the center of the haft where it intersects the blade.    
 
-```{r stack, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r stack, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=4.5,fig.height=4.5}
 # Lets stack them scaling them 
 stack(RapaNui)
 ```
+Figure 6. Superimposed *mata'a* outlines from Rapa Nui.  For comparison, all *mata'a* are aligned at the center point of the haft where it meets the blade. 
 
-```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+Once we identified the centroid, we calculated the distance from the centroids to the perimeter in one-degree intervals for the 360-degree perimeter.  One-degree increments  provide sufficient detail about shape at a scale that characterized overall shape variability with enough detail to capture attributes regarding the haft shape and distal blade shape outline.   
+While our measured outlines are composed of 200 points, Momocs interpolates between points to locate distances from centroids at even intervals.In addition, since all measurements are based on georeferenced coordinates, planimetric measure (such as width or length) can be calculated.  Additional image analysis techniques to isolate object outlines point to the strong potential for automation of the measurement process, greatly increasing the ability to characterize large assemblages. With large numbers of measures of radial distances made relative to the *mata'a* centroids, we then calculate a statistical summary for each angle to assess variability in relative dimensions (Figure 7).  
+
+```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=4.5,fig.height=4.5}
 # we interpolate before equianular sampling
 RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 360)
 RapaNuirr.int <- coo.samplerr(RapaNui, 360) # and plot this one
 par(mfrow=c(1,1))
 ci.plot(RapaNuirr.int)
-quartiles.plot(RapaNurr.int)
+quartiles.plot(RapaNuirr.int)
 par(mfrow=c(1, 2))
 ```
-Figure 6.  Variability in *mata’a* shape shown with 95% confidence intervals and quartiles. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
+Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
 
-
-
-
+```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE}
+#, fig.width=4.5,fig.height=4.5}
+#polar.plot(u,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
+#par(new=T)
+#polar.plot(m,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
+#par(new=T)
+#polar.plot(l,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=5) 
+#par(new=F)
 ```
-Figure 7. *Mata'a* shape variability. After aligning the *mata'a* with respect to the center of the stem at the point in which it intersects the blad, we show the outlines of each of the *mata'a* superimposed.    
-
-```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
-polar.plot(upperCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
-par(new=T)
-polar.plot(mean,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
-par(new=T)
-polar.plot(lowerCI,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=5) 
-par(new=F)
-```
-Figure 8. *Mata'a* statistical estimation of shape variability: mean and 95% confidence intervals.
 
 #Morphometric Analyses
 
@@ -279,30 +293,35 @@ RapaFP <- eFourier(RapaP, 12, norm=FALSE)
 ```
 
 ## By Source
-```{r, rapaf-plot,fig.width=4.5,fig.height=4.5}
+```{r, rapaf-plot} 
+#,fig.width=4.5,fig.height=4.5}
 
 plot(PCA(RapaF), "Source")
 
 ```
 
 
-```{r, rapafp-plot,results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafp-plot,results='asis'} 
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Source") # Procrustes aligned (normalization of the outlines)
 ```
 
 ## By Site
-```{r, rapafs-plot, results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafs-plot, results='asis'} 
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
 ```
 
-```{r, rapafps-plot, results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafps-plot, results='asis'} 
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
 
 #Some embedded plots.
 
-```{r, rapafp-p, results='asis', fig.width=4.5,fig.height=4.5}
+```{r, rapafp-p, results='asis'}
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
