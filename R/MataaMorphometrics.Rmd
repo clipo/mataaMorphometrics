@@ -41,24 +41,32 @@ yCenter = 11 # y coordinate of centroid
 
 # We read the whole file
 allPAST <- read.table(data.path, header = TRUE, sep="\t")
-PAST <- allPAST[which(allPAST$Island=="Rapa Nui"),]
+PAST <-allPAST[which(allPAST$Island=="Rapa_Nui"),]
+nbPAST <-PAST[which(allPAST$Island=="New_Britain"),]
 
 last.meta <- which(colnames(PAST)=="X1") - 1
 fac <- PAST[, 1:last.meta]
+allfac<-allPAST[,1:last.meta]
+
 # xy will contain coordinates only
 xy <- as.matrix(PAST[, -c(1:last.meta)])
 allxy<- as.matrix(allPAST[,-c(1:last.meta)])
 scaledXY <- xy/scalingFactor
-allscaledXY <-xy/scalingFactor
+allscaledXY <-allxy/scalingFactor
+
 # a short loop to reorder thing and store them in a list
 coo <- list()
 allcoo <-list()
 for (i in 1:nrow(scaledXY)){ 
   coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
-  allcoo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
+  }
+
+for (i in 1:nrow(allscaledXY)){ 
+  allcoo[[i]] <- cbind(allscaledXY[i, seq(1, ncol(allscaledXY), 2)], allscaledXY[i, seq(2, ncol(allscaledXY), 2)])
   }
 # we renames the components of the list (ie the shapes)
 names(coo) <- fac[, 1]
+#names(allcoo) <-allfac[,1]
 
 # now we create the Out object (formerly Coo,
 # but Coo is now a super-class now in order to handle outlines, open outlines, and
