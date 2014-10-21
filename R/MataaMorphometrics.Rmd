@@ -29,7 +29,6 @@ set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
 if("Momocs" %in% rownames(installed.packages()) == FALSE) { install_github("vbonhomme/Momocs")}
 #install_github("vbonhomme/Momocs")
-#library(Momocs)
 ```
 
 
