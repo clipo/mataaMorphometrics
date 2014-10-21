@@ -296,41 +296,63 @@ Procrustes superimposition uses the the centroid of the shapes to (0,0) as the b
 RapaF <- eFourier(RapaNui, 12)
 RapaP <- fgProcrustes(RapaNui)
 RapaFP <- eFourier(RapaP, 12, norm=FALSE)
-
 ```
 
+#Elliptic Fourier Analysis
+Giardina and Kuhl (1977) and Kuhl and Giardina (1982)  developed a method for fitting separately the x and y coordinates of an outline projected on a plane. This method has  advantages over the other Fourier-based approaches: equally spaced points are not required, virtually any outline can be fitted (see Rohlf and Archie 1984; Crampton 1995; Renaud and Michaux 2003) and the coefficients can be made independent of outline position and normalized for size.
+
+Elliptic Fourier analysis is based on an harmonic sum of such ellipses as in Ptolemy’s astronomical system with higher harmonic order ellipses “rolling” within all lower order ellipses. 
+
+For all positive integers n, the sum of a cosine curve and a sine curve represent the nth harmonic content of the x and y projections of the k-edged polygon, and for any n, these two curves define an ellipse in the plane. Ferson, Rohlf, and Koehn (1985) noticed that in the “time”, say one period, it takes the nth harmonic to traverse its ellipse n times, the (n + 1)th harmonic has traversed its own ellipse n + 1 times (Figure 4). Ferson et al. (1985) noticed that the reconstruction of the original polygon is done by vector-adding these ellipses for all harmonics, which echoes (the ancient astronomer) Ptolemy’s epicycles, and the reconstruction obtained from N harmonics is the best possible fit in a least-squares sense.
+In elliptic Fourier analysis, four coefficients per harmonic are obtained, two for x and two for y. We can use the first harmonic, the one that defines the best-fitting ellipse, to normalize the harmonic coefficients and make them invariant to size and rotation. The harmonic coefficients can also be normalized for the location of the first outline coordinate. When this is done, the shapes are individually aligned according to their first fitted ellipse. If at least one homologous point can be defined, one can rather use them to align the outlines. 
+
+#Harmonic Power
+Finally, we can also estimate the number of harmonics after examining the spectrum of harmonic Fourier power. The power is proportional to the harmonic amplitude and can be considered as a measure of shape information. As the rank of a harmonic increases, the power decreases and adds less and less information. We can evaluate the number of harmonics
+
+```{r, hqual-plot,fig.width=4.5,fig.height=4.5}
+hqual(RapaNui, method = "eFourier", id = 16, harm.range = 1:49,  palette = col.sari, plot.method = "panel")
+```
+Figure XX. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics give a very satisfactory reconstruction.
+
+```{r, hpow-plot,fig.width=4.5,fig.height=4.5}
+hpow(RapaNui)
+```
+Figure XX.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima and medians are also plotted.
+
 ## By Source
-```{r, rapaf-plot} 
-#,fig.width=4.5,fig.height=4.5}
+```{r, rapaf-plot,fig.width=4.5,fig.height=4.5}
 
 plot(PCA(RapaF), "Source")
 
 ```
 
-
-```{r, rapafp-plot,results='asis'} 
-#, fig.width=4.5,fig.height=4.5}
+```{r, rapafp-plot,results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Source") # Procrustes aligned (normalization of the outlines)
 ```
 
 ## By Site
-```{r, rapafs-plot, results='asis'} 
-#, fig.width=4.5,fig.height=4.5}
+```{r, rapafs-plot, results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
 ```
 
-```{r, rapafps-plot, results='asis'} 
-#, fig.width=4.5,fig.height=4.5}
+```{r, rapafps-plot, results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
 ```
 
 
-#Some embedded plots.
-
-```{r, rapafp-p, results='asis'}
-#, fig.width=4.5,fig.height=4.5}
-plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
+```{r, pca-prep-all, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+allF <- eFourier(allMataa, 12)
+allP <- fgProcrustes(allMataa)
+allFP <- eFourier(allMataa, 12, norm=FALSE)
 ```
+
+#Comparison with other Pacific Islands
+
+```{r, allfp-plot, results='asis', fig.width=4.5,fig.height=4.5}} 
+ plot(PCA(allFP), "Island", amp.shp=1.5)
+```
+Figure XX:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain and Pitcairn Island. The shapes are reconstructed from the factorial map using the first two PC axes.
+
 
 # References Cited
 
