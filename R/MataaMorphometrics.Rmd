@@ -233,6 +233,7 @@ Momocs:::panel(RapaNui, fac = "Collection")
 #Momocs:::panel(RapaNui, fac = "Island")
 #Momocs:::panel(RapaNui, fac="Source", reorder="Source")
 ```
+
 Figure 3.  *Mata'a* included in the current analyses.
 
 For the purposes of our analyses and following the approach taken in Lipo et al. [-@Lipo:2010aa], we assumed that *mata'a* are the hafted portions of compound tools that are otherwise incompletely preserved in archaeological deposits.  In this context and based on evidence of usewear on the distal edges [@Church:1994aa; @Church:1996aa], we assume that the overall shape of *mata'a* shape is a functional element [sensu @Dunnell:1978aa], the portion of the artifact that interacts with the environment.  Consequently, our interest is on those aspects of shape that potentially affect function and thereby come under natural selection.  The task of explaining variability in shape consists of identifying selective pressures that affect the performance of shape and to determine whether their magnitude is sufficiently great to impact fitness.  The greater the selective pressures on performance, the more constraint we would expect on those aspects of shape.  If the effect on function and performance is sufficiently small, then other forces such as technological (i.e., material source, manufacturing steps, etc.) or stylistic (stochastic or neutral) ones may have played a role in fixing the shapes of *mata'a*, as well as when and where they occur in the archaeological record. In these cases, we would expect to see a greater range of variability. It is possible, however, that not all *mata'a* instances were used in the same way.  If *mata'a* shapes is influcenced by more than one function, either contemporaneously or over time, then the selective context will differ and thus the “cause” of *mata'a* shape should vary. This situation should create modal patterns of mata'a where shape variability forms statistically distinguishablke groups. 
@@ -249,6 +250,7 @@ hist(lengths, main="Mata'a Length")
 hist(widths, main="Mata'a Width") 
 par(mfrow=c(1, 1))
 ```
+
 Figure 5. *Mata'a* length and width.
 
 While the range of variability in shape shown in Figure 4 is substantial, simple metrics of length and width (Figure 5) suggest that there is just a single distribution of these objects without clear-cut modes in size. Comparisons of length and width, however, are fairly crude descriptions of shape.  A more direct means of evaluating shape variability is accomplished by superimposing  *mata'a* outlines (Figure 6). This process required selecting a standard reference point for all objects from which measurements would be based.  We selected our reference points, referred to here as “centroids,” based on the points from which we believe variability will be meaningfully constrained (or not).  In this case of *mata'a*, we chose a centroid at the center of the haft where it intersects the blade.    
@@ -257,6 +259,7 @@ While the range of variability in shape shown in Figure 4 is substantial, simple
 # Lets stack them scaling them 
 stack(RapaNui)
 ```
+
 Figure 6. Superimposed *mata'a* outlines from Rapa Nui.  For comparison, all *mata'a* are aligned at the center point of the haft where it meets the blade. 
 
 Once we identified the centroid, we calculated the distance from the centroids to the perimeter in one-degree intervals for the 360-degree perimeter.  One-degree increments  provide sufficient detail about shape at a scale that characterized overall shape variability with enough detail to capture attributes regarding the haft shape and distal blade shape outline.   
@@ -272,6 +275,7 @@ ci.plot(RapaNuirr.int)
 quartiles.plot(RapaNuirr.int)
 par(mfrow=c(1, 2))
 ```
+
 Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
 
 ```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
@@ -299,6 +303,7 @@ somewhere on the outline and follow it, you will pass again and again by the sam
 ```{r, ellipic-fourier, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE,  fig.width=4.5,fig.height=4.5}
 Ptolemy(RapaNui[1], nb.h = 5, t = seq(0, 2*pi, pi/2), legend = TRUE)
 ```
+
 Figure 8. For all positive integers, the sum of a cosine curve and a sine curve defines an ellipse in the plane. Elliptic Fourier analysis is based on an harmonic sum of such ellipses. Five harmonics are here shown at four locations on the original outline of a *mata'a*. As the number of harmonics is increased the reconstruction better approximates the original shape outline.
 
 Fourier series, however, work on continuous functions. Since in practice shape is measured on a finite number of discrete points on a plane (in our case, x/y coordinates), a discrete equivalent to Fourier series is used in morphometrics. A given number of points called pseudolandmarks have to be sampled along the outline before computing shape analysis. All Fourier decomposition then result in an harmonic sum of trigonometric functions associated with harmonic coeffi-
@@ -311,11 +316,13 @@ To conduct Fourier analysis, we must estimate the number of necessary harmonics 
 ```{r, hqual-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 hqual(RapaNui, method = "eFourier", id = 16, harm.range = 1:36,  palette = col.sari, plot.method = "panel")
 ```
+
 Figure 9. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics provide a satisfactory reconstruction.
 
 ```{r, hpow-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 hpow(RapaNui)
 ```
+
 Figure 10.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima, minimaRapa and medians are also plotted.
 
 Based on the elliptical Fourier characterizations of the *mata'a* we can now examine the shapes to determine if there are clusters of shape classes that might distinguish different functional sub-groups from each other.  Figure XX presents the  position of mata'a shapes on a factorial map with shapes reconstructed from first two principal compoonent axes.  Based on these data we do not have discrete shape groups: *mata'a* are highly variable in outline shape and there are continuous intermediate shapes between all variants. This finding demonstrates that the similarity of the proximal haft end of the *mata'a* and that the distal end is free to vary.  These results fail to indicate any subgroup that might have been specifically built as lethal weapons and supports the notion that mata'a have no particular function for which blade shape affects performance. Given observations of usewear on the blade edges (e.g., @Church:1994aa, -@Church@1996aa), it is likely that this means that *mata'a* simply must have an edge sufficient for cutting and scraping. 
@@ -324,6 +331,7 @@ Based on the elliptical Fourier characterizations of the *mata'a* we can now exa
 # By Site
 plot(PCA(RapaF))
 ```
+
 Figure 11.  First two principal components (PC1 and PC2 are on the x- and y-axis, respectively) for the Rapa Nui *mata'a*.
 
 We can also examine the *mata'a* to see if there are systematic differences between the locations from which *mata'a* are found or between the obsidian sources used to make the artifacts. In our analyses, we have examples of *mata'a* from 'r numberOfSites' sites (Table 4).
@@ -333,12 +341,14 @@ Table 4:  Rapa Nui *mata'a* included in analyses by site.
 bySite <- table(fac$Collection,fac$Site)
 knitr:::kable(bySite, digits=0)
 ```
+
 Figure 12 presents the distribution of sets of *mata'a* from multiple locations across the island. The graph includes the confidence ellipses for the 'r numberOfSites' sites on the grid representing the morphological space based on the first two principal components.  The overlap of the groups indicates that the shapes from each of the sites are cannot be distinguished.  The same conclusion can be drawn from an analysis of the shape variability relative to obsidian source (Figure 13).  Overall, there appears to be no evidence that *mata'a* blade shape was constrained due to functional performance.   
 
 ```{r, rapaf-bysite-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 ## By Source
 plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
 ```
+
 Figure 12.  First two principal components of *mata'a* grouped by site location. 
 
 ```{r, rapaf-bymaterial-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
@@ -355,13 +365,14 @@ allFP <- eFourier(allMataa, 12, norm=FALSE)
 
 #Comparison with stemmed tools from other Pacific Islands
 
-The *mata'a* of Rapa Nui share some similarity with stone tools found on other islands across the Pacific.  On New Britain in Melanesia, for example, Torrence (-@Torrence@2009aa, -@Torrence@2009ab, -@Torrence@2013aa) has described stemmed tools that share much in common with the shape of *mata'a.* Torrence (see also @Kononenko:2012aa) that these tools may have been used for tatooing. On Pitcairn Island located 2500 km to the west of Rapa Nui and inhabited by related populations, a few stemmed lithic tools have been found (@Heyerdahl:1965aa). 
+The *mata'a* of Rapa Nui share some similarity with stone tools found on other islands across the Pacific.  On New Britain in Melanesia, for example, Torrence (-@Torrence@2009aa, -@Torrence@2009ab, -@Torrence@2013aa) has described stemmed tools that share much in common with the shape of *mata'a.* Torrence (see also @Kononenko:2012aa) that these tools may have been used for tatooing. On Pitcairn Island located 1900 km to the west of Rapa Nui and inhabited by historically related populations, a few stemmed lithic tools have been found (@Heyerdahl:1965aa). 
 
-When we compare the shapes of *mata'a* with outlines derived from published examples of these other artifacts, we find that they are quite distinct.  Unlike any subgroupings found among the Rapa Nui cases, the tools of other islands have marked differences.  In this way, the lack of any sub-groupings and specificity in the blade shape suggests that the way in which *mata'a* were used differs from the use of similarly shaped tools on other islands. The Rapa Nui *mata'a* are diverse in shape yet their overall form is relatively homogenous, pointing to a single class of use. This does not appear to be the case in other islands, at least based on this preliminary study.
+In our study, we generated outlines of stemmed lithic tools from published images and drawings in the same way we generated outlines for the Rapa Nui *mata'a*. While the sample sizes of the non-Rapa Nui artifacts are small, When we compare the shapes of *mata'a* with those other objects, we find that their overall shapes are quite distinct.  Unlike the case in which we found no subgroupings  among the Rapa Nui cases, the tools of other islands are markedly different.  In this way, the lack of any sub-groupings and specificity in the blade shape suggests that the way in which *mata'a* were used differs from the use of similarly shaped tools on other islands. The Rapa Nui *mata'a* are diverse in shape yet their overall form is relatively homogenous, pointing to a single class of use. This does not appear to be the case in other islands, at least based on this preliminary study.
 
 ```{r, allfp-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE,  fig.width=4.5, fig.height=4.5 } 
  plot(PCA(allFP), "Island", amp.shp=1.5)
 ```
+
 Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain and Pitcairn Island. The shapes are reconstructed from the factorial map using the first two PC axes.
 
 #Conclusion
