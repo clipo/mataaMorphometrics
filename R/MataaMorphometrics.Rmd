@@ -299,15 +299,39 @@ RapaFP <- eFourier(RapaP, 12, norm=FALSE)
 ```
 
 #Elliptic Fourier Analysis
-Giardina and Kuhl (1977) and Kuhl and Giardina (1982)  developed a method for fitting separately the x and y coordinates of an outline projected on a plane. This method has  advantages over the other Fourier-based approaches: equally spaced points are not required, virtually any outline can be fitted (see Rohlf and Archie 1984; Crampton 1995; Renaud and Michaux 2003) and the coefficients can be made independent of outline position and normalized for size.
 
-Elliptic Fourier analysis is based on an harmonic sum of such ellipses as in Ptolemy’s astronomical system with higher harmonic order ellipses “rolling” within all lower order ellipses. 
+Fourier based analyses are powerful tools for the study of shape variability (@Claude:2008aa).
+Fourier approaches decompose shape into a periodic function that is the sum
+of  simple trigonometric functions such as sine and cosine. These simple functions
+are frequencies that are integer multiples, i.e. are harmonics, of one another.
+Lower harmonics provide approximation for the coarse-scale trends in the original
+periodic function while the high-frequency harmonics fit its fine-scale variations.
+In morphometrics, Fourier treats closed outlines as periodic functions. If you start
+somewhere on the outline and follow it, you will pass again and again by the same
+starting point and thus periodic functions can describe this outline. These functions can uses a variety of descriptive data for  the outline: the distance of any point on the outline to the centroid of the shape, the variation of the
+tangent angle for any point, or the (x/y) position on the plane. For an outline shape, a periodic function is
+obtained and can be decomposed (and thus described) by Fourier series. These three
+different methods available in Momocs and hereafter called "radius variation", "tangent
+angle" and "elliptical analysis" will briefly be detailed below (Figure 3) and their
+comparison has been discussed extensively (@Rohlf:1984aa).
 
-For all positive integers n, the sum of a cosine curve and a sine curve represent the nth harmonic content of the x and y projections of the k-edged polygon, and for any n, these two curves define an ellipse in the plane. Ferson, Rohlf, and Koehn (1985) noticed that in the “time”, say one period, it takes the nth harmonic to traverse its ellipse n times, the (n + 1)th harmonic has traversed its own ellipse n + 1 times (Figure 4). Ferson et al. (1985) noticed that the reconstruction of the original polygon is done by vector-adding these ellipses for all harmonics, which echoes (the ancient astronomer) Ptolemy’s epicycles, and the reconstruction obtained from N harmonics is the best possible fit in a least-squares sense.
-In elliptic Fourier analysis, four coefficients per harmonic are obtained, two for x and two for y. We can use the first harmonic, the one that defines the best-fitting ellipse, to normalize the harmonic coefficients and make them invariant to size and rotation. The harmonic coefficients can also be normalized for the location of the first outline coordinate. When this is done, the shapes are individually aligned according to their first fitted ellipse. If at least one homologous point can be defined, one can rather use them to align the outlines. 
+The principle of Fourier series described above applies on continuous functions.
+Since a shape is based on a finite number of discrete points, typically (x/y) coordinates
+on a plane, a discrete equivalent to Fourier series is used in morphometrics. A given
+number of points called pseudolandmarks, typically a few dozens, have to be sampled
+along the outline before computing shape analysis. All Fourier decomposition 
+then result in an harmonic sum of trigonometric functions associated with harmonic coeffi-
+cients. They are (usually) normalized to remove homothetic, translational or rotational
+differences between shapes. Two or four coefficients, depending on the approach used,
+are obtained for each calculated harmonic and can then be considered as quantitative
+variables. Nyquist frequency impedes us from having more harmonics than half the
+number of points fitted, which is thus the upper limit. The geometrical information
+contained in the outlines are thus quantified and can be analysed with classical multivariate
+tools.
 
 #Harmonic Power
-Finally, we can also estimate the number of harmonics after examining the spectrum of harmonic Fourier power. The power is proportional to the harmonic amplitude and can be considered as a measure of shape information. As the rank of a harmonic increases, the power decreases and adds less and less information. We can evaluate the number of harmonics
+
+To conduct Fourier analysis, we must estimate the number of necessary harmonics after examining the spectrum of harmonic Fourier power. The power is proportional to the harmonic amplitude and can be considered as a measure of shape information. As the rank of a harmonic increases, the power decreases and adds less and less information. We can evaluate the mininum number of harmonics required to best approximate the shape. In the case of the *mata'a*, 12 harmonics provide a good reconstruction of the overall shape (Figures XX and XX).
 
 ```{r, hqual-plot,fig.width=4.5,fig.height=4.5}
 hqual(RapaNui, method = "eFourier", id = 16, harm.range = 1:49,  palette = col.sari, plot.method = "panel")
