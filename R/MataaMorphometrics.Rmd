@@ -3,10 +3,10 @@ title: "Rapa Nui Mataa Morphometric Analyses"
 author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 date: "7 September 2014"
 output:
-  word_document:
-    reference_docx: reference.docx
   pdf_document:
     keep_tex: yes
+  word_document:
+    reference_docx: reference.docx
 bibliography: bibliography.bib
 email: carl.lipo@csulb.edu
 csl: antiquity.csl
@@ -28,13 +28,13 @@ options(repos = c(CRAN = "http://cran.rstudio.com"))
 set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
 if("Momocs" %in% rownames(installed.packages()) == FALSE) { install_github("vbonhomme/Momocs")}
-#install_github("vbonhomme/Momocs")
+library(Momocs)
 ```
 
 
 ```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
 # some constants we use in the file
-data.path <- "/Volumes/Macintosh HD/Users/carllipo/mataaMorphometrics/Data/xyfinaldatawithids.txt" 
+data.path <- "../Data/xyfinaldatawithids.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
 xCenter = 12 # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
 yCenter = 11 # y coordinate of centroid
@@ -227,8 +227,7 @@ The second collection of *mata'a* is composed of `r bishopMataa` objects housed 
 
 ![Figure 2.  Locations *mata'a* collections from Rapa Nui, Chile.](../Figures/Figure2.pdf)
 
-```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE} 
-#, fig.width=4.5,fig.height=4.5}
+```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 Momocs:::panel(RapaNui, fac = "Collection")
 #Momocs:::panel(RapaNui, fac = "Site")
 #Momocs:::panel(RapaNui, fac = "Island")
@@ -236,17 +235,15 @@ Momocs:::panel(RapaNui, fac = "Collection")
 ```
 Figure 3.  *Mata'a* included in the current analyses.
 
-
 For the purposes of our analyses and following the approach taken in Lipo et al. [-@Lipo:2010aa], we assumed that *mata'a* are the hafted portions of compound tools that are otherwise incompletely preserved in archaeological deposits.  In this context and based on evidence of usewear on the distal edges [@Church:1994aa; @Church:1996aa], we assume that the overall shape of *mata'a* shape is a functional element [sensu @Dunnell:1978aa], the portion of the artifact that interacts with the environment.  Consequently, our interest is on those aspects of shape that potentially affect function and thereby come under natural selection.  The task of explaining variability in shape consists of identifying selective pressures that affect the performance of shape and to determine whether their magnitude is sufficiently great to impact fitness.  The greater the selective pressures on performance, the more constraint we would expect on those aspects of shape.  If the effect on function and performance is sufficiently small, then other forces such as technological (i.e., material source, manufacturing steps, etc.) or stylistic (stochastic or neutral) ones may have played a role in fixing the shapes of *mata'a*, as well as when and where they occur in the archaeological record. In these cases, we would expect to see a greater range of variability. It is possible, however, that not all *mata'a* instances were used in the same way.  If *mata'a* shapes is influcenced by more than one function, either contemporaneously or over time, then the selective context will differ and thus the “cause” of *mata'a* shape should vary. This situation should create modal patterns of mata'a where shape variability forms statistically distinguishablke groups. 
 
 # Data
 
-In our analyses, we used scaled photos of *mata'a* that we aligned at the point where the midpoint of the stem meets the blade. We converted the images to binary to isolate the artifact from the background and then used TPSdig software [@Rohlf:2014aa] to create outlines of each *mata’a*.  TPSDig was particularly useful as it provides a means for automatically tracing outlines with a fixed number of points.  In the creation of outlines, we identified 200 sets of X-Y coordinates located on equidistant points along the perimeter of the artifact (Figure 4). The set of coordinates for each mata'a were aggregated into a single file using PAST [@Hammer:2001aa]. 
+In our analyses, we aligned scaled photos of *mata'a* at the point where the midpoint of the stem meets the blade. We oriented each image with the centerline of the haft. These steps helped insure that the shapes were directly comparable. We converted the images to binary to isolate the artifact from the background and then used TPSdig software [@Rohlf:2014aa] to create outlines of each *mata’a*.  TPSDig was particularly useful as it provides a means for automatically tracing outlines with a fixed number of points.  In the creation of outlines, we identified 200 sets of X-Y coordinates located on equidistant points along the perimeter of the artifact (Figure 4). The set of coordinates for each mata'a were aggregated into a single file using PAST [@Hammer:2001aa]. Finally, we standardized the outlines for differences in sizes by dividing the cooridinate positions by the total length of each outline. 
 
 ![Figure 4.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure3.jpg)
 
-```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE}
-#, fig.width=3,fig.height=3}
+```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=3,fig.height=3}
 par(mfrow=c(1, 2))
 hist(lengths, main="Mata'a Length") 
 hist(widths, main="Mata'a Width") 
@@ -256,18 +253,17 @@ Figure 5. *Mata'a* length and width.
 
 While the range of variability in shape shown in Figure 4 is substantial, simple metrics of length and width (Figure 5) suggest that there is just a single distribution of these objects without clear-cut modes in size. Comparisons of length and width, however, are fairly crude descriptions of shape.  A more direct means of evaluating shape variability is accomplished by superimposing  *mata'a* outlines (Figure 6). This process required selecting a standard reference point for all objects from which measurements would be based.  We selected our reference points, referred to here as “centroids,” based on the points from which we believe variability will be meaningfully constrained (or not).  In this case of *mata'a*, we chose a centroid at the center of the haft where it intersects the blade.    
 
-```{r stack, message=FALSE, echo=FALSE, warning=FALSE}
-#, fig.width=4.5,fig.height=4.5}
+```{r stack, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 # Lets stack them scaling them 
 stack(RapaNui)
 ```
 Figure 6. Superimposed *mata'a* outlines from Rapa Nui.  For comparison, all *mata'a* are aligned at the center point of the haft where it meets the blade. 
 
 Once we identified the centroid, we calculated the distance from the centroids to the perimeter in one-degree intervals for the 360-degree perimeter.  One-degree increments  provide sufficient detail about shape at a scale that characterized overall shape variability with enough detail to capture attributes regarding the haft shape and distal blade shape outline.   
+
 While our measured outlines are composed of 200 points, Momocs interpolates between points to locate distances from centroids at even intervals.In addition, since all measurements are based on georeferenced coordinates, planimetric measure (such as width or length) can be calculated.  Additional image analysis techniques to isolate object outlines point to the strong potential for automation of the measurement process, greatly increasing the ability to characterize large assemblages. With large numbers of measures of radial distances made relative to the *mata'a* centroids, we then calculate a statistical summary for each angle to assess variability in relative dimensions (Figure 7).  
 
-```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE}
-#, fig.width=4.5,fig.height=4.5}
+```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 # we interpolate before equianular sampling
 RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 360)
 RapaNuirr.int <- coo.samplerr(RapaNui, 360) # and plot this one
@@ -278,8 +274,7 @@ par(mfrow=c(1, 2))
 ```
 Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
 
-```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE}
-#, fig.width=4.5,fig.height=4.5}
+```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 #polar.plot(u,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
 #par(new=T)
 #polar.plot(m,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",line.col=4) 
@@ -290,8 +285,6 @@ Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence in
 
 #Morphometric Analyses
 
-Procrustes superimposition uses the the centroid of the shapes to (0,0) as the bases for comparison between shapes.  The centroid is calculated on the based of average of the x and y coordinates.   The shapes are then scaled so that they are equivalent by multipling the coordinates of each semilandmark by the suare root of the summed squared distances between the centroid and each semilandmark. The algorithm then rotates each shape until there is minimal distance between the shape and the mean shape for all shapes.  For the semilandmarks, the variation in position of each semilandmark along the outline curve is also removed. Analyses are done by projecting shapes onto a space tangent to shape space. Within the tangent space, conventional multivariate statistical methods such as multivariate analysis of variance and multivariate regression, can be used to test statistical hypotheses about shape.
-
 ```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
 RapaF <- eFourier(RapaNui, 12)
 RapaP <- fgProcrustes(RapaNui)
@@ -300,69 +293,59 @@ RapaFP <- eFourier(RapaP, 12, norm=FALSE)
 
 #Elliptic Fourier Analysis
 
-Fourier based analyses are powerful tools for the study of shape variability (@Claude:2008aa).
-Fourier approaches decompose shape into a periodic function that is the sum
-of  simple trigonometric functions such as sine and cosine. These simple functions
-are frequencies that are integer multiples, i.e. are harmonics, of one another.
-Lower harmonics provide approximation for the coarse-scale trends in the original
-periodic function while the high-frequency harmonics fit its fine-scale variations.
-In morphometrics, Fourier treats closed outlines as periodic functions. If you start
-somewhere on the outline and follow it, you will pass again and again by the same
-starting point and thus periodic functions can describe this outline. These functions can uses a variety of descriptive data for  the outline: the distance of any point on the outline to the centroid of the shape, the variation of the
-tangent angle for any point, or the (x/y) position on the plane. For an outline shape, a periodic function is
-obtained and can be decomposed (and thus described) by Fourier series. These three
-different methods available in Momocs and hereafter called "radius variation", "tangent
-angle" and "elliptical analysis" will briefly be detailed below (Figure 3) and their
-comparison has been discussed extensively (@Rohlf:1984aa).
+Fourier based analyses are powerful tools for the study of shape variability (@Claude:2008aa). Fourier approaches decompose shape into a periodic function that is the sum of simple trigonometric functions such as sine and cosine. These simple functions are frequencies that are integer multiples, i.e. are harmonics, of one another. Lower harmonics provide approximation for the coarse-scale trends in the original periodic function while the high-frequency harmonics fit its fine-scale variations (Figure 8). In morphometrics, Fourier treats closed outlines as periodic functions. If you start
+somewhere on the outline and follow it, you will pass again and again by the same starting point and thus periodic functions can describe this outline. These functions can uses a variety of descriptive data for  the outline: the distance of any point on the outline to the centroid of the shape, the variation of the tangent angle for any point, or the (x/y) position on the plane (@Rohlf:1984aa). For an outline shape, a periodic function is obtained and can be decomposed (and thus described) by Fourier series. 
 
-The principle of Fourier series described above applies on continuous functions.
-Since a shape is based on a finite number of discrete points, typically (x/y) coordinates
-on a plane, a discrete equivalent to Fourier series is used in morphometrics. A given
-number of points called pseudolandmarks, typically a few dozens, have to be sampled
-along the outline before computing shape analysis. All Fourier decomposition 
-then result in an harmonic sum of trigonometric functions associated with harmonic coeffi-
-cients. They are (usually) normalized to remove homothetic, translational or rotational
-differences between shapes. Two or four coefficients, depending on the approach used,
-are obtained for each calculated harmonic and can then be considered as quantitative
-variables. Nyquist frequency impedes us from having more harmonics than half the
-number of points fitted, which is thus the upper limit. The geometrical information
-contained in the outlines are thus quantified and can be analysed with classical multivariate
-tools.
+```{r, ellipic-fourier, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE,  fig.width=4.5,fig.height=4.5}
+Ptolemy(RapaNui[1], nb.h = 5, t = seq(0, 2*pi, pi/2), legend = TRUE)
+```
+Figure 8. For all positive integers, the sum of a cosine curve and a sine curve defines an ellipse in the plane. Elliptic Fourier analysis is based on an harmonic sum of such ellipses. Five harmonics are here shown at four locations on the original outline of a *mata'a*. As the number of harmonics is increased the reconstruction better approximates the original shape outline.
+
+Fourier series, however, work on continuous functions. Since in practice shape is measured on a finite number of discrete points on a plane (in our case, x/y coordinates), a discrete equivalent to Fourier series is used in morphometrics. A given number of points called pseudolandmarks have to be sampled along the outline before computing shape analysis. All Fourier decomposition then result in an harmonic sum of trigonometric functions associated with harmonic coeffi-
+cients. They are (usually) normalized to remove homothetic, translational or rotational differences between shapes. Two or four coefficients, depending on the approach used, are obtained for each calculated harmonic and can then be considered as quantitative variables. Nyquist frequency impedes us from having more harmonics than half the number of points fitted, which is thus the upper limit. The geometrical information contained in the outlines are thus quantified and can be analysed with classical multivariate tools.
 
 #Harmonic Power
 
-To conduct Fourier analysis, we must estimate the number of necessary harmonics after examining the spectrum of harmonic Fourier power. The power is proportional to the harmonic amplitude and can be considered as a measure of shape information. As the rank of a harmonic increases, the power decreases and adds less and less information. We can evaluate the mininum number of harmonics required to best approximate the shape. In the case of the *mata'a*, 12 harmonics provide a good reconstruction of the overall shape (Figures XX and XX).
+To conduct Fourier analysis, we must estimate the number of necessary harmonics after examining the spectrum of harmonic Fourier power. The power is proportional to the harmonic amplitude and can be considered as a measure of shape information. As the rank of a harmonic increases, the power decreases and adds less and less information. We can evaluate the mininum number of harmonics required to best approximate the shape. In the case of the *mata'a* and using x/y position for points on the outline as the data set, 12 harmonics provide a good reconstruction of the overall shape (Figures 9 and 10).
 
-```{r, hqual-plot,fig.width=4.5,fig.height=4.5}
-hqual(RapaNui, method = "eFourier", id = 16, harm.range = 1:49,  palette = col.sari, plot.method = "panel")
+```{r, hqual-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
+hqual(RapaNui, method = "eFourier", id = 16, harm.range = 1:36,  palette = col.sari, plot.method = "panel")
 ```
-Figure XX. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics give a very satisfactory reconstruction.
+Figure 9. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics provide a satisfactory reconstruction.
 
-```{r, hpow-plot,fig.width=4.5,fig.height=4.5}
+```{r, hpow-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 hpow(RapaNui)
 ```
-Figure XX.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima and medians are also plotted.
+Figure 10.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima, minimaRapa and medians are also plotted.
 
+Based on the elliptical Fourier characterizations of the *mata'a* we can now examine the shapes to determine if there are clusters of shape classes that might distinguish different functional sub-groups from each other.  Figure XX presents the  position of mata'a shapes on a factorial map with shapes reconstructed from first two principal compoonent axes.  Based on these data we do not have discrete shape groups: *mata'a* are highly variable in outline shape and there are continuous intermediate shapes between all variants. This finding demonstrates that the similarity of the proximal haft end of the *mata'a* and that the distal end is free to vary.  These results fail to indicate any subgroup that might have been specifically built as lethal weapons and supports the notion that mata'a have no particular function for which blade shape affects performance. Given observations of usewear on the blade edges (e.g., @Church:1994aa, -@Church@1996aa), it is likely that this means that *mata'a* simply must have an edge sufficient for cutting and scraping. 
+
+```{r, rapaf-all-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
+# By Site
+plot(PCA(RapaF))
+```
+Figure 11.  First two principal components (PC1 and PC2 are on the x- and y-axis, respectively) for the Rapa Nui *mata'a*.
+
+We can also examine the *mata'a* to see if there are systematic differences between the locations from which *mata'a* are found or between the obsidian sources used to make the artifacts. In our analyses, we have examples of *mata'a* from 'r numberOfSites' sites (Table 4).
+
+Table 4:  Rapa Nui *mata'a* included in analyses by site.
+```{r kable4, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
+bySite <- table(fac$Collection,fac$Site)
+knitr:::kable(bySite, digits=0)
+```
+Figure 12 presents the distribution of sets of *mata'a* from multiple locations across the island. The graph includes the confidence ellipses for the 'r numberOfSites' sites on the grid representing the morphological space based on the first two principal components.  The overlap of the groups indicates that the shapes from each of the sites are cannot be distinguished.  The same conclusion can be drawn from an analysis of the shape variability relative to obsidian source (Figure 13).  Overall, there appears to be no evidence that *mata'a* blade shape was constrained due to functional performance.   
+
+```{r, rapaf-bysite-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 ## By Source
-```{r, rapaf-plot,fig.width=4.5,fig.height=4.5}
-
-plot(PCA(RapaF), "Source")
-
-```
-
-```{r, rapafp-plot,results='asis', fig.width=4.5,fig.height=4.5}
-plot(PCA(RapaFP), "Source") # Procrustes aligned (normalization of the outlines)
-```
-
-## By Site
-```{r, rapafs-plot, results='asis', fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaF), "Site") # regular EFT with normalized coefficients
 ```
+Figure 12.  First two principal components of *mata'a* grouped by site location. 
 
-```{r, rapafps-plot, results='asis', fig.width=4.5,fig.height=4.5}
-plot(PCA(RapaFP), "Site") # Procrustes aligned (normalization of the outlines)
+```{r, rapaf-bymaterial-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
+## By Source
+plot(PCA(RapaF), "Source") # regular EFT with normalized coefficients
 ```
-
+Figure 13.  First two principal components of *mata'a* grouped by site location. 
 
 ```{r, pca-prep-all, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
 allF <- eFourier(allMataa, 12)
@@ -370,13 +353,18 @@ allP <- fgProcrustes(allMataa)
 allFP <- eFourier(allMataa, 12, norm=FALSE)
 ```
 
-#Comparison with other Pacific Islands
+#Comparison with stemmed tools from other Pacific Islands
 
-```{r, allfp-plot, results='asis', fig.width=4.5,fig.height=4.5}} 
+The *mata'a* of Rapa Nui share some similarity with stone tools found on other islands across the Pacific.  On New Britain in Melanesia, for example, Torrence (-@Torrence@2009aa, -@Torrence@2009ab, -@Torrence@2013aa) has described stemmed tools that share much in common with the shape of *mata'a.* Torrence (see also @Kononenko:2012aa) that these tools may have been used for tatooing. On Pitcairn Island located 2500 km to the west of Rapa Nui and inhabited by related populations, a few stemmed lithic tools have been found (@Heyerdahl:1965aa). 
+
+When we compare the shapes of *mata'a* with outlines derived from published examples of these other artifacts, we find that they are quite distinct.  Unlike any subgroupings found among the Rapa Nui cases, the tools of other islands have marked differences.  In this way, the lack of any sub-groupings and specificity in the blade shape suggests that the way in which *mata'a* were used differs from the use of similarly shaped tools on other islands. The Rapa Nui *mata'a* are diverse in shape yet their overall form is relatively homogenous, pointing to a single class of use. This does not appear to be the case in other islands, at least based on this preliminary study.
+
+```{r, allfp-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE,  fig.width=4.5, fig.height=4.5 } 
  plot(PCA(allFP), "Island", amp.shp=1.5)
 ```
-Figure XX:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain and Pitcairn Island. The shapes are reconstructed from the factorial map using the first two PC axes.
+Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain and Pitcairn Island. The shapes are reconstructed from the factorial map using the first two PC axes.
 
+#Conclusion
 
-# References Cited
+#References Cited
 
