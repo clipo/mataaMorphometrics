@@ -133,27 +133,24 @@ dmp <- function(q, xlab="", ylab="", title="", th0=pi/2,
   if (missing(leg)) leg <- rownames(q)
   legend("topright", lwd=1, col=cols, legend=leg, cex=3/4, bty="n")}
 
-# just a domestic plotter
+## plot the confidence intervals
 ci.plot <- function(x){
-  #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
-  x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-600, -500)))
-  #x <-lapply(x$coo,coo.interpolate,360)
-  #x <- lapply(x$coo, coo.centdist)
+  #x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-xCenter, -yCenter)))
+  x <- lapply(x$coo,coo.interpolate,360)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
   xCI <- apply(x, 2, CI,ci = 0.99)
   ## now add some and substract to differentiate between the 3 lines.. this is just arbitrary spacing.
-  l<-xCI[1,]-100
+  l<-xCI[1,]-1
   m<-xCI[2,]
-  u<-xCI[3,]+100
+  u<-xCI[3,]+1
   xxCI=rbind(l,m,u)
   dmp(xxCI)
   }
 
 quartiles.plot<-function(x){
   #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
-  x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-600, -500)))
-  #x <-lapply(x$coo,coo.interpolate,360)
-  #x <- lapply(x$coo, coo.centdist)
+  #x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-xCenter, -yCenter)))
+  x <-lapply(x$coo,coo.interpolate,360)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
   quartilesCI <- apply(x, 2, quantile, probs=seq(0, 1, 0.25))
   dmp(quartilesCI)
