@@ -3,10 +3,10 @@ title: "Rapa Nui Mataa Morphometric Analyses"
 author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 date: "7 September 2014"
 output:
-  pdf_document:
-    keep_tex: yes
   word_document:
     reference_docx: reference.docx
+  pdf_document:
+    keep_tex: yes
 bibliography: bibliography.bib
 email: carl.lipo@csulb.edu
 csl: antiquity.csl
@@ -224,7 +224,7 @@ For our analyses of Rapa Nui *mata'a*, our assemblage consisted of planview phot
 
 The second collection of *mata'a* is composed of `r bishopMataa` objects housed at the Bishop Museum, Honolulu, Hawai'i. These *mata'a* consist of examples  purchased from the island by a private collector in 1920, collections made by Kenneth P. Emory in 1929-1931 and various gifts to the museum [@Mulrooney:2014aa, p. 5-6]. Mulrooney and colleagues took photos of these *mata'a* during their study of obsidian sourcing via pXRF [@Mulrooney:2014aa]. Their findings demonstrate that the majority of *mata'a* were made from obsidian obtained at the Orito source. Given the assorted history of the Bishop Museum collection, we can only attribute the source of these *mata'a* to Rapa Nui and and not a specific location.   Mulrooney and colleagues, however, kindly provided source identifications for each mata'a based on the results of their study. In this way, we are able to use these *mata'a* examples to examine potential shape variability that might be due to the obsidian source. This shape variability could be potentially caused by systematic material differences or by the differential use of *mata'a* that are dervied from different locations. 
 
-![Figure 2.  Locations *mata'a* collections from Rapa Nui, Chile.](../Figures/Figure2.pdf)
+![Figure 2.  Locations of *mata'a* collections from Rapa Nui, Chile.](../Figures/Figure2.pdf)
 
 ```{r family_picture, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 Momocs:::panel(RapaNui, fac = "Collection")
@@ -243,10 +243,12 @@ In our analyses, we aligned scaled photos of *mata'a* at the point where the mid
 
 ![Figure 4.  Measurement process used to generate semilandmark data for each *mata'a* image.](../Figures/Figure4-StepsInMeasurement.pdf)
 
+Figure 4. Measurement process used to generate semilandmark data for each *mata'a* image.
+
 ```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 par(mfrow=c(1, 2))
-hist(lengths, main="Mata'a Length") 
-hist(widths, main="Mata'a Width") 
+hist(lengths, main="*Mata'a* Length") 
+hist(widths, main="*Mata'a* Width") 
 par(mfrow=c(1, 1))
 ```
 
@@ -274,7 +276,7 @@ par(mfrow=c(1,1))
 ci.plot(RapaNui)
 #quartiles.plot(RapaNuirr.int)
 quartiles.plot(RapaNui)
-par(mfrow=c(1, 2))
+par(mfrow=c(2, 1))
 ```
 
 Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
@@ -314,13 +316,13 @@ cients. They are (usually) normalized to remove homothetic, translational or rot
 To conduct Fourier analysis, we must estimate the number of necessary harmonics after examining the spectrum of harmonic Fourier power. The power is proportional to the harmonic amplitude and can be considered as a measure of shape information. As the rank of a harmonic increases, the power decreases and adds less and less information. We can evaluate the mininum number of harmonics required to best approximate the shape. In the case of the *mata'a* and using x/y position for points on the outline as the data set, 12 harmonics provide a good reconstruction of the overall shape (Figures 9 and 10).
 
 ```{r, hqual-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
-hqual(RapaNui, method = "eFourier", id = 16, harm.range = 1:36,  palette = col.sari, plot.method = "panel")
+hqual(RapaNui, method = "eFourier", id = 16, title="*Mata'a* reconstructions with harmonics", harm.range = 1:36,  palette = col.sari, plot.method = "panel")
 ```
 
 Figure 9. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics provide a satisfactory reconstruction.
 
 ```{r, hpow-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
-hpow(RapaNui)
+hpow(RapaNui, method = "efourier", title="Fourier coefficients power spectrum", plot.method="stack")
 ```
 
 Figure 10.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima, minimaRapa and medians are also plotted.
@@ -364,9 +366,9 @@ allF <- eFourier(allMataa, 12, norm=TRUE)  ## note that this is scaled
 
 #Comparison with stemmed tools from other Pacific Islands
 
-The *mata'a* of Rapa Nui share some similarity with stone tools found on other islands across the Pacific.  On New Britain in Melanesia, for example, Torrence (-@Torrence@2009aa, -@Torrence@2009ab, -@Torrence@2013aa) has described obsidian stemmed tools that share much in common with the shape of *mata'a.* Torrence (see also @Kononenko:2012aa) that these tools may have been used for range of activities including tatooing. On Pitcairn Island located 1900 km to the west of Rapa Nui and inhabited by historically related populations, a few stemmed lithic tools have been found (@Heyerdahl:1965aa). 
+The *mata'a* of Rapa Nui share some similarity with stone tools found on other islands across the Pacific.  On New Britain in Melanesia, for example, Torrence (-@Torrence@2009aa, -@Torrence@2009ab, -@Torrence@2013aa) has described obsidian stemmed tools that share much in common with the shape of *mata'a.* Torrence (see also @Kononenko:2012aa) that these tools may have been used for range of activities including tatooing.  Pitcairn Island is remote Eastern Polynesian island that   is located ca. 1900 km to the west of Rapa Nui. The island was inhabited by historically related Polynesian populations, though abandoned during prehistory.  A few stemmed lithic tools have been found on Pitcairn (@Heyerdahl:1965aa). 
 
-In our study, we generated outlines of stemmed lithic tools from published images and drawings in the same way we generated outlines for the Rapa Nui *mata'a*. While the sample sizes of the non-Rapa Nui artifacts are small, when we compare the shapes of *mata'a* with those other objects, we find that the Pitcairn Island stemmed artifacts have overall shapes that are quite distinct.  The New Britain artifacts that are thought to represent an array of non-lethal function are more like the ones from Rapa Nui.
+As a comparison for our study, we generated outlines of examples stemmed lithic tools from published images and drawings of these islands using the same procedure for Rapa Nui. While the sample sizes of the non-Rapa Nui artifacts are small, when we compare the shapes of *mata'a* with those other objects, we find that the Pitcairn Island stemmed artifacts have overall shapes that are quite distinct.  The New Britain artifacts that are thought to represent an array of non-lethal function have shape features that are more like the ones from Rapa Nui.
 
 ```{r, allfp-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE,  fig.width=4.5, fig.height=4.5 } 
  plot(PCA(allF), "Island") #amp.shp=1.5)
