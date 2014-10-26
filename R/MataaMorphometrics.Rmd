@@ -322,7 +322,11 @@ hqual(RapaNui, method = "eFourier", id = 16, title="*Mata'a* reconstructions wit
 Figure 9. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics provide a satisfactory reconstruction.
 
 ```{r, hpow-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
+<<<<<<< HEAD
 hpow(RapaNui, method = "efourier", title="Fourier coefficients power spectrum")
+=======
+hpow(RapaNui, method = "efourier", title="Fourier coefficients power spectrum", plot.method="stack")
+>>>>>>> 7ec11126d6e44bf33f05a37be3ed651a9ed6b0a1
 ```
 
 Figure 10.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima, minimaRapa and medians are also plotted.
