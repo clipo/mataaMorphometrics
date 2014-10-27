@@ -17,6 +17,7 @@ affiliations:
 ---
 
 ```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
+
 #suppressPackageStartupMessages(library(rCharts, quietly=TRUE))
 library(knitr)
 library(httr)
@@ -332,7 +333,7 @@ hpow(RapaNui, method = "efourier", title="Fourier coefficients power spectrum")
 
 Figure 10.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima, minimaRapa and medians are also plotted.
 
-Based on the elliptical Fourier characterizations of the *mata'a* we can now examine the shapes to determine if there are clusters of shape classes that might distinguish different functional sub-groups from each other.  Figure 11 presents the  position of mata'a shapes on a factorial map with shapes reconstructed from first two principal compoonent axes.  Based on these data we do not have discrete shape groups: *mata'a* are highly variable in outline shape and there are continuous intermediate shapes between all variants. This finding demonstrates that the similarity of the proximal haft end of the *mata'a* and that the distal end is free to vary.  These results fail to indicate any subgroup that might have been specifically built as lethal weapons and supports the notion that mata'a have no particular function for which blade shape affects performance. Given observations of usewear on the blade edges (e.g., @Church:1994aa, -@Church@1996aa), it is likely that this means that *mata'a* simply must have an edge sufficient for cutting and scraping. 
+Based on the elliptical Fourier characterizations of the *mata'a* we can now examine the shapes to determine if there are clusters of shape classes that might distinguish different functional sub-groups from each other.  Figure 11 presents the  position of mata'a shapes on a factorial map with shapes reconstructed from first two principal compoonent axes.  Based on these data we do not have discrete shape groups: *mata'a* are highly variable in outline shape and there are continuous intermediate shapes between all variants. This finding demonstrates that the similarity of the proximal haft end of the *mata'a* and that the distal end is free to vary.  These results fail to indicate any subgroup that might have been specifically built as lethal weapons and supports the notion that mata'a have no particular function for which blade shape affects performance. Given observations of usewear on the blade edges (e.g.,@Church:1998aa; @Church:1994aa; @Church@1996aa; @Stevenson:2008aa, p. 107), it is likely that this means that *mata'a* simply must have an edge sufficient for cutting and scraping. 
 
 ```{r, rapaf-all-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 # By Site
@@ -379,11 +380,13 @@ As a comparison for our study, we generated outlines of examples stemmed lithic 
  plot(PCA(allF), "Island") #amp.shp=1.5)
 ```
 
-Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain and Pitcairn Island. The shapes are reconstructed from the factorial map using the first two PC axes.
+Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain and Pitcairn Island. The shapes are reconstructed from the factorial map using the first two component axes.
 
 #Conclusion
 
-When we take a careful look at the shape of mata'a we simply do not see evidence that these class of artifacts wereJust dont find evidence of weaponry - nothing falls out that points to some subset of the objects being distinctive -- all the intermediate shapes. So no performance to blade shape -- no constraints. Simply make them to have an edge and a stem. 
+While the notion that Rapa Nui prehistory consists of a tale of collapse and self-destruction remains popular, the evidence to support this claim is non-existent. In addition to lack of defensive structures and skeletal evidence of lethal violence (@Hunt:2011aa), the so-called "weapons of mass destruction" (@Keegan:1993aa) take a careful look at the shape of *mata'a* we simply do not see evidence that these class of artifacts represent lethal weapons (see also @Ingersoll:2013aa). There appears to be no performance requirements that would influence the blade shape. Other than having an edges, mata'a are no more lethal than throwing any other kind of rock.  Indeed, as documented in post-contact Rapa Nui, rock throwing from high points is the primary way in which native Rapanui fought off the instrusion of Europeans (e.g., Roggeveen 1722 visit, @Eyzaguirre:2004aa).
+
+It is unfortunate that in the case of Rapa Nui, the myth of the island continues to persist despite the lack of evidence. 
 
 #References Cited
 
