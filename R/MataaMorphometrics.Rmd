@@ -3,10 +3,10 @@ title: "Rapa Nui Mataa Morphometric Analyses"
 author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 date: "7 September 2014"
 output:
-  word_document:
-    reference_docx: reference.docx
   pdf_document:
     keep_tex: yes
+  word_document:
+    reference_docx: reference.docx
 bibliography: bibliography.bib
 email: carl.lipo@csulb.edu
 csl: antiquity.csl
@@ -31,6 +31,7 @@ options(repos = c(CRAN = "http://cran.rstudio.com"))
 set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
 if("Momocs" %in% rownames(installed.packages()) == FALSE) { install_github("vbonhomme/Momocs")}
+RCurl::getBinaryURL(url='https://github.com/vbonhomme/Momocs.zip', cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"), followlocation=1L)
 library(Momocs)
 ```
 
