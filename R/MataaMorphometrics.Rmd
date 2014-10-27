@@ -187,7 +187,7 @@ Even if we had direct observations of these objects being used in "spear-like" f
 
 On the surface landscape of Rapa Nui, *mata'a* are one of the most numerous shaped artifact classes. Overall, *mata'a* vary greatly in size and shape, but average 6-10 cm in width and length. Technologically, they are formed from unifacial flakes derived trough hard hammer percussion on obsidian cores quarried from one of the island's obsidian sources.  Most of the shaping of the *mata'a* occurs during the creation of a stem that presumably serves as a haft. The stem is formed from one of the lateral margins of the original flake where blade constitutes the remaining distal and opposite lateral margins. *Mata'a* stems and shoulders are formed by unifacial flaking and are generally lenticular in cross section. Overall, the blade shape is dominated by the shape of the parent flake though some shaping through secondary flaking is sometimes evident. Often, large areas of cortex still cover much of one face.
 
-In exploring the the way in which *mata'a* forms vary, researchers have noted that there is a great diversity of shape [@Mulloy:1961aa]. *Mata`a* shapes are highly inconsistent and vary from rounded to subangluar to angular to complex.  Early researchers assigned mata`a shape variation to what they conceived as ethnographic categories based on Rapanui words [i.e., @Routledge:1919aa].  Later attempts to construct systematic classifications have also focused on identifying types based on characterizations of overall shape.  None of these classification efforts produced useful categories.
+In exploring the the way in which *mata'a* forms vary, researchers have noted that there is a great diversity of shapes that vary from rounded to subangluar to angular to complex [@Mulloy:1961aa]. Early researchers assigned mata`a shape variation to what they conceived as ethnographic categories based on Rapanui words [i.e., @Routledge:1919aa].  Later attempts to construct systematic classifications have also focused on identifying types based on characterizations of overall shape.  None of these classification efforts produced useful categories.
 
 Mulloy [-@Mulloy:1961aa, p. 151], for example, argued that “no significant clustering or correlations could be extracted.... the material represents a continuous range of variation without objective natural order, and that the only classification possible must involve the subjective selection of ideal types from infinite series of possibilities, and the arbitrary reference of intermediate for to one or another of these.”  Mulloy concluded manufacturing procedures dictated shapes and differences in overall shape of mata’a were best explained by chance.
  
@@ -272,7 +272,7 @@ Once we identified the centroid, we calculated the distance from the centroids t
 
 While our measured outlines are composed of 200 points, Momocs interpolates between points to locate distances from centroids at even intervals.In addition, since all measurements are based on georeferenced coordinates, planimetric measure (such as width or length) can be calculated.  Additional image analysis techniques to isolate object outlines point to the strong potential for automation of the measurement process, greatly increasing the ability to characterize large assemblages. With large numbers of measures of radial distances made relative to the *mata'a* centroids, we then calculate a statistical summary for each angle to assess variability in relative dimensions (Figure 7).  
 
-```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+```{r width_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4,fig.height=4}
 # we interpolate before equianular sampling
 #RapaNui$coo <- lapply(RapaNui$coo, coo.interpolate, 360)
 #RapaNuirr.int <- coo.samplerr(RapaNui, 360) # and plot this one
@@ -281,7 +281,7 @@ par(mfrow=c(1,1))
 ci.plot(RapaNui)
 #quartiles.plot(RapaNuirr.int)
 quartiles.plot(RapaNui)
-par(mfrow=c(2, 1))
+par(mfrow=c(1, 2))
 ```
 
 Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
