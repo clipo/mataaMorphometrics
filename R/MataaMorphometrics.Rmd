@@ -3,6 +3,7 @@ title: "Rapa Nui Mataa Morphometric Analyses"
 author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 date: "7 September 2014"
 output:
+  html_document: default
   pdf_document:
     keep_tex: yes
   word_document:
@@ -212,14 +213,14 @@ Measurements for morphometrics can be generated in a number of ways.  With roots
   
 In our morphometric analyses we make use of Momocs (http://CRAN.R-project.org/package=Momocs), an R package (R Core Team 2014) developed by Bonhomme [-@Bonhomme:2012aa; @Bonhomme:2014ab]. Momocs builds upon techniques developed by Claude [-@Claude:2008aa] and reviewed by Bowman [-@Bowman:2009aa]. Bonhomme incorporated functions from Claude's work into an integrated framework and a standalone R package. The package's vignette *A Graphical Introduction to Momocs and Outline Analysis Using R* [@Bonhomme:2012aa]  provides an extensive description of the functions of the package.
 
-Table 1:  *Mata'a* included in analyses by collection.
+Table 1:  *Mata'a* included in analyses by collection location.
 ```{r kable1, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
 byCollection <- table(fac$Collection,fac$Site)
 bySource <- table(fac$Source,fac$Site)
 knitr:::kable(byCollection, digits=0)
 ```
 
-Table 2:  *Mata'a* included in analyses by location.
+Table 2:  *Mata'a* included in analyses by obsidian source.
 ```{r kable2, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
 knitr:::kable(bySource,digits=0)
 ```
