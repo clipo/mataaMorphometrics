@@ -286,6 +286,8 @@ quartiles.plot(RapaNui)
 par(mfrow=c(1, 2))
 ```
 
+![Figure 7.  Shape variability](../Figures/figure_1.png)
+
 Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
 
 ```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
