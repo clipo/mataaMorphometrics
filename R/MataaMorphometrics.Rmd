@@ -3,11 +3,11 @@ title: "Rapa Nui Mataa Morphometric Analyses"
 author: "Carl P. Lipo, Rene Horneman, Terry L. Hunt, Vincent Bonhomme"
 date: "7 September 2014"
 output:
-  html_document: default
-  pdf_document:
-    keep_tex: yes
   word_document:
     reference_docx: reference.docx
+  pdf_document:
+    keep_tex: yes
+  html_document: default
 bibliography: bibliography.bib
 email: carl.lipo@csulb.edu
 csl: antiquity.csl
@@ -242,7 +242,7 @@ Momocs:::panel(RapaNui, fac = "Collection")
 
 Figure 3.  *Mata'a* included in the current analyses.
 
-For the purposes of our analyses and following the approach taken in Lipo et al. [-@Lipo:2010aa], we assumed that *mata'a* are the hafted portions of compound tools that are otherwise incompletely preserved in archaeological deposits.  In this context and based on evidence of usewear on the distal edges [@Church:1994aa; @Church:1996aa], we assume that the overall shape of *mata'a* shape is a functional element [sensu @Dunnell:1978aa], the portion of the artifact that interacts with the environment.  Consequently, our interest is on those aspects of shape that potentially affect function and thereby come under natural selection.  The task of explaining variability in shape consists of identifying selective pressures that affect the performance of shape and to determine whether their magnitude is sufficiently great to impact fitness.  The greater the selective pressures on performance, the more constraint we would expect on those aspects of shape.  If the effect on function and performance is sufficiently small, then other forces such as technological (i.e., material source, manufacturing steps, etc.) or stylistic (stochastic or neutral) ones may have played a role in fixing the shapes of *mata'a*, as well as when and where they occur in the archaeological record. In these cases, we would expect to see a greater range of variability. It is possible, however, that not all *mata'a* instances were used in the same way.  If *mata'a* shapes is influcenced by more than one function, either contemporaneously or over time, then the selective context will differ and thus the “cause” of *mata'a* shape should vary. This situation should create modal patterns of mata'a where shape variability forms statistically distinguishablke groups. 
+For the purposes of our analyses and following the approach taken in Lipo *et al.* [-@Lipo:2010aa], we assumed that *mata'a* are the hafted portions of compound tools that are otherwise incompletely preserved in archaeological deposits.  In this context and based on evidence of usewear on the distal edges [@Church:1994aa; @Church:1996aa], we assume that the overall shape of *mata'a* shape is a functional element [sensu @Dunnell:1978aa], the portion of the artifact that interacts with the environment.  Consequently, our interest is on those aspects of shape that potentially affect function and thereby come under natural selection.  The task of explaining variability in shape consists of identifying selective pressures that affect the performance of shape and to determine whether their magnitude is sufficiently great to impact fitness.  The greater the selective pressures on performance, the more constraint we would expect on those aspects of shape.  If the effect on function and performance is sufficiently small, then other forces such as technological (i.e., material source, manufacturing steps, etc.) or stylistic (stochastic or neutral) ones may have played a role in fixing the shapes of *mata'a*, as well as when and where they occur in the archaeological record. In these cases, we would expect to see a greater range of variability. It is possible, however, that not all *mata'a* instances were used in the same way.  If *mata'a* shapes is influcenced by more than one function, either contemporaneously or over time, then the selective context will differ and thus the “cause” of *mata'a* shape should vary. This situation should create modal patterns of mata'a where shape variability forms statistically distinguishablke groups. 
 
 # Data
 
@@ -288,7 +288,7 @@ par(mfrow=c(1, 2))
 
 ![Figure 7.  Shape variability](../Figures/figure_1.png)
 
-Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to areas with greater variance versus those with more constrained shape.
+Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence intervals. Note that the 95% confidence intervals are shown with exaggerated differences between the values to illustrate areas with greater variance versus those with more constrained shape. Here, the area at the base of the stem where it meets the blade is the most constrained portion of *mata'a* shape while the stem length and blade are more variable. 
 
 ```{r polar_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 #polar.plot(u,angles,pos=NULL,label.pos=NULL, start=0,clockwise=TRUE,rp.type="l",lty=3, line.col=3) 
@@ -337,7 +337,7 @@ hpow(RapaNui, method = "efourier", title="Fourier coefficients power spectrum")
 
 Figure 10.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima, minimaRapa and medians are also plotted.
 
-Based on the elliptical Fourier characterizations of the *mata'a* we can now examine the shapes to determine if there are clusters of shape classes that might distinguish different functional sub-groups from each other.  Figure 11 presents the  position of mata'a shapes on a factorial map with shapes reconstructed from first two principal compoonent axes.  Based on these data we do not have discrete shape groups: *mata'a* are highly variable in outline shape and there are continuous intermediate shapes between all variants. This finding demonstrates that the similarity of the proximal haft end of the *mata'a* and that the distal end is free to vary.  These results fail to indicate any subgroup that might have been specifically built as lethal weapons and supports the notion that mata'a have no particular function for which blade shape affects performance. Given observations of usewear on the blade edges [e.g.,@Church:1998aa; @Church:1994aa; @Church:1996aa; @Stevenson:2008aa, p. 107], it is likely that this means that *mata'a* simply must have an edge sufficient for cutting and scraping. 
+Based on the elliptical Fourier characterizations of the *mata'a* we can now examine the shapes to determine if there are clusters of shape classes that might distinguish different functional sub-groups from each other.  Figure 11 presents the  position of mata'a shapes on a factorial map with shapes reconstructed from first two principal compoonent axes.  Based on these data we do not have discrete shape groups: *mata'a* are highly variable in outline shape and there are continuous intermediate shapes between all variants. This finding demonstrates that the similarity of the proximal haft end of the *mata'a* and that the distal end is free to vary.  These results fail to indicate any subgroup that might have been specifically built as lethal weapons and supports the notion that mata'a have no particular function for which blade shape affects performance. Given observations of usewear on the blade edges [e.g., @Church:1998aa; @Church:1994aa; @Church:1996aa; @Stevenson:2008aa, p. 107], it is likely that this means that *mata'a* simply must have an edge sufficient for cutting and scraping. 
 
 ```{r, rapaf-all-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 # By Site
@@ -346,7 +346,7 @@ plot(PCA(RapaF))
 
 Figure 11.  First two principal components (PC1 and PC2 are on the x- and y-axis, respectively) for the Rapa Nui *mata'a*.
 
-We can also examine the *mata'a* to see if there are systematic differences between the locations from which *mata'a* are found or between the obsidian sources used to make the artifacts. In our analyses, we have examples of *mata'a* from 'r numberOfSites' sites (Table 4).
+We can also examine the *mata'a* to see if there are systematic differences between the locations from which *mata'a* are found or between the obsidian sources used to make the artifacts. In our analyses, we have examples of *mata'a* from `r numberOfSites` sites (Table 4).
 
 Table 4:  Rapa Nui *mata'a* included in analyses by site.
 ```{r kable4, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
@@ -354,7 +354,7 @@ bySite <- table(fac$Collection,fac$Site)
 knitr:::kable(bySite, digits=0)
 ```
 
-Figure 12 presents the distribution of sets of *mata'a* from multiple locations across the island. The graph includes the confidence ellipses for the 'r numberOfSites' sites on the grid representing the morphological space based on the first two principal components.  The overlap of the groups indicates that the shapes from each of the sites are cannot be distinguished.  The same conclusion can be drawn from an analysis of the shape variability relative to obsidian source (Figure 13).  Overall, there appears to be no evidence that *mata'a* blade shape was constrained due to functional performance.   
+Figure 12 presents the distribution of sets of *mata'a* from multiple locations across the island. The graph includes the confidence ellipses for the `r numberOfSites` sites on the grid representing the morphological space based on the first two principal components.  The overlap of the groups indicates that the shapes from each of the sites are cannot be distinguished.  The same conclusion can be drawn from an analysis of the shape variability relative to obsidian source (Figure 13).  Overall, there appears to be no evidence that *mata'a* blade shape was constrained due to functional performance.   
 
 ```{r, rapaf-bysite-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
 ## By Source
@@ -371,12 +371,12 @@ plot(PCA(RapaF), "Source") # regular EFT with normalized coefficients
 Figure 13.  First two principal components of *mata'a* grouped by site location. 
 
 ```{r, pca-prep-all, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-allF <- eFourier(allMataa, 12, norm=TRUE)  ## note that this is scaled
+allF <- eFourier(allMataa, 13, norm=TRUE)  ## note that this is scaled
 ```
 
 #Comparison with stemmed tools from other Pacific Islands
 
-The *mata'a* of Rapa Nui share some similarity with stone tools found on other islands across the Pacific.  On New Britain in Melanesia, for example, Torrence [-@Torrence@2009aa,  -@Torrence@2009ab, -@Torrence@2013aa[] has described obsidian stemmed tools that share much in common with the shape of *mata'a.* Torrence (see also @Kononenko:2012aa) argues that these tools may have been used for range of activities including tatooing and ritual scarification.  Pitcairn Island is remote Eastern Polynesian island that   is located ca. 1900 km to the west of Rapa Nui. The island was inhabited by historically related Polynesian populations, though abandoned during prehistory.  An additional but limited comparison can be made for Pitcairn Island, where a few stemmed lithic tools have been found [@Heyerdahl:1965aa]. 
+The *mata'a* of Rapa Nui share some similarity with stone tools found on other islands across the Pacific.  On New Britain in Melanesia, for example, Torrence [-@Torrence:2009aa, -@Torrence:2009ab; -@Torrence:2013aa] has described obsidian stemmed tools that share much in common with the shape of *mata'a.* Torrence [see also @Kononenko:2012aa] argues that these tools may have been used for range of activities including tatooing and ritual scarification.  Pitcairn Island is remote Eastern Polynesian island that   is located ca. 1900 km to the west of Rapa Nui. The island was inhabited by historically related Polynesian populations, though abandoned during prehistory.  An additional but limited comparison can be made for Pitcairn Island, where a few stemmed lithic tools have been found [@Heyerdahl:1965aa]. 
 
 As a comparison for our study, we generated outlines of examples stemmed lithic tools from published images and drawings of these islands using the same procedure for Rapa Nui. While the sample sizes of the non-Rapa Nui assemblages are small, when we compare the shapes of *mata'a* with those other objects, we find that the Pitcairn Island stemmed artifacts have overall shapes that are quite distinct. While we cannot rule out the possibility that the Pitcairn examples are a few extremely long and pointed shapes that happen to have been collected from a much wider array of variability, these shapes are certainly more consistent with hafted tools for hunting or weapons.  
 
@@ -386,13 +386,13 @@ The New Britain artifacts, on the other hand,  wide array of features that are m
  plot(PCA(allF), "Island") #amp.shp=1.5)
 ```
 
-Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain and Pitcairn Island. The shapes are reconstructed from the factorial map using the first two component axes.
+Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain, New Zealand, Chatham and Pitcairn Islands. The shapes are reconstructed from the factorial map using the first two component axes.
 
 #Conclusion
 
 While the notion that Rapa Nui prehistory consists of a tale of collapse and self-destruction remains popular, the evidence to support this claim is non-existent. In addition to lack of defensive structures and skeletal evidence of lethal violence [@Hunt:2011aa], the so-called "weapons of mass destruction" [@Keegan:1993aa] take a careful look at the shape of *mata'a* we simply do not see evidence that these class of artifacts represent lethal weapons [see also @Ingersoll:2013aa]. There appears to be no performance requirements that would influence the blade shape. Other than having an edges, mata'a are no more lethal than throwing any other kind of rock.  Indeed, as documented in post-contact Rapa Nui, rock throwing from high points is the primary way in which native Rapanui fought off the instrusion of Europeans, [e.g., Roggeveen's 1722 visit, @Eyzaguirre:2004aa].
 
-That *mata'a* had more than one function is not surprising since it is essential to resist the notion that any object is imbibed with an inherent function [@Dunnell:1978aa]. Instead, we measure function on the empirical variability for any assemblage of objects [@Dunnell:1976aa]. In the case of *mata'a* the wear patterns and distribution in rock mulch suggest that at least some of these objects were employed in cultivation. We also cannot rule out that they were used in tattooing and scarification practices.  The latter function certainly is consistent with observations of healed scars made by Spanish visitors in 1770 [@Corney:1908aa].
+That *mata'a* had more than one function is not surprising since it is essential to resist the notion that any object is imbibed with an inherent function [@Dunnell:1978aa]. Instead, we measure function on the empirical variability for any assemblage of objects [@Dunnell:1976aa]. In the case of *mata'a* the wear patterns and distribution in rock mulch suggest that at least some of these objects were employed in cultivation. We also cannot rule out that they were used in tattooing and scarification practices.  The latter function certainly is consistent with observations of healed scars made by Spanish visitors in AD 1770 [@Corney:1908aa].
 
 It is unfortunate that in the case of Rapa Nui, the myth of the island continues to persist despite the lack of evidence. Tradition has long trumped empirical inquiry when it comes to the understanding the functional role that *mata'a* played within the subsistence and social dimensions of prehistoric Rapa Nui. In the case of Rapa Nui, getting the correct answer is far from a trivial academic exercise. The island's prehistory is often used as an exemplar of ignoring the impacts humans made on the environment and thus is driving policy decisions. United Kingdom Prime Minister Margaret Thatcher, for example, famously used Rapa Nui as a warning in a 1989 presentation to the General Assembly of United Nations  [e.g., @Thatcher:2014aa]. Similarly,  *Mata'a* have been used as examples of mass effect "weapons" in a study of terrorist tactics [@Rasmussen:2010aa].  Given the contemporary importance that Rapa Nui has in guiding our concerns for our future, we owe it to ourselves to make certain that we fully understand the prehistory of the island and that our understanding is based on well documented evidence. 
 
