@@ -329,11 +329,6 @@ Figure 11.  First two principal components (PC1 and PC2 are on the x- and y-axis
 
 We can also examine the *mata'a* to see if there are systematic differences between the locations from which *mata'a* are found or between the obsidian sources used to make the artifacts. In our analyses, we have examples of *mata'a* from `r numberOfSites` sites (Table 4).
 
-Table 4:  Rapa Nui *mata'a* included in analyses by site.
-```{r kable4, results="asis", message=FALSE, echo=FALSE, warning=FALSE}
-bySite <- table(fac$Collection,fac$Site)
-knitr:::kable(bySite, digits=0)
-```
 
 Figure 12 presents the distribution of sets of *mata'a* from multiple locations across the island. The graph includes the confidence ellipses for the `r numberOfSites` sites on the grid representing the morphological space based on the first two principal components.  The overlap of the groups indicates that the shapes from each of the sites are cannot be distinguished.  The same conclusion can be drawn from an analysis of the shape variability relative to obsidian source (Figure 13).  Overall, there appears to be no evidence that *mata'a* blade shape was constrained due to functional performance.   
 
