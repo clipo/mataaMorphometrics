@@ -250,8 +250,8 @@ Figure 4. Measurement process used to generate semilandmark data for each *mata'
 
 ```{r length_metrics, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 par(mfrow=c(1, 2))
-hist(lengths, main="Length (cm)") 
-hist(widths, main="Width (cm)") 
+hist(lengths, main="Length (cm)" ,  xlab="length (cm)", breaks = 8) 
+hist(widths, main="Width (cm)", xlab="width (cm)", breaks = 8) 
 par(mfrow=c(1, 1))
 ```
 
@@ -374,3 +374,21 @@ It is unfortunate that in the case of Rapa Nui, the myth of the island continues
 
 #References Cited
 
+
+```{r bootstrap, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
+par(mfrow=c(1, 2))
+lengthMean = NULL
+widthMean = NULL
+for (i in 1:length(lengths)) {
+    subsampleL <- sample(lengths,size=i,replace=TRUE)
+    subsampleW <- sample(widths,size=i,replace=TRUE)
+    meanS <- mean(subsampleL) 
+    meanW <-var(subsampleW)
+    lengthMean[i] = meanS
+    widthMean[i] = meanW
+}
+plot(lengthMean, ylab="Lengths (cm)",xlab="Sample Size (N)")
+plot(widthMean, ylab="Widths (cm)", xlab="Sample Size (N)")
+par(mfrow=c(1, 1))
+```
+Figure S1. Sample size and *mata'a* parameter estimation. The sample size (N=417) of *mata'a* appears to be sufficient to estimate variability in the basic shapes. 
