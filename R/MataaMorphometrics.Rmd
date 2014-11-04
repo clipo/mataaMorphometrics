@@ -377,18 +377,38 @@ It is unfortunate that in the case of Rapa Nui, the myth of the island continues
 
 ```{r bootstrap, message=FALSE, echo=FALSE, warning=FALSE, fig.width=4.5,fig.height=4.5}
 par(mfrow=c(1, 2))
+lengthFrame <- data.frame(number=rep(NA,(numberOfMataa*2)), mean=NA, sd=NA,LL=NA, UL=NA)
+widthFrame <- data.frame(number=rep(NA,(numberOfMataa*2)), mean=NA, sd=NA,LL=NA, UL=NA)
 lengthMean = NULL
 widthMean = NULL
-for (i in 1:length(lengths)) {
+numberOfSamples=100
+for (i in 1:(2*numberOfMataa) ) {
+  for (n in 1:numberOfSamples) {
     subsampleL <- sample(lengths,size=i,replace=TRUE)
     subsampleW <- sample(widths,size=i,replace=TRUE)
-    meanS <- mean(subsampleL) 
+    meanL <- mean(subsampleL)
+    sdL <- sd(subsampleL)
     meanW <-var(subsampleW)
-    lengthMean[i] = meanS
-    widthMean[i] = meanW
-}
-plot(lengthMean, ylab="Lengths (cm)",xlab="Sample Size (N)")
-plot(widthMean, ylab="Widths (cm)", xlab="Sample Size (N)")
+    lengthMean[n] = meanL
+    lengthSD[n] = sdL
+    widthMean[n] = meanW
+  }
+  lengthFrame[i, ] <-c( i, mean(lengthMean), sd(lengthMean),mean(lengthMean)-2*sd(lengthMean), mean(lengthMean)+2*sd(lengthMean))
+  widthFrame[i, ] <-c( i, mean(widthMean), sd(widthMean),mean(widthMean)-2*sd(widthMean), mean(widthMean)+2*sd(widthMean))
+  }
+#plotCI(lengthFrame$number,lengthFrame$mean, ui=lengthFrame$UL, li=lengthFrame$LL )
+plot(lengthFrame$number, lengthFrame$mean,  type = "l", xlab="Sample Size (N)", ylab="Length (cm)")
+polygon(c(lengthFrame$number,rev(lengthFrame$number)),c(lengthFrame$LL,rev(lengthFrame$UL)),col = "grey75", border = FALSE)
+abline(v=numberOfMataa, lty="dotted")
+
+#plotCI(widthFrame$number,widthFrame$mean, ui=widthFrame$UL, li=widthFrame$LL )
+plot(widthFrame$number, widthFrame$mean,  type = "l", xlab="Sample Size (N)", ylab="Width (cm)")
+polygon(c(widthFrame$number,rev(widthFrame$number)),c(widthFrame$LL,rev(widthFrame$UL)),col = "grey75", border = FALSE)
+abline(v=numberOfMataa, lty="dotted")
+#plot(lengthMean, ylab="Lengths (cm)",xlab="Sample Size (N)")
+
+#plot(widthMean, ylab="Widths (cm)", xlab="Sample Size (N)")
+#abline(v=numberOfMataa, lty="dotted")
 par(mfrow=c(1, 1))
 ```
 Figure S1. Sample size and *mata'a* parameter estimation. The sample size (N=417) of *mata'a* appears to be sufficient to estimate variability in the basic shapes. 
