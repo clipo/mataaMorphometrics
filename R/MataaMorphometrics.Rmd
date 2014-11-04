@@ -397,12 +397,12 @@ for (i in 1:(2*numberOfMataa) ) {
   widthFrame[i, ] <-c( i, mean(widthMean), sd(widthMean),mean(widthMean)-2*sd(widthMean), mean(widthMean)+2*sd(widthMean))
   }
 #plotCI(lengthFrame$number,lengthFrame$mean, ui=lengthFrame$UL, li=lengthFrame$LL )
-plot(lengthFrame$number, lengthFrame$mean,  type = "l", xlab="Sample Size (N)", ylab="Length (cm)")
+plot(lengthFrame$number, lengthFrame$mean,  type = "l", ylim=c(4,12), xlab="Sample Size (N)", ylab="Length (cm)")
 polygon(c(lengthFrame$number,rev(lengthFrame$number)),c(lengthFrame$LL,rev(lengthFrame$UL)),col = "grey75", border = FALSE)
 abline(v=numberOfMataa, lty="dotted")
 
 #plotCI(widthFrame$number,widthFrame$mean, ui=widthFrame$UL, li=widthFrame$LL )
-plot(widthFrame$number, widthFrame$mean,  type = "l", xlab="Sample Size (N)", ylab="Width (cm)")
+plot(widthFrame$number, widthFrame$mean,  type = "l",ylim=c(0,12), xlab="Sample Size (N)", ylab="Width (cm)")
 polygon(c(widthFrame$number,rev(widthFrame$number)),c(widthFrame$LL,rev(widthFrame$UL)),col = "grey75", border = FALSE)
 abline(v=numberOfMataa, lty="dotted")
 #plot(lengthMean, ylab="Lengths (cm)",xlab="Sample Size (N)")
