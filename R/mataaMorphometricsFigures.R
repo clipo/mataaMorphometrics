@@ -1,5 +1,5 @@
 ## Figures for Mata'a Morphometrics paper
-
+setwd("/Volumes/Macintosh HD/Users/carllipo/mataaMorphometrics/R") ## SET THE WORKING DIRECTORY
 library(knitr)
 library(httr)
 library(Rmisc)
@@ -221,5 +221,33 @@ abline(v=numberOfMataa, lty="dotted")
 #abline(v=numberOfMataa, lty="dotted")
 par(mfrow=c(1, 1))
 
+
+library(rgl)
+## playing with 3D
+bp <- PCA(eFourier(RapaNui, 12, norm=TRUE))
+x <- bp$x[, 1]
+y <- bp$x[, 2]
+z <- bp$x[, 3]
+f <- bp$fac$Site
+cg <- col.qual(2)
+cp <- cg[f]
+level=0.5
+open3d()
+plot3d(x, y, z, col=cp, xlab = "PC1", ylab="PC2", zlab="PC3", size=3, aspect=TRUE)
+for (i in seq(along=levels(f))){
+  m <- cbind(x, y, z)[f==levels(f)[i],]
+  cm <- apply(m, 2, mean)
+  #points3d(cm[1], cm[2], cm[3], col=cg[i], size=5)
+  apply(m, 1, function(x)
+    segments3d(c(cm[1], x[1]),
+               c(cm[2], x[2]),
+               c(cm[3], x[3]),
+               col=cg[i], alpha=0.5))
+  
+  shade3d(ellipse3d(cov(m), col=cg[i], level=level,  alpha=0.1))
+  wire3d(ellipse3d(cov(m), col=cg[i], level=level, alpha=0.05))}
+
+xx <- spin3d(axis = c(1, 1, 1), rpm = 10)
+play3d(xx, duration = 6)
 
 
