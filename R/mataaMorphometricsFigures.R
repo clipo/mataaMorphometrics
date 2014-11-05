@@ -221,7 +221,34 @@ abline(v=numberOfMataa, lty="dotted")
 #abline(v=numberOfMataa, lty="dotted")
 par(mfrow=c(1, 1))
 
+##########################
 
+PAST <- subset(allPAST, Island="Rapa_Nui" & Site != "Unknown")
+last.meta <- which(colnames(PAST)=="X1") - 1
+fac <- PAST[, 1:last.meta]
+
+
+# xy will contain coordinates only
+xy <- as.matrix(PAST[, -c(1:last.meta)])
+scaledXY <- xy/scalingFactor
+
+# a short loop to reorder thing and store them in a list
+coo <- list()
+for (i in 1:nrow(scaledXY)){ 
+  coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
+}
+
+# we renames the components of the list (ie the shapes)
+names(coo) <- fac[, 1]
+
+# now we create the Out object (formerly Coo,
+# but Coo is now a super-class now in order to handle outlines, open outlines, and
+# landmarks)
+RapaNui <- Out(coo, fac=fac)
+
+
+## Descriptive information for the paper
+numberOfMataa <- nrow(scaledXY)
 library(rgl)
 ## playing with 3D
 bp <- PCA(eFourier(RapaNui, 12, norm=TRUE))
@@ -229,7 +256,7 @@ x <- bp$x[, 1]
 y <- bp$x[, 2]
 z <- bp$x[, 3]
 f <- bp$fac$Site
-cg <- col.qual(2)
+cg <- col.qual(8)
 cp <- cg[f]
 level=0.5
 open3d()
