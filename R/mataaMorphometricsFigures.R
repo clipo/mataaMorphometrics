@@ -1,5 +1,5 @@
 ## Figures for Mata'a Morphometrics paper
-setwd("/Volumes/Macintosh HD/Users/carllipo/mataaMorphometrics/R") ## SET THE WORKING DIRECTORY
+setwd("/Volumes/Macintosh HD/Users/clipo/mataaMorphometrics/R") ## SET THE WORKING DIRECTORY
 library(knitr)
 library(httr)
 library(Rmisc)
@@ -23,27 +23,37 @@ yCenter = 11 # y coordinate of centroid
 # We read the whole file
 allPAST <- read.table(data.path, header = TRUE, sep="\t")
 PAST <-allPAST[which(allPAST$Island=="Rapa_Nui"),]
-nonRapaNui <-PAST[which(allPAST$Island=="New_Britain"),]
+nonRapaNui <-PAST[which(allPAST$Island != "Rapa_Nui"),]
 
 last.meta <- which(colnames(PAST)=="X1") - 1
 fac <- PAST[, 1:last.meta]
 allfac<-allPAST[,1:last.meta]
+nonRapaNuiFac <-nonRapaNui[,1:last.meta]
 
 # xy will contain coordinates only
 xy <- as.matrix(PAST[, -c(1:last.meta)])
 allxy<- as.matrix(allPAST[,-c(1:last.meta)])
+nonRapaNuiXY <- as.matrix(nonRapaNui[,-c(1:last.meta)])
+
+# scale the coordinates so that pixels = cm
 scaledXY <- xy/scalingFactor
 allscaledXY <-allxy/scalingFactor
+nonRapaNuiScaledXY <- nonRapaNuiXY/scalingFactor
 
 # a short loop to reorder thing and store them in a list
 coo <- list()
 allcoo <-list()
+nonRapaNuicoo <-list()
 for (i in 1:nrow(scaledXY)){ 
   coo[[i]] <- cbind(scaledXY[i, seq(1, ncol(scaledXY), 2)], scaledXY[i, seq(2, ncol(scaledXY), 2)])
 }
 
 for (i in 1:nrow(allscaledXY)){ 
   allcoo[[i]] <- cbind(allscaledXY[i, seq(1, ncol(allscaledXY), 2)], allscaledXY[i, seq(2, ncol(allscaledXY), 2)])
+}
+
+for (i in 1:nrow(nonRapaNuiScaledXY)){ 
+  nonRapaNuicoo[[i]] <- cbind(nonRapaNuiScaledXY[i, seq(1, ncol(nonRapaNuiScaledXY), 2)], nonRapaNuiScaledXY[i, seq(2, ncol(nonRapaNuiScaledXY), 2)])
 }
 # we renames the components of the list (ie the shapes)
 names(coo) <- fac[, 1]
@@ -54,11 +64,15 @@ names(coo) <- fac[, 1]
 # landmarks)
 RapaNui <- Out(coo, fac=fac)
 
-## include the non Rapa Nui examples
+## include the non Rapa Nui examples as well
 allMataa <-Out(allcoo, fac=allfac)
+
+## Just the non-Rapa Nui examples 
+allMataa <-Out(nonRapaNuicoo, fac=allfac)
 
 ## Descriptive information for the paper
 numberOfMataa <- nrow(scaledXY)
+numberOfNonRapaNuiMataa <- nrow(nonRapaNuiScaledXY)
 
 # Create vectors of the lengths and widths for descr. stats. 
 ## note that in the images 1 cm = 75 pixels
@@ -89,15 +103,13 @@ bishopMataa <- length(which(fac[3]=="Bishop"))
 unknownMataa <- length(which(fac[3]=="Unknown"))
 numberOfSites <-length(fac[4])-1
 
-
-# the dmp function
+# the dmp function to create the polar plots
 dmp <- function(q, xlab="", ylab="", title="", th0=pi/2,
                 cols, palette=col.summer, leg, ...){
   op <- par(mar=c(5.1, 0, 4.1, 0))
   q <- q/max(q)
   nr <- nrow(q)
   nc <- ncol(q)
-  #th <- seq(0, 2*pi, length=nc+1)[-(nc+1)] + th0
   th <- seq(0, 2*pi, length=nc) + th0
   xi <- t(apply(q, 1, function(r) r*cos(th)))
   yi <- t(apply(q, 1, function(r) r*sin(th)))
@@ -116,7 +128,6 @@ dmp <- function(q, xlab="", ylab="", title="", th0=pi/2,
 
 ## plot the confidence intervals
 ci.plot <- function(x){
-  #x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-xCenter, -yCenter)))
   x <- lapply(x$coo,coo.interpolate,360)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
   xCI <- apply(x, 2, CI,ci = 0.99)
@@ -129,8 +140,6 @@ ci.plot <- function(x){
 }
 
 quartiles.plot<-function(x){
-  #x$coo <- lapply(coo.trans$coo, x$coo, - 625, - 500)
-  #x <- lapply(x$coo, function(x) apply(x, 1, ed, pt2=c(-xCenter, -yCenter)))
   x <-lapply(x$coo,coo.interpolate,360)
   x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
   quartilesCI <- apply(x, 2, quantile, probs=seq(0, 1, 0.25))
@@ -159,10 +168,11 @@ par(mfrow=c(1, 1))
 #Figure 6. Superimposed *mata'a* outlines from Rapa Nui.  For comparison, all *mata'a* are aligned at the center point of the haft where it meets the blade.
 stack(RapaNui)
 
-RapaF <- eFourier(RapaNui, 12, norm=TRUE)  #norm makes sure they are scaled
+RapaF <- eFourier(RapaNui, 12, norm=TRUE)  #norm makes sure they are normalized by total length of perimeter
 
 ##Figure 8. For all positive integers, the sum of a cosine curve and a sine curve defines an ellipse in the plane. Elliptic Fourier analysis is based on an harmonic sum of such ellipses. Five harmonics are here shown at four locations on the original outline of a *mata'a*. As the number of harmonics is increased the reconstruction better approximates the original shape outline.
 Ptolemy(RapaNui[1], nb.h = 5, t = seq(0, 2*pi, pi/2), legend = TRUE)
+
 ##Figure 9. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics provide a satisfactory reconstruction.
 hqual(RapaNui, method = "eFourier", id = 16, title="*Mata'a* reconstructions with harmonics", harm.range = 1:36,  palette = col.sari, plot.method = "panel")
 
@@ -183,7 +193,7 @@ allF <- eFourier(allMataa, 13, norm=TRUE)  ## note that this is scaled
 ##Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain, New Zealand, Chatham and Pitcairn Islands. The shapes are reconstructed from the factorial map using the first two component axes.
 plot(PCA(allF), "Island", ellipses=TRUE)
 
-##Figure S1. Sample size and *mata'a* parameter estimation. The sample size (N=417) of *mata'a* appears to be sufficient to estimate variability in the basic shapes.
+##Figure S1. Sample size and *mata'a* parameter estimation. The sample size (N=423) of *mata'a* appears to be sufficient to estimate variability in the basic shapes.
 par(mfrow=c(1, 2))
 lengthFrame <- data.frame(number=rep(NA,(numberOfMataa*2)), mean=NA, sd=NA,LL=NA, UL=NA)
 widthFrame <- data.frame(number=rep(NA,(numberOfMataa*2)), mean=NA, sd=NA,LL=NA, UL=NA)
@@ -249,6 +259,8 @@ RapaNui <- Out(coo, fac=fac)
 
 ## Descriptive information for the paper
 numberOfMataa <- nrow(scaledXY)
+
+
 library(rgl)
 ## playing with 3D
 bp <- PCA(eFourier(RapaNui, 12, norm=TRUE))
