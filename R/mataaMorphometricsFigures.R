@@ -69,7 +69,7 @@ RapaNui <- Out(coo, fac=fac)
 allMataa <-Out(allcoo, fac=allfac)
 
 ## Just the non-Rapa Nui examples 
-allMataa <-Out(nonRapaNuicoo, fac=allfac)
+allMataaNonRapaNui <-Out(nonRapaNuicoo, fac=allfac)
 
 ## Descriptive information for the paper
 numberOfMataa <- nrow(scaledXY)
@@ -179,12 +179,13 @@ Ptolemy(RapaNui[1], nb.h = 5, t = seq(0, 2*pi, pi/2), legend = TRUE)
 plot(PCA(RapaF),  ellipses=TRUE) 
 
 #Figure 12.  First two principal components of *mata'a* grouped by site location. 
-plot(PCA(RapaF), "Site",  ellipses=TRUE) # regular EFT with normalized coefficients
+plot(PCA(RapaF), "Site",  ellipses=TRUE, conf_ellipses=0.90, conf_ellipsesax = c(0.2, 0.4, 0.75, 0.8))
+# regular EFT with normalized coefficients
 manovaSite<-MANOVA_PW(PCA(RapaF), "Site")
 knitr:::kable(manovaSite$summary, digits=4)
 
 #Figure 10.  First two principal components of *mata'a* grouped by obsidian source. 
-plot(PCA(RapaF), "Source",  ellipses=TRUE) # regular EFT with normalized coefficients
+plot(PCA(RapaF), "Source",  ellipses=TRUE,  conf_ellipses=0.90, conf_ellipsesax = c(0.2, 0.4, 0.75, 0.8)) # regular EFT with normalized coefficients
 manovaObsidian<-MANOVA_PW(PCA(RapaF), "Source")
 # p-values for table in figure
 knitr:::kable(manovaObsidian$summary, digits=4)
@@ -194,7 +195,7 @@ allF <- efourier(allMataa, 13, norm=TRUE)  ## note that this is scaled
 
 allP <- PCA(allF)
 manovaIsland<-MANOVA_PW(filter(allP, !Island %in% c("New_Zealand", "Pitcairn")), "Island")
-plot(PCA(allF), "Island", ellipses=TRUE)
+plot(PCA(allF), "Island", ellipses=TRUE,  conf_ellipses=0.90, conf_ellipsesax = c(0.2, 0.4, 0.75, 0.8))
 knitr:::kable(manovaIsland$summary, digits=4)
 
 ## p-values for smaller island comparisons
