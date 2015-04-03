@@ -171,14 +171,14 @@ stack(RapaNui)
 
 RapaF <- efourier(RapaNui, 12, norm=TRUE)  #norm makes sure they are normalized by total length of perimeter
 
-##Figure 8. For all positive integers, the sum of a cosine curve and a sine curve defines an ellipse in the plane. Elliptic Fourier analysis is based on an harmonic sum of such ellipses. Five harmonics are here shown at four locations on the original outline of a *mata'a*. As the number of harmonics is increased the reconstruction better approximates the original shape outline.
+##Figure 7. For all positive integers, the sum of a cosine curve and a sine curve defines an ellipse in the plane. Elliptic Fourier analysis is based on an harmonic sum of such ellipses. Five harmonics are here shown at four locations on the original outline of a *mata'a*. As the number of harmonics is increased the reconstruction better approximates the original shape outline.
 Ptolemy(RapaNui[1], nb.h = 5, t = seq(0, 2*pi, pi/2), legend = TRUE)
 
 
-#Figure 9.  First two principal components (PC1 and PC2 are on the x- and y-axis, respectively) for the Rapa Nui *mata'a*.
+#Figure 8.  First two principal components (PC1 and PC2 are on the x- and y-axis, respectively) for the Rapa Nui *mata'a*.
 plot(PCA(RapaF),  ellipses=TRUE) 
 
-#Figure 12.  First two principal components of *mata'a* grouped by site location. 
+#Figure 9.  First two principal components of *mata'a* grouped by site location. 
 plot(PCA(RapaF), "Site",  ellipses=TRUE, conf_ellipses=0.90, conf_ellipsesax = c(0.2, 0.4, 0.75, 0.8))
 # regular EFT with normalized coefficients
 manovaSite<-MANOVA_PW(PCA(RapaF), "Site")
