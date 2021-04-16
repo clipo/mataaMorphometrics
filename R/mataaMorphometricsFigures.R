@@ -14,15 +14,16 @@ set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
 install_github("vbonhomme/Momocs")
 library(Momocs)
+library(here)
 
 # some constants we use in the file
-data.path <- "../Data/xyfinaldatawithids.txt" 
+data.path <-  "Data/xyfinaldatawithids.txt"
 scalingFactor = 75 ## this is the # of pixels per cm. 
 xCenter = 12 # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
 yCenter = 11 # y coordinate of centroid
 
 # We read the whole file
-allPAST <- read.table(data.path, header = TRUE, sep="\t")
+allPAST <- read.table(here(data.path), header = TRUE, sep="\t")
 PAST <-allPAST[which(allPAST$Island=="Rapa_Nui"),]
 nonRapaNui <-PAST[which(allPAST$Island != "Rapa_Nui"),]
 
@@ -173,7 +174,6 @@ RapaF <- efourier(RapaNui, 12, norm=TRUE)  #norm makes sure they are normalized 
 
 ##Figure 7. For all positive integers, the sum of a cosine curve and a sine curve defines an ellipse in the plane. Elliptic Fourier analysis is based on an harmonic sum of such ellipses. Five harmonics are here shown at four locations on the original outline of a *mata'a*. As the number of harmonics is increased the reconstruction better approximates the original shape outline.
 Ptolemy(RapaNui[1], nb.h = 5, t = seq(0, 2*pi, pi/2), legend = TRUE)
-
 
 #Figure 8.  First two principal components (PC1 and PC2 are on the x- and y-axis, respectively) for the Rapa Nui *mata'a*.
 plot(PCA(RapaF),  ellipses=TRUE) 
