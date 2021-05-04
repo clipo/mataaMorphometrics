@@ -1,5 +1,5 @@
 ## Figures for Mata'a Morphometrics paper
-setwd("/Users/clipo/mataaMorphometrics/R") ## SET THE WORKING DIRECTORY
+#setwd("/Users/clipo/mataaMorphometrics/R") ## SET THE WORKING DIRECTORY
 library(knitr)
 library(httr)
 library(Rmisc)
@@ -12,7 +12,7 @@ opts_chunk$set(fig.align='left')
 options(repos = c(CRAN = "http://cran.rstudio.com"))
 set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
-install_github("vbonhomme/Momocs")
+#install_github("vbonhomme/Momocs")
 library(Momocs)
 library(here)
 
@@ -287,7 +287,7 @@ cg <- col.qual(8)
 cp <- cg[f]
 level=0.5
 open3d()
-plot3d(x, y, z, col=cp, xlab = "PC1", ylab="PC2", zlab="PC3", size=3, aspect=TRUE)
+plot3d(x, y, z,  xlab = "PC1", ylab="PC2", zlab="PC3", size=3, aspect=TRUE)
 for (i in seq(along=levels(f))){
   m <- cbind(x, y, z)[f==levels(f)[i],]
   cm <- apply(m, 2, mean)

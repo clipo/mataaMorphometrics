@@ -19,6 +19,7 @@ affiliations:
 
 ```{r, setup, error=FALSE, message=FALSE,   echo=FALSE, cache=TRUE, warning=FALSE}
 #suppressPackageStartupMessages(library(rCharts, quietly=TRUE))
+library(here)
 library(knitr)
 library(httr)
 library(Rmisc)
@@ -31,20 +32,20 @@ options(repos = c(CRAN = "http://cran.rstudio.com"))
 set_config( config( ssl.verifypeer = 0L ) )
 library(devtools)
 #if("Momocs" %in% rownames(installed.packages()) == FALSE) { install_github("vbonhomme/Momocs")}
-RCurl::getBinaryURL(url='https://github.com/vbonhomme/Momocs.zip', cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"), followlocation=1L)
+#RCurl::getBinaryURL(url='https://github.com/vbonhomme/Momocs.zip', cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"), followlocation=1L)
 library(Momocs)
 ```
 
 
 ```{r, data-analysis, echo=FALSE, message=FALSE, cache=TRUE, warning=FALSE}
 # some constants we use in the file
-data.path <- "../Data/xyfinaldatawithids.txt" 
+data.path <- "./Data/xyfinaldatawithids.txt" 
 scalingFactor = 75 ## this is the # of pixels per cm. 
 xCenter = 12 # x coordinate of centroid (if its fixed, otherwise can be aligned based on average centroid, etc.)
 yCenter = 11 # y coordinate of centroid
 
 # We read the whole file
-allPAST <- read.table(data.path, header = TRUE, sep="\t")
+allPAST <- read.table(here(data.path), header = TRUE, sep="\t")
 PAST <-allPAST[which(allPAST$Island=="Rapa_Nui"),]
 nonRapaNui <-PAST[which(allPAST$Island=="New_Britain"),]
 
@@ -285,7 +286,7 @@ Figure 7.  Variability in *mata’a* shape shown with mean and 95% confidence in
 #Morphometric Analyses
 
 ```{r, pca-prep, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-RapaF <- eFourier(RapaNui, 12, norm=TRUE)  #norm makes sure they are scaled
+RapaF <- efourier(RapaNui, 12, norm=TRUE)  #norm makes sure they are scaled
 ```
 
 Some text here about the various ways in which morphometrics can be done.
@@ -307,21 +308,37 @@ cients. They are (usually) normalized to remove homothetic, translational or rot
 
 To conduct Fourier analysis, we must estimate the number of necessary harmonics after examining the spectrum of harmonic Fourier power. The power is proportional to the harmonic amplitude and can be considered as a measure of shape information. As the rank of a harmonic increases, the power decreases and adds less and less information. We can evaluate the mininum number of harmonics required to best approximate the shape. In the case of the *mata'a* and using x/y position for points on the outline as the data set, 12 harmonics provide a good reconstruction of the overall shape (Figures 9 and 10).
 
-```{r, hqual-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
-hqual(RapaNui, method = "eFourier", id = 16, title="*Mata'a* reconstructions with harmonics", harm.range = 1:36,  palette = col.sari, plot.method = "panel")
+```{r, hqual-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE} #fig.width=4.5,fig.height=4.5}
+#hqual(RapaNui, method = "eFourier", id = 16, title="*Mata'a* reconstructions with harmonics", harm.range = 1:36,  palette = col.sari, plot.method = "panel")
+#b5 <- RapaNui %>% slice(1:12) ## sample 12 of them
+#b5  %>% calibrate_harmonicpower_efourier(nb.h=12) #nb.h indicates # of harmonics
+
+#updated for Momocs 1.3.2
+library(ggplot2)
+cal <- RapaNui  %>% calibrate_harmonicpower_efourier(nb.h=12)
+cal$gg + theme_minimal() +
+coord_cartesian(xlim=c(3.5, 12.5), ylim=c(0, 100)) +
+ggtitle("Mata'a* reconstructions with harmonics")
 ```
 
 Figure 9. *Mata'a* reconstructed from different numbers of harmonics. Twelve harmonics provide a satisfactory reconstruction.
 
-```{r, hpow-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
-hpow(RapaNui, method = "efourier", title="Fourier coefficients power spectrum")
+```{r, hpow-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE} #fig.width=4.5,fig.height=4.5}
+#harm_pow(RapaF)
+ef <- efourier(RapaNui[1], 24)
+harm_pow(ef)
+plot(cumsum(harm_pow(ef)[-1]), type='o',
+  main='Cumulated harmonic power without the first harmonic',
+  ylab='Cumulated harmonic power', xlab='Harmonic rank')
+
 ```
 
 Figure 10.  Cumulated harmonic Fourier power calculated from Rapa Nui *mata'a*. The 12 first harmonics gather nearly 100% of the harmonic power. Maxima, minimaRapa and medians are also plotted.
 
 Based on the elliptical Fourier characterizations of the *mata'a* we can now examine the shapes to determine if there are clusters of shape classes that might distinguish different functional sub-groups from each other.  Figure 11 presents the  position of mata'a shapes on a factorial map with shapes reconstructed from first two principal compoonent axes.  Based on these data we do not have discrete shape groups: *mata'a* are highly variable in outline shape and there are continuous intermediate shapes between all variants. This finding demonstrates that the similarity of the proximal haft end of the *mata'a* and that the distal end is free to vary.  These results fail to indicate any subgroup that might have been specifically built as lethal weapons and supports the notion that mata'a have no particular function for which blade shape affects performance. Given observations of usewear on the blade edges [e.g., @Church:1998aa; @Church:1994aa; @Church:1996aa; @Stevenson:2008aa, p. 107], it is likely that this means that *mata'a* simply must have an edge sufficient for cutting and scraping. 
 
-```{r, rapaf-all-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
+```{r, rapaf-all-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+#, fig.width=4.5,fig.height=4.5}
 plot(PCA(RapaF),  ellipses=TRUE) 
 ```
 
@@ -329,25 +346,31 @@ Figure 11.  First two principal components (PC1 and PC2 are on the x- and y-axis
 
 We can also examine the *mata'a* to see if there are systematic differences between the locations from which *mata'a* are found or between the obsidian sources used to make the artifacts. In our analyses, we have examples of *mata'a* from `r numberOfSites` sites (Table 4).
 
-
 Figure 12 presents the distribution of sets of *mata'a* from multiple locations across the island. The graph includes the confidence ellipses for the `r numberOfSites` sites on the grid representing the morphological space based on the first two principal components.  The overlap of the groups indicates that the shapes from each of the sites are cannot be distinguished.  The same conclusion can be drawn from an analysis of the shape variability relative to obsidian source (Figure 13).  Overall, there appears to be no evidence that *mata'a* blade shape was constrained due to functional performance.   
 
-```{r, rapaf-bysite-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
+```{r, rapaf-bysite-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE} #, fig.width=4.5,fig.height=4.5}
 ## By Source
-plot(PCA(RapaF), "Site",  ellipses=TRUE) # regular EFT with normalized coefficients
+RapaF.p <- PCA(RapaF)
+#plot(PCA(RapaF), "Site", ellipses=TRUE) # regular EFT with normalized coefficients
+#plot(RapaF.p, pos.shp="full")
+plot(RapaF.p, ~Site)
 ```
 
 Figure 12.  First two principal components of *mata'a* grouped by site location. 
 
-```{r, rapaf-bymaterial-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, fig.width=4.5,fig.height=4.5}
+```{r, rapaf-bymaterial-plot, results='asis', echo=FALSE, cache=TRUE, warning=FALSE}
+#, message=FALSE, fig.width=4.5,fig.height=4.5}
 ## By Source
-plot(PCA(RapaF), "Source",  ellipses=TRUE) # regular EFT with normalized coefficients
+#plot(PCA(RapaF), "Source",  ellipses=TRUE) # regular EFT with normalized coefficients
+plot(RapaF.p, ~Source)
 ```
 
 Figure 13.  First two principal components of *mata'a* grouped by site location. 
 
 ```{r, pca-prep-all, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
-allF <- eFourier(allMataa, 13, norm=TRUE)  ## note that this is scaled
+allF <- efourier(allMataa, 13, norm=TRUE)  ## note that this is scaled
+
+
 ```
 
 #Comparison with stemmed tools from other Pacific Islands
@@ -358,8 +381,11 @@ As a comparison for our study, we generated outlines of examples stemmed lithic 
 
 The New Britain artifacts, on the other hand, wide array of features that are more like the ones from Rapa Nui. Based on this comparison, it is certainly conceivable that one of Rapa Nui *mata'a* reflect the same kinds of uses that are thought to characterize the New Britain tools. Tatooing is known from Rapa Nui through ethnohistoric observation [@Huish:1839aa, p. 77; @Metraux:1940aa; @Thomson:1891aa, p. 22] and as markings on the prehistoric *moai* [@Lee:1992aa]. It would not be surprising that at least some of the mata'a objects were used in tatooing and scarification practices, though their numbers and widespread distribution suggests that they were  likely not all used in this fashion. 
 
-```{r, allfp-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE,  fig.width=4.5, fig.height=4.5 } 
- plot(PCA(allF), "Island", ellipses=TRUE)
+```{r, allfp-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+#,  fig.width=4.5, fig.height=4.5 } 
+#plot(PCA(allF), "Island", ellipses=TRUE)
+plot(PCA(allF), ~Island)
+
 ```
 
 Figure 14:  Factorial maps depicting the two principal compoents (PC1 and PC2 are the x- and y-axis, respectively) of morphological variation for stemmed lithic shaped objects from Rapa Nui, New Britain, New Zealand, Chatham and Pitcairn Islands. The shapes are reconstructed from the factorial map using the first two component axes.
