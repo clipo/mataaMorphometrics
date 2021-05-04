@@ -326,7 +326,9 @@ Figure 9. *Mata'a* reconstructed from different numbers of harmonics. Twelve har
 ```{r, hpow-plot,echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE} #fig.width=4.5,fig.height=4.5}
 #harm_pow(RapaF)
 ef <- efourier(RapaNui[1], 24)
-harm_pow(ef)
+#hp_ef<-harm_pow(ef)[-1]
+#plot(hp_ef)
+
 plot(cumsum(harm_pow(ef)[-1]), type='o',
   main='Cumulated harmonic power without the first harmonic',
   ylab='Cumulated harmonic power', xlab='Harmonic rank')
@@ -369,8 +371,6 @@ Figure 13.  First two principal components of *mata'a* grouped by site location.
 
 ```{r, pca-prep-all, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
 allF <- efourier(allMataa, 13, norm=TRUE)  ## note that this is scaled
-
-
 ```
 
 #Comparison with stemmed tools from other Pacific Islands
